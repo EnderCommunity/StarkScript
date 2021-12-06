@@ -2,7 +2,7 @@
 
 StarkScript is a compiled C-based programming language that aims to offer the same usability as that of JavaScript's and TypeScript's.
 
-> Note: The development of this programming language is going to be painfully slow.
+> Note that this is a replacement for the [Murmur programming language](https://github.com/EnderCommunity/Murmur). The compiler of the Murmur programming language felt a bit messy, and it was not proparly documented. So, instead of rewriting lots of its code and re-documenting it, it was decided to completely rewrite the whole compiler and re-do the whole thing properly. (hopefully this won't happen again)
 
 ## Compiling and running the StarkScript compiler
 
