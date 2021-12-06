@@ -26,8 +26,7 @@
 int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix){
 
     // Create a new format string with the prefix included in it
-    char *prefixedFormat = calloc(strlen(__format) + strlen(prefix) + 1,
-                                sizeof(char));
+    char *prefixedFormat = calloc(strlen(__format) + strlen(prefix) + 1, sizeof(char));
     strcpy(prefixedFormat, prefix);
     strcat(prefixedFormat, __format);
 
