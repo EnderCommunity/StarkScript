@@ -109,7 +109,7 @@ int consoleWarn(const char *format, ...){
 
     }else{
 
-        // Don't show the debug message
+        // Don't show the warning message
         return 0;
 
     }
@@ -145,7 +145,7 @@ int consoleError(const char *format, ...){
 
     }else{
 
-        // Don't show the debug message
+        // Don't show the error message
         return 0;
 
     }
