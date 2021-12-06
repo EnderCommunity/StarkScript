@@ -33,3 +33,7 @@ sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Star
 ## Contributing
 
 Everyone is allowed to contribute to this repository. Just make sure to document all your changes and not exceed the 100 characters per line restriction.
+
+## License
+
+StarkScript's compiler is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-nc-sa/4.0/).
