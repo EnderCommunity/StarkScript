@@ -33,8 +33,9 @@ int main(int argc, char *argv[]){
 
         // ...
 
-        // Free the memory used by the `cmplrInputFilePth` variable
+        // Free the memory used by the `cmplrInputFilePth` and `cmplrOutputFilePth` variable
         free(cmplrInputFilePth);
+        free(cmplrOutputFilePth);
 
     }else{
 
@@ -61,7 +62,7 @@ void stopProcess(int exitCode){
     }
     if(cmplrOutputFilePth != NULL){
 
-        free(cmplrInputFilePth);
+        free(cmplrOutputFilePth);
 
     }
 
