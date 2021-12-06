@@ -21,27 +21,6 @@
 // Get the console's strings
 #include "./strings/console.c"
 
-// Define a function similar to the `printf` function that will accept a `va_list` instead of an
-// ellipsis!
-int ____printf(const char *__format, __builtin_va_list __local_argv){
-
-    // Note: This is some of the source code of the print function
-
-    // Define a variable that will hole the return value
-    int __retval;
-
-    // Print all the message using the `__builtin_vfprintf` function
-    // It receives the ellipsis arguments as a `__builtin_va_list` list
-    __retval = __builtin_vfprintf(stdout, __format, __local_argv);
-
-    // Close the opened `__builtin_va_list` list
-    __builtin_va_end(__local_argv);
-
-    // Return the code that value that the `printf` function would've returned
-    return __retval;
-
-}
-
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...
 int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix){
@@ -53,7 +32,10 @@ int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, cons
     strcat(prefixedFormat, __format);
 
     // Print the console message
-    int result = ____printf(prefixedFormat, __local_argv);
+    int result = __builtin_vfprintf(stdout, __format, __local_argv);
+
+    // Close the opened `__builtin_va_list` list
+    __builtin_va_end(__local_argv);
 
     // Free the allocated memory for the `prefixedFormat` variable
     free(prefixedFormat);
@@ -69,9 +51,15 @@ int consoleInfo(const char *format, ...){
     __builtin_va_list __local_argv;
     __builtin_va_start(__local_argv, format);
 
-    // Print the console message and return the int value that the `printf` function would've
-    // returned
-    return ____printf(format, __local_argv);
+    // Print all the message using the `__builtin_vfprintf` function
+    // It receives the ellipsis arguments as a `__builtin_va_list` list
+    int result = __builtin_vfprintf(stdout, format, __local_argv);
+
+    // Close the opened `__builtin_va_list` list
+    __builtin_va_end(__local_argv);
+
+    // Return the int value that the `printf` function would've returned
+    return result;
 
 }
 
