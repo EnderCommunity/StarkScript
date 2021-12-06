@@ -31,10 +31,7 @@ int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, cons
     strcat(prefixedFormat, __format);
 
     // Print the console message
-    int result = __builtin_vfprintf(stdout, __format, __local_argv);
-
-    // Close the opened `__builtin_va_list` list
-    __builtin_va_end(__local_argv);
+    int result = __builtin_vfprintf(stdout, prefixedFormat, __local_argv);
 
     // Free the allocated memory for the `prefixedFormat` variable
     free(prefixedFormat);
@@ -76,6 +73,9 @@ int consoleDebug(const char *format, ...){
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_DEBUG_MESSAGE);
 
+        // Close the opened `__builtin_va_list` list
+        __builtin_va_end(__local_argv);
+
         // Return the int value that the `printf` function would've returned
         return result;
 
@@ -100,6 +100,9 @@ int consoleWarn(const char *format, ...){
 
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_WARNING_MESSAGE);
+
+        // Close the opened `__builtin_va_list` list
+        __builtin_va_end(__local_argv);
 
         // Return the int value that the `printf` function would've returned
         return result;
@@ -126,11 +129,14 @@ int consoleError(const char *format, ...){
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_ERROR_MESSAGE);
 
+        // Close the opened `__builtin_va_list` list
+        __builtin_va_end(__local_argv);
+
         // Check if the error message is allowed to terminate this process
         if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT) {
 
             // Exit with a FAILURE state
-            exit(EXIT_FAILURE);
+            stopProcess(EXIT_FAILURE);
 
         }
 
