@@ -54,7 +54,7 @@ int main(int argc, char *argv[]){
 // Define a function that stops the process
 void stopProcess(int exitCode){
 
-    // Free up any globally allocated variables depending on the compiling stage that the error occured in
+    // Free up any globally allocated variables
     if(cmplrInputFilePth != NULL) {
 
         free(cmplrInputFilePth);
