@@ -39,6 +39,7 @@ int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, cons
     // Free the allocated memory for the `prefixedFormat` variable
     free(prefixedFormat);
 
+    // Return the return value of the `__builtin_vfprintf` function
     return result;
 
 }
@@ -75,6 +76,7 @@ int consoleDebug(const char *format, ...){
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_DEBUG_MESSAGE);
 
+        // Return the int value that the `printf` function would've returned
         return result;
 
     }else{
@@ -99,6 +101,7 @@ int consoleWarn(const char *format, ...){
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_WARNING_MESSAGE);
 
+        // Return the int value that the `printf` function would've returned
         return result;
 
     }else{
@@ -131,6 +134,7 @@ int consoleError(const char *format, ...){
 
         }
 
+        // Return the int value that the `printf` function would've returned
         return result;
 
     }else{
