@@ -1,0 +1,50 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc.exe build active file",
+			"command": "gcc",
+			"args": [
+				"-g",
+				"${workspaceFolder}/compiler/stark.c",
+				"-o",
+				"${workspaceFolder}/compiler/Stark.exe",
+				"-lregex"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"isDefault": true,
+				"kind": "build"
+			},
+			"detail": "C/C++ compiler"
+		},
+		{
+			"type": "process",
+			"label": "StarkScript: build compiler",
+			"command": "${workspaceFolder}/compiler/Stark",
+			"windows": {
+				"command": "${workspaceFolder}\\compiler\\Stark.exe"
+			},
+			"linux": {
+				"command": "${workspaceFolder}/compiler/Stark.out"
+			},
+			"args": [
+				"${workspaceFolder}\\pitch.stark"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"group": {
+				"isDefault": true,
+				"kind": "test"
+			},
+			"problemMatcher": []
+		}
+	]
+}

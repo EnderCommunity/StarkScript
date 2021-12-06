@@ -1,0 +1,2 @@
+Make sure to rename functions at compile time (max is 31 characters):
+http://www.crasseux.com/books/ctutorial/Function-names.html
