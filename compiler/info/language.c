@@ -11,8 +11,8 @@
 // Define the current version of the StarkScript compiler
 #define __STARK_COMPILER_VERSION__ "0.0.0"
 
-// Define the release channel of the StarkScript compiler (This constant can be set
-// to "Alpha", "Beta", or "Stable")
+// Define the release channel of the StarkScript compiler (This constant can be set to "Alpha",
+// "Beta", or "Stable")
 #define __STARK_RELEASE_STATE__ "Alpha"
 
 // Define the URL of StarkScript's website

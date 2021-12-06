@@ -13,7 +13,7 @@
 // Define the function that prints the compiler start message
 void prntCmplrMsg(){
 
-    // Print any compiler important info
+    // Print any important compiler info
     printf("StarkScript V%s (Compiler version %s | %s channel )\nUsing the [%s] compiler on %s\n\n\
     For more information, visit: %s\n\n\n",
     __STARK_VERSION__, __STARK_COMPILER_VERSION__, __STARK_RELEASE_STATE__, COMPILER_NAME,
