@@ -88,7 +88,8 @@ void processArgs(int argc, char *argv[]){
 
         }else{
 
-            //
+            // Tell the user that this flag does not exist
+            consoleWarn("The flag \"%s\" does not exist!", argv[i]);
 
         }
 
