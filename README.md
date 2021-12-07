@@ -4,6 +4,29 @@ StarkScript - or the *Stark programming language* - is a compiled C-based progra
 
 > Note that this is a replacement for the [Murmur programming language](https://github.com/EnderCommunity/Murmur). The compiler of the Murmur programming language felt a bit messy, and it was not proparly documented. So, instead of rewriting lots of its code and re-documenting it, it was decided to completely rewrite the whole compiler and re-do the whole thing properly. (hopefully this won't happen again)
 
+## The development environment
+
+The StarkScript compiler is written in C, and the whole language is compiled down to C code. So, naturally, you must have a C compiler. We recommend the [GNU compiler](https://gcc.gnu.org/).
+
+It would be better if you use Linux to work on the compiler.
+> If you are a Windows user, you could use Windows to work on the compiler, or you could also use the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install) (AKA WSL)
+
+### Linux
+
+If you face trouble when installing the GCC compiler on your operating system, you could try googling "*How to install GNU GCC compiler on -Your Linux Distro-*". Here's an article that covers [setting up the GCC compiler on Ubuntu](https://linuxize.com/post/how-to-install-gcc-compiler-on-ubuntu-18-04/).
+
+### Windows
+
+If you wish to use Windows, you need to download [*MSYS2*](https://www.msys2.org/). (Make sure to update your PATH variable after the installing *MSYS2*)
+
+Execute the folllowing in your *MSYS2* console:
+
+```sh
+pacman -Syu
+:: Run this commands only if the compiler fails
+:: pacman -S mingw-w64-x86_64-toolchain
+```
+
 ## Compiling and running the StarkScript compiler
 
 If you wish to compile and run the StarkScript compiler, navigate to the `/compiler` directory and do the following:
