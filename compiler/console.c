@@ -19,7 +19,7 @@
 #include <stdarg.h>
 
 // Get the console's strings
-#include "./strings/console.c"
+#include "./strings/console.h"
 
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...

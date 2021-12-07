@@ -6,7 +6,7 @@
 
 
 // Include the compiler flags
-#include "./flags.c"
+#include "./flags.h"
 
 // Pre-define the `stopProcess` function so all the included files can use it
 void stopProcess(int exitCode);
