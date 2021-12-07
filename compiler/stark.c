@@ -20,6 +20,9 @@ void stopProcess(int exitCode);
 // Include the command line arguments processing function
 #include "./args.c"
 
+// Include the input and output paths processing function
+#include "./io.c"
+
 // Define the main function
 int main(int argc, char *argv[]){
 
@@ -29,26 +32,24 @@ int main(int argc, char *argv[]){
     // Process the command line arguments
     processArgs(argc, argv);
 
-    if(cmplrInputFilePth != NULL){
+    // Process the input and output paths
+    if(processIO(&cmplrInputFilePth, &cmplrOutputFilePth)){
 
         // ...
 
-        // Free the memory used by the `cmplrInputFilePth` and `cmplrOutputFilePth` variable
-        free(cmplrInputFilePth);
-        free(cmplrOutputFilePth);
-        cmplrInputFilePth = NULL;
-        cmplrOutputFilePth = NULL;
+        // Free up the used memory by the output path variable
+        free(globalIO.output.fullPth);
 
-    }else{
+        // Free up the used memory by the input path variable
+        free(globalIO.input.fullPth);
 
-        consoleError("No input file path was passed!");
+        // Free up the used memory by the working directory variable
+        free(globalIO.wrkDir);
 
     }
 
     // Print a warning about the state of the compiler
     consoleWarn("No output...");
-
-    consoleError("Oops...");
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;
@@ -69,6 +70,21 @@ void stopProcess(int exitCode){
     if(cmplrOutputFilePth != NULL){
 
         free(cmplrOutputFilePth);
+
+    }
+    if(globalIO.wrkDir != NULL){
+
+        free(globalIO.wrkDir);
+
+    }
+    if(globalIO.input.fullPth != NULL){
+
+        free(globalIO.input.fullPth);
+
+    }
+    if(globalIO.output.fullPth != NULL){
+
+        free(globalIO.output.fullPth);
 
     }
 
