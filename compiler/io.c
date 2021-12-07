@@ -161,9 +161,6 @@ int processIO(char **inputPth, char **outputPth){
                     // Get the absolute path of the output directory
                     globalIO.output.fullPth = absPth(*outputPth);
 
-                    // Print the full output path/directory (Debug)
-                    consoleDebug("Output directory: %s", globalIO.output.fullPth);
-
                     // Free the memory used by the output path variable
                     free(*outputPth);
                     *outputPth = NULL;
@@ -182,16 +179,37 @@ int processIO(char **inputPth, char **outputPth){
 
             }else{
 
-                // Get the output directory from the input path
-                // Keep working here!!!!!!!
-                consoleError("Not finished coding this code path yet...");
+                // Get the output directory from the input path!
+
+                // Get the last occurence of the "/" character or the "\\" character
+                char *lastOccr;
+                #ifdef _WIN32
+
+                    lastOccr = strrchr(globalIO.input.fullPth, '\\');
+
+                #else
+
+                    lastOccr = strrchr(globalIO.input.fullPth, '/');
+
+                #endif
+                int position = lastOccr - globalIO.input.fullPth;
+
+                // Get the absolute path of the input path
+                globalIO.output.fullPth = calloc(position + 1, sizeof(char));
+
+                // Copy the directory of the input file (without the file name)
+                for(int i = 0; i < position; i++){
+                 
+                    globalIO.output.fullPth[i] = globalIO.input.fullPth[i];
+
+                }
+
+                // Add the string end character
+                globalIO.output.fullPth[position] = '\0';
 
             }
 
             // ...
-
-            // Keep working here!!!!!!!
-            consoleError("Not finished coding this yet...");
 
         }else{
 
@@ -199,6 +217,9 @@ int processIO(char **inputPth, char **outputPth){
             consoleError("The passed input path is invalid! (You must pass a valid file path)");
 
         }
+
+        // Print the full output path/directory (Debug)
+        consoleDebug("Output directory: %s", globalIO.output.fullPth);
 
         // Free the memory used by the input path variable
         free(*inputPth);
