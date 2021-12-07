@@ -38,24 +38,34 @@ int main(int argc, char *argv[]){
         // Note that all the variables that were passed to the `processIO` function are now cleared,
         // All these variables were used to generate the `globalIO` object!
 
-        // ...
+        // This is the content of the `globalIO` object:
+        // (struct GlobalIO) {
+        //     input: {
+        //         fullPth: <absolute input file path>
+        //     },
+        //     output: {
+        //         fullPth: <absolute output directory path>,
+        //         fileName: <output file path>
+        //     },
+        //     wrkDir: <working directory path>
+        // }
 
-        // Free up the memory used by the output file name variable
-        free(globalIO.output.fileName);
-
-        // Free up the used memory by the output path variable
-        free(globalIO.output.fullPth);
-
-        // Free up the used memory by the input path variable
-        free(globalIO.input.fullPth);
+        // Print a warning about the state of the compiler
+        consoleWarn("End of execution...");
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);
 
-    }
+        // Free up the used memory by the input path variable
+        free(globalIO.input.fullPth);
 
-    // Print a warning about the state of the compiler
-    consoleWarn("No output...");
+        // Free up the used memory by the output path variable
+        free(globalIO.output.fullPth);
+
+        // Free up the memory used by the output file name variable
+        free(globalIO.output.fileName);
+
+    }
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;
