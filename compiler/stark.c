@@ -36,6 +36,8 @@ int main(int argc, char *argv[]){
         // Free the memory used by the `cmplrInputFilePth` and `cmplrOutputFilePth` variable
         free(cmplrInputFilePth);
         free(cmplrOutputFilePth);
+        cmplrInputFilePth = NULL;
+        cmplrOutputFilePth = NULL;
 
     }else{
 
@@ -56,6 +58,8 @@ int main(int argc, char *argv[]){
 void stopProcess(int exitCode){
 
     // Free up any globally allocated variables
+    // Note that there is no need to change the value of any of these variables to NUll (as we only
+    // need to do that if we want to keep track of the allocation state of these variables)
     if(cmplrInputFilePth != NULL) {
 
         free(cmplrInputFilePth);
