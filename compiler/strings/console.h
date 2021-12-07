@@ -25,3 +25,6 @@
 
 // Define the prefix of error console messages
 #define STRING_CONSOLE_ERROR_MESSAGE "[\033[0;31mx\033[0m][\033[0;31mError\033[0m]: "
+
+// Define the GitHub issue suggestion string
+#define STRING_CONSOLE_GITHUB_REPORT "\033[0m\n\n            * Please, open an issue on our GitHub repository about this error! (visit https://github.com/EnderCommunity/StarkScript/issues/)\n"
