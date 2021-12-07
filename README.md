@@ -23,8 +23,9 @@ Execute the folllowing in your *MSYS2* console:
 
 ```sh
 pacman -Syu
-:: Run this commands only if the compiler fails
-:: pacman -S mingw-w64-x86_64-toolchain
+
+## Run this commands only if the compiler fails
+pacman -S mingw-w64-x86_64-toolchain
 ```
 
 ## Compiling and running the StarkScript compiler
