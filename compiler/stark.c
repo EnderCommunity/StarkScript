@@ -44,7 +44,8 @@ int main(int argc, char *argv[]){
     }
 
     // Print a warning about the state of the compiler
-    consoleWarn("This compiler is still not functional! Please, consider helping us!\n");
+    printf("\n");
+    consoleWarn("This compiler is still not functional! Please, consider helping us!\n\n");
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;
