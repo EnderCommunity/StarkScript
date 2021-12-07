@@ -21,6 +21,9 @@
 // It's used to access the max length of certain values (files names, paths, etc)
 #include <limits.h>
 
+// Get the input and output strings
+#include "./strings/io.h"
+
 // Define an interface that includes all the needed input info
 struct GlobalInput {
 
@@ -34,6 +37,9 @@ struct GlobalOutput {
 
     // The full path
     char *fullPth;
+
+    // The output file name
+    char *fileName;
 
 };
 
@@ -94,7 +100,7 @@ char* absPth(char *pth){
 // This function receives the variables as references to insure that the final value of the global
 // `cmplrInputFilePth` variable and `cmplrOutputFilePth` variable will change according to the
 // changes applied to the `inputPth` and `outputPth` variables
-int processIO(char **inputPth, char **outputPth){
+int processIO(char **inputPth, char **outputPth, char **outputName){
 
     // Note that you need to dereference the `inputPth` variable and the `outputPth` variable
 
@@ -209,8 +215,6 @@ int processIO(char **inputPth, char **outputPth){
 
             }
 
-            // ...
-
         }else{
 
             // This is not a valid path
@@ -220,6 +224,27 @@ int processIO(char **inputPth, char **outputPth){
 
         // Print the full output path/directory (Debug)
         consoleDebug("Output directory: %s", globalIO.output.fullPth);
+
+        // Check if the user passed an output file name
+        if(*outputName != NULL){
+
+            // Copy the `outputName` variable
+            globalIO.output.fileName = calloc(strlen(*outputName) + 1, sizeof(char));
+            strcpy(globalIO.output.fileName, *outputName);
+
+            // Free up the memory used by the `outputName` variable
+            free(*outputName);
+
+        }else{
+
+            // Set the output file name to the default one
+            globalIO.output.fileName = calloc(strlen(STRING_IO_OUTPUT_NAME_DEFAULT) + 1, sizeof(char));
+            strcpy(globalIO.output.fileName, STRING_IO_OUTPUT_NAME_DEFAULT);
+
+        }
+
+        // Print the output file name (Debug)
+        consoleDebug("Output file name: %s", globalIO.output.fileName);
 
         // Free the memory used by the input path variable
         free(*inputPth);

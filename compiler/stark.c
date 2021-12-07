@@ -33,9 +33,15 @@ int main(int argc, char *argv[]){
     processArgs(argc, argv);
 
     // Process the input and output paths
-    if(processIO(&cmplrInputFilePth, &cmplrOutputFilePth)){
+    if(processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName)){
+
+        // Note that all the variables that were passed to the `processIO` function are now cleared,
+        // All these variables were used to generate the `globalIO` object!
 
         // ...
+
+        // Free up the memory used by the output file name variable
+        free(globalIO.output.fileName);
 
         // Free up the used memory by the output path variable
         free(globalIO.output.fullPth);
@@ -72,6 +78,11 @@ void stopProcess(int exitCode){
         free(cmplrOutputFilePth);
 
     }
+    if(cmplrOutputFileName != NULL){
+
+        free(cmplrOutputFileName);
+
+    }
     if(globalIO.wrkDir != NULL){
 
         free(globalIO.wrkDir);
@@ -85,6 +96,11 @@ void stopProcess(int exitCode){
     if(globalIO.output.fullPth != NULL){
 
         free(globalIO.output.fullPth);
+
+    }
+    if(globalIO.output.fileName != NULL){
+
+        free(globalIO.output.fileName);
 
     }
 
