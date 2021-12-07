@@ -56,7 +56,7 @@ sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Star
 
 ## Contributing
 
-Everyone is allowed to contribute to this repository. Just make sure to document all your changes and not exceed the 100 characters per line restriction.
+Everyone is allowed to contribute to this repository. You can read the [contribution guide](./CONTRIBUTING.md)!
 
 ## License
 
