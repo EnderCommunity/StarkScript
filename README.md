@@ -8,7 +8,7 @@ StarkScript - or the *Stark programming language* - is a compiled C-based progra
 
 The StarkScript compiler is written in C, and the whole language is compiled down to C code. So, naturally, you must have a C compiler. We recommend the [GNU compiler](https://gcc.gnu.org/).
 
-It would be better if you use Linux to work on the compiler.
+> It would be better if you use Linux to work on the compiler.
 > If you are a Windows user, you could use Windows to work on the compiler, or you could also use the [Windows Subsystem for Linux](https://docs.microsoft.com/en-us/windows/wsl/install) (AKA WSL)
 
 ### Linux
