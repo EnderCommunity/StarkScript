@@ -19,7 +19,7 @@ void processArgs(int argc, char *argv[]){
     for(int i = 1; i < argc; i++){
 
         // Print the current index and the current argument (debug)
-        consoleDebug("[index: %d, value: \"%s\"]\n", i, argv[i]);
+        consoleDebug("[index: %d, value: \"%s\"]", i, argv[i]);
 
         // Check for any valid command line arguments
         // -i (Indicates that the next argument is going to be the path of the input file)
@@ -44,7 +44,7 @@ void processArgs(int argc, char *argv[]){
 
                     // Show an error in the console tellling the user that only one input path can
                     // be passed at a time
-                    consoleError("Only one input path can passed at a time!\n");
+                    consoleError("Only one input path can passed at a time!");
 
                 }
 
@@ -52,7 +52,7 @@ void processArgs(int argc, char *argv[]){
 
                 // Show an error in the console telling the user that the compiler expected another
                 // argument after this one
-                consoleError("Expected another argument after the \"%s\" argument!\n", argv[--i]);
+                consoleError("Expected another argument after the \"%s\" argument!", argv[--i]);
 
             }
 
@@ -74,7 +74,7 @@ void processArgs(int argc, char *argv[]){
 
                     // Show an error in the console tellling the user that only one output path can
                     // be passed at a time
-                    consoleError("Only one output path can passed at a time!\n");
+                    consoleError("Only one output path can passed at a time!");
 
                 }
 
@@ -82,7 +82,7 @@ void processArgs(int argc, char *argv[]){
 
                 // Show an error in the console telling the user that the compiler expected another
                 // argument after this one
-                consoleError("Expected another argument after the \"%s\" argument!\n", argv[--i]);
+                consoleError("Expected another argument after the \"%s\" argument!", argv[--i]);
 
             }
 

@@ -5,6 +5,9 @@
 **/
 
 
+// Define the name of the StarkScript language
+#define __STARK_NAME__ "StarkScript"
+
 // Define the current version of the StarkScript language
 #define __STARK_VERSION__ "0"
 

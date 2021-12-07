@@ -41,13 +41,14 @@ int main(int argc, char *argv[]){
 
     }else{
 
-        consoleError("No input file path was passed!\n");
+        consoleError("No input file path was passed!");
 
     }
 
     // Print a warning about the state of the compiler
-    printf("\n");
-    consoleWarn("This compiler is still not functional! Please, consider helping us!\n\n");
+    consoleWarn("No output...");
+
+    consoleError("Oops...");
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;

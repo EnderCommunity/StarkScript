@@ -23,12 +23,26 @@
 
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...
-int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix){
+int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix, const int grayTxt){
 
     // Create a new format string with the prefix included in it
-    char *prefixedFormat = calloc(strlen(__format) + strlen(prefix) + 1, sizeof(char));
-    strcpy(prefixedFormat, prefix);
-    strcat(prefixedFormat, __format);
+    char *prefixedFormat = calloc(strlen(__format) + strlen(prefix) +
+                                2 * strlen(CONSOLE_COLOR_RESET) + // Two colour resets are used to
+                                                        // ensure that no colouring mistakes will
+                                                        // ruin any of the console messages!
+                                1 + // New line
+                                ((grayTxt) ? strlen(CONSOLE_COLOR_GRAY) : 0) +
+                                1, sizeof(char));
+    sprintf(prefixedFormat, "%s%s%s%s%s\n",
+
+        // Reset the text colour
+        CONSOLE_COLOR_RESET,
+
+        // Get the prefix and the console message
+        prefix, ((grayTxt) ? CONSOLE_COLOR_GRAY : ""), __format,
+
+        // Reset the text colour again
+        CONSOLE_COLOR_RESET);
 
     // Print the console message
     int result = __builtin_vfprintf(stdout, prefixedFormat, __local_argv);
@@ -71,7 +85,7 @@ int consoleDebug(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_DEBUG_MESSAGE);
+        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_DEBUG_MESSAGE, 1);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -99,7 +113,7 @@ int consoleWarn(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_WARNING_MESSAGE);
+        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_WARNING_MESSAGE, 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -127,7 +141,7 @@ int consoleError(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_ERROR_MESSAGE);
+        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_ERROR_MESSAGE, 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
