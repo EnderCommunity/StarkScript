@@ -6,4 +6,4 @@
 
 
 // Define all the flags that are related to the console
-#include "./flags/console.c"
+#include "./flags/console.h"
