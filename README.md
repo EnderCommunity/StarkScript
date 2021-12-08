@@ -28,32 +28,6 @@ pacman -Syu
 pacman -S mingw-w64-x86_64-toolchain
 ```
 
-## Compiling and running the StarkScript compiler
-
-If you wish to compile and run the StarkScript compiler, navigate to the `/compiler` directory and do the following:
-
-### For Linux
-
-```sh
-gcc -g stark.c -o Stark.out ## Compile using GCC into an OUT file
-./Stark.out ## Run the compiler
-```
-
-### For Windows
-
-```sh
-gcc -g stark.c -o Stark.exe ## Compile using GCC into an EXE file
-./Stark ## Run the compiler
-```
-
-### Detecting memory leaks
-
-If you wish to check for any memory leaks, you can use `valgrind` on Linux:
-
-```sh
-sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Stark.out
-```
-
 ## Getting started
 
 First, you need to compile the compiler using the `gcc` command:
@@ -76,6 +50,14 @@ For starters, to compile a `example.stark` file, you can use this command:
 
 ```sh
 ./Stark --input /path/to/example.stark
+```
+
+### Detecting memory leaks
+
+If you wish to check for any memory leaks, you can use `valgrind` on Linux:
+
+```sh
+sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Stark.out
 ```
 
 ## Contributing
