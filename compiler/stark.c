@@ -5,6 +5,59 @@
 **/
 
 
+//
+// Even though it could prove unnecessary, here's the entire map of the compiler directory:
+//  _______________________________________________________________________________________________
+// |                                                                                               |
+// | [folder] Compiler                                                                             |
+// |_______________________________________________________________________________________________|
+// |                                                                                               |
+// | --> [folder] cli                                                                              |
+// |                                                                                               |
+// |     (?) This folder includes all the files that are related to the command line interface     |
+// |_______________________________________________________________________________________________|
+// |                                                                                               |
+// | --> [folder] flags                                                                            |
+// |                                                                                               |
+// |     (?) This folder includes all the files that are used to define the values of custom       |
+// |         flags.                                                                                |
+// |                                                                                               |
+// |     (!) You may only add `.h` files within this directory!                                    |
+// |_______________________________________________________________________________________________|
+// |                                                                                               |
+// | --> [folder] info                                                                             |
+// |                                                                                               |
+// |     (?) This folder includes all the files that are used to define constants that hold any    |
+// |         kind of unchanging information (like info about the user's OS)                        |
+// |                                                                                               |
+// |     (!) You may only add `.h` files within this directory!                                    |
+// |_______________________________________________________________________________________________|
+// |                                                                                               |
+// | --> [folder] initial                                                                          |
+// |                                                                                               |
+// |     (?) This folder includes all the files that manage the initial compiling process. You may |
+// |         the "initial.c" file within this folder for more info about this.                     |
+// |_______________________________________________________________________________________________|
+// |----|                                                                                          |
+// |----| --> [folder] lexer                                                                       |
+// |----|                                                                                          |
+// |----|     (?) This folder includes all the lexer files.                                        |
+// |____|__________________________________________________________________________________________|
+// |----|                                                                                          |
+// |----| --> [folder] preproc                                                                     |
+// |----|                                                                                          |
+// |----|     (?) This folder includes all the preprocessor files.                                 |
+// |____|__________________________________________________________________________________________|
+// |                                                                                               |
+// | --> [folder] strings                                                                          |
+// |                                                                                               |
+// |     (?) This folder includes all the files that are used to define any interchangeable string |
+// |         values.                                                                               |
+// |                                                                                               |
+// |     (!) You may only add `.h` files within this directory!                                    |
+// |_______________________________________________________________________________________________|
+//
+
 // Include the `time.h` library
 // In this project, it's used to keep track of how long the compiler takes to run
 #include <time.h>
@@ -29,6 +82,9 @@ void stopProcess(int exitCode);
 
 // Include the input and output paths processing function
 #include "./cli/io.c"
+
+// Include the `stopProcess` function
+#include "./process.c"
 
 // Include the initial compiling components
 #include "./initial/initial.c"
@@ -89,55 +145,5 @@ int main(int argc, char *argv[]){
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;
-
-}
-
-// Define a function that stops the process
-void stopProcess(int exitCode){
-
-    // Free up any globally allocated variables
-    // Note that there is no need to change the value of any of these variables to NUll (as we only
-    // need to do that if we want to keep track of the allocation state of these variables)
-    if(cmplrInputFilePth != NULL) {
-
-        free(cmplrInputFilePth);
-
-    }
-    if(cmplrOutputFilePth != NULL){
-
-        free(cmplrOutputFilePth);
-
-    }
-    if(cmplrOutputFileName != NULL){
-
-        free(cmplrOutputFileName);
-
-    }
-    if(globalIO.wrkDir != NULL){
-
-        free(globalIO.wrkDir);
-
-    }
-    if(globalIO.input.fullPth != NULL){
-
-        free(globalIO.input.fullPth);
-
-    }
-    if(globalIO.output.fullPth != NULL){
-
-        free(globalIO.output.fullPth);
-
-    }
-    if(globalIO.output.fileName != NULL){
-
-        free(globalIO.output.fileName);
-
-    }
-
-    // Print a failure message
-    printExtMsg(1);
-
-    // Use the built-in `exit` function to terminate the process
-    exit(exitCode);
 
 }
