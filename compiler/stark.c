@@ -30,6 +30,9 @@ void stopProcess(int exitCode);
 // Include the input and output paths processing function
 #include "./cli/io.c"
 
+// Include the initial compiling components
+#include "./initial/initial.c"
+
 // Define the main function
 int main(int argc, char *argv[]){
 
