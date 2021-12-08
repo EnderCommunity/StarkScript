@@ -5,6 +5,13 @@
 **/
 
 
+// Include the `time.h` library
+// In this project, it's used to keep track of how long the compiler takes to run
+#include <time.h>
+
+// Define the start time variable
+clock_t startTime;
+
 // Include the compiler flags
 #include "./flags.h"
 
@@ -26,14 +33,21 @@ void stopProcess(int exitCode);
 // Define the main function
 int main(int argc, char *argv[]){
 
+    // Keep track of the start time
+    startTime = clock();
+
     // Print the compiler start message
     printCmplrMsg();
 
+    // Define a variable that can be used to decide if the compiler should attempt to start
+    // compiling or not
+    int allowCompile = 1;
+
     // Process the command line arguments
-    processArgs(argc, argv);
+    processArgs(argc, argv, &allowCompile);
 
     // Process the input and output paths
-    if(processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName)){
+    if(allowCompile && processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName)){
 
         // Note that all the variables that were passed to the `processIO` function are now cleared,
         // All these variables were used to generate the `globalIO` object!
@@ -66,6 +80,9 @@ int main(int argc, char *argv[]){
         free(globalIO.output.fileName);
 
     }
+
+    // Print a success message
+    printExtMsg(0);
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;
@@ -113,6 +130,9 @@ void stopProcess(int exitCode){
         free(globalIO.output.fileName);
 
     }
+
+    // Print a failure message
+    printExtMsg(1);
 
     // Use the built-in `exit` function to terminate the process
     exit(exitCode);
