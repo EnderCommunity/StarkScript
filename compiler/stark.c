@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
         // }
 
         // Print a warning about the state of the compiler
-        consoleWarn("End of execution...");
+        consoleInfo("End of execution...");
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);
