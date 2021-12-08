@@ -83,9 +83,6 @@ void stopProcess(int exitCode);
 // Include the input and output paths processing function
 #include "./cli/io.c"
 
-// Include the `stopProcess` function
-#include "./process.c"
-
 // Include the initial compiling components
 #include "./initial/initial.c"
 
@@ -147,3 +144,6 @@ int main(int argc, char *argv[]){
     return EXIT_SUCCESS;
 
 }
+
+// Include the `stopProcess` function
+#include "./process.c"
