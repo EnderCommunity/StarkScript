@@ -19,7 +19,7 @@
 #include <stdarg.h>
 
 // Get the console's strings
-#include "./strings/console.h"
+#include "./../strings/console.h"
 
 // Keep track of the number of logs, warnings, and errors!
 int logCount = 0,
