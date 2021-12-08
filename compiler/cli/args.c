@@ -194,7 +194,6 @@ void processArgs(int argc, char *argv[], int *allowCompile){
             // Stop this loop
             stopArgsPrc(&argc, &i, allowCompile);
 
-
             // Call the help catalog function
             helpCatalog();
 
