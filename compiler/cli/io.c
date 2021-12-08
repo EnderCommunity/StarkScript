@@ -26,7 +26,7 @@
 #include <limits.h>
 
 // Get the input and output strings
-#include "./strings/io.h"
+#include "./../strings/io.h"
 
 // Define an interface that includes all the needed input info
 struct GlobalInput {

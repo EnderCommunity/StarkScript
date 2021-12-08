@@ -6,9 +6,9 @@
 
 
 // Include the files that contain info that is related to the start message
-#include "./info/compiler.h"
-#include "./info/system.h"
-#include "./info/language.h"
+#include "./../info/compiler.h"
+#include "./../info/system.h"
+#include "./../info/language.h"
 
 // Define the function that prints the compiler start message
 void printCmplrMsg(){

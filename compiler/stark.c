@@ -19,16 +19,16 @@ clock_t startTime;
 void stopProcess(int exitCode);
 
 // Include all the console-related functions
-#include "./console.c"
+#include "./cli/console.c"
 
 // Include the start message function
-#include "./message.c"
+#include "./cli/message.c"
 
 // Include the command line arguments processing function
-#include "./args.c"
+#include "./cli/args.c"
 
 // Include the input and output paths processing function
-#include "./io.c"
+#include "./cli/io.c"
 
 // Define the main function
 int main(int argc, char *argv[]){
