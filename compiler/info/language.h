@@ -19,4 +19,8 @@
 #define __STARK_RELEASE_STATE__ "Alpha"
 
 // Define the URL of StarkScript's website
+// This URL is currently the same as the GitHub repository
 #define __STARK_WEBSITE_URL__ "https://github.com/EnderCommunity/StarkScript/"
+
+// Define the URL of StarkScript's GitHub repository
+#define __STARK_GITHUB_URL__ "https://github.com/EnderCommunity/StarkScript/"
