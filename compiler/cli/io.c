@@ -163,6 +163,25 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                 // Print the full input path (Debug)
                 consoleDebug("Input path: %s", globalIO.input.fullPth);
 
+                // Check the file extension
+                // The file extension doesn't really affect the compiler, it's just better to always
+                // use the same extension for the same type of files.
+                {
+
+                    // Get the file extension
+                    const char *dot = strrchr(globalIO.input.fullPth, '.');
+
+                    // Check if the file doesn't have the "stark" extension or any extension at all
+                    if(!dot || dot == globalIO.input.fullPth ||
+                        strcmp(dot + 1, __STARK_EXTENSION__) != 0){
+
+                        consoleWarn("The input file doesn't have the \"%s\" extension in its name!",
+                        __STARK_EXTENSION__);
+
+                    }
+
+                }
+
                 // Check if the output path variable has a value
                 if(*outputPth != NULL){
 
