@@ -24,8 +24,8 @@ void helpCatalog(){
     %s--gcc%s                  Runs the \"gcc -v\" command\n\
     %s-i%s <path>              Same as --input\n\
     %s-o%s <directory>         Same as --output\n\
-    %s-n%s <string>            Same as --name\n\
-",
+    %s-n%s <string>            Same as --name\n\n\
+For bug reporting, please visit: %sissues/\n",
 
     // The "Usage" title
     CONSOLE_COLOR_CYAN, CONSOLE_COLOR_RESET,
@@ -41,7 +41,9 @@ void helpCatalog(){
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
-    CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET
-    );
+    CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
+
+    // The URL of StarkScript's GtiHub repository
+    __STARK_GITHUB_URL__);
 
 }
