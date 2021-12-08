@@ -20,7 +20,7 @@
 //   |   <content>                                          |
 //   |______________________________________________________|
 //
-// Will generate this "mega input file":
+// Will be like this when converted to a "mega input file":
 //    ______________________________________________________
 //   |                                                      |
 //   |   <content>                                          |
