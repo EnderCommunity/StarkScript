@@ -115,7 +115,7 @@ int main(int argc, char *argv[]){
         //     },
         //     output: {
         //         fullPth: <absolute output directory path>,
-        //         fileName: <output file path>
+        //         fileName: <output file name>
         //     },
         //     wrkDir: <working directory path>
         // }
