@@ -63,7 +63,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
     for(int i = 1; i < argc; i++){
 
         // Print the current index and the current argument (debug)
-        consoleDebug("[index: %d, value: \"%s\"]", i, argv[i]);
+        // consoleDebug("[index: %d, value: \"%s\"]", i, argv[i]);
 
         // There are three types of commands:
         // normal            normal flags do nothing other than their job
@@ -81,9 +81,9 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         //                  (Note that this flag will take effect only after it's detection, so you may see
         //                  some gray text!)
         // --gcc (p)        Runs the "gcc -v" command
-        // -i (r)           Same as -input
-        // -o (r)           Same as -output
-        // -n (r)           Same as -name
+        // -i (r)           Same as --input
+        // -o (r)           Same as --output
+        // -n (r)           Same as --name
 
         // Check if the user is passing the input file path
         if(strcmp(argv[i], "-i") == 0 || strcmp(argv[i], "--input") == 0){
