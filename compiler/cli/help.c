@@ -21,7 +21,7 @@ void helpCatalog(){
                                (Defaults to \"EXECUTABLE\")\n\
     %s--no-gray%s              Prevent debug console messages from being colored in gray\n\
                                (Note that this flag will take effect only after it's detection, so you may see some gray text!)\n\
-    %s--gcc%s (p)              Runs the \"gcc -v\" command\n\
+    %s--gcc%s                  Runs the \"gcc -v\" command\n\
     %s-i%s <path>              Same as --input\n\
     %s-o%s <directory>         Same as --output\n\
     %s-n%s <string>            Same as --name\n\
