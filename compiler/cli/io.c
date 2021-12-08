@@ -168,6 +168,9 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                 // use the same extension for the same type of files.
                 {
 
+                    // Here's the source of this piece of code:
+                    // https://stackoverflow.com/questions/5309471/getting-file-extension-in-c
+
                     // Get the file extension
                     const char *dot = strrchr(globalIO.input.fullPth, '.');
 
