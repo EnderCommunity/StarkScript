@@ -54,6 +54,30 @@ If you wish to check for any memory leaks, you can use `valgrind` on Linux:
 sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Stark.out
 ```
 
+## Getting started
+
+First, you need to compile the compiler using the `gcc` command:
+
+```sh
+## Navigate to the compiler folder
+cd compiler/
+
+## Compile the `stark.c` file
+## Replace the {ext} part with the appropriate executable extention for your OS
+## For windows, it's "exe". And for Linux, it's `out`.
+gcc -g stark.c -o Stark.{ext}
+```
+
+> If you do not wish to compile the compiler, you can use the provided binaries within the compiler folder!
+
+You can use the `--help` flag to get help with the general use of all the things you can do with the compiler.
+
+For starters, to compile a `example.stark` file, you can use this command:
+
+```sh
+./Stark --input /path/to/example.stark
+```
+
 ## Contributing
 
 Everyone is allowed to contribute to this repository. You can read the [contribution guide](./CONTRIBUTING.md)!
