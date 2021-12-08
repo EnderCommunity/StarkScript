@@ -14,7 +14,7 @@
 void printCmplrMsg(){
 
     // Print any important compiler info
-    consoleInfo(
+    consoleLog(
 
     // You must not add any whitespace at the start of this line...
     // If you do, additional lines will appear on small screens!
@@ -57,5 +57,41 @@ void printCmplrMsg(){
 
     // Reset the text colour
     CONSOLE_COLOR_RESET);
+
+}
+
+// Define a function that prints the exit message
+void printExtMsg(int didFail){
+
+    // Calculate the time it took the compiler to get to this point
+    clock_t endTime = clock();
+    double timeSpent = (double)(endTime - startTime) / CLOCKS_PER_SEC;
+
+    // Print into the console
+    consoleLog("\n%s%s%s in %.4fs\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n",
+
+    // Colour the status word with its appropriate colour
+    (didFail) ? CONSOLE_COLOR_RED : CONSOLE_COLOR_GREEN,
+
+    // Pass the status of the compiler to the print function
+    (didFail) ? "FAILED" : "FINISHED",
+
+    // Reset the text colour
+    CONSOLE_COLOR_RESET,
+
+    // Pass the `timeSpent` variable to the print function
+    timeSpent,
+
+    // Colour the logs count with green
+    CONSOLE_COLOR_GREEN, logCount, CONSOLE_COLOR_RESET,
+
+    // Colour the warnings count with yellow
+    CONSOLE_COLOR_YELLOW, warnCount, CONSOLE_COLOR_RESET,
+
+    // Colour the errors count with red
+    CONSOLE_COLOR_RED, errorCount, CONSOLE_COLOR_RESET,
+    
+    // Colour the debug count with cyan
+    CONSOLE_COLOR_CYAN, debugCount, CONSOLE_COLOR_RESET);
 
 }

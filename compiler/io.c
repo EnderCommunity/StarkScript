@@ -9,6 +9,10 @@
 // It's used to access functions that can help in dealing with paths and files!
 #include <unistd.h>
 
+// Include the `stat.h` library
+// It's used to get stats of files and directories
+#include <sys/stat.h>
+
 // Include the `dirent.h` library
 // It's used to access functions that can help in dealing with directories!
 #include <dirent.h>
@@ -113,105 +117,121 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
     if(*inputPth != NULL){
 
         // Check if the passed value is a valid path
-        if(access(*inputPth, F_OK) == 0 ){
+        if(access(*inputPth, F_OK) == 0){
 
-            // Contain this block of code so the `buffer` variable would get deleted after getting
-            // copied to the global working directory variable (globalIO.wrkDir)
-            {
+            // Check if this is a path for a file
+            struct stat path_stat;
+            stat(*inputPth, &path_stat);
 
-                // Create a temporary buffer to receive the current working directory
-                // Not using a char array buffer could result in the `getcwd` not working properly
-                char buffer[PATH_MAX];
+            if(S_ISREG(path_stat.st_mode)) {
 
-                // Get the current working directory
-                getcwd(buffer, sizeof(buffer));
+                //
+                //
+                //
+                // Contain this block of code so the `buffer` variable would get deleted after getting
+                // copied to the global working directory variable (globalIO.wrkDir)
+                {
 
-                if(strlen(buffer) == 0){
+                    // Create a temporary buffer to receive the current working directory
+                    // Not using a char array buffer could result in the `getcwd` not working properly
+                    char buffer[PATH_MAX];
 
-                    // Inform the user about this error
-                    consoleError("Couldn't get the current working directory!");
+                    // Get the current working directory
+                    getcwd(buffer, sizeof(buffer));
 
-                }else{
+                    if(strlen(buffer) == 0){
 
-                    // Copy the buffer to the global working directory variable
-                    globalIO.wrkDir = calloc(strlen(buffer) + 1, sizeof(char));
-                    strcpy(globalIO.wrkDir, buffer);
+                        // Inform the user about this error
+                        consoleError("Couldn't get the current working directory!");
 
-                    // Print the current working directory (Debug)
-                    consoleDebug("Current working directory: %s", globalIO.wrkDir);
+                    }else{
+
+                        // Copy the buffer to the global working directory variable
+                        globalIO.wrkDir = calloc(strlen(buffer) + 1, sizeof(char));
+                        strcpy(globalIO.wrkDir, buffer);
+
+                        // Print the current working directory (Debug)
+                        consoleDebug("Current working directory: %s", globalIO.wrkDir);
+
+                    }
 
                 }
 
-            }
+                // Get the absolute path of the input path
+                globalIO.input.fullPth = absPth(*inputPth);
 
-            // Get the absolute path of the input path
-            globalIO.input.fullPth = absPth(*inputPth);
+                // Print the full input path (Debug)
+                consoleDebug("Input path: %s", globalIO.input.fullPth);
 
-            // Print the full input path (Debug)
-            consoleDebug("Input path: %s", globalIO.input.fullPth);
+                // Check if the output path variable has a value
+                if(*outputPth != NULL){
 
-            // Check if the output path variable has a value
-            if(*outputPth != NULL){
+                    // Open a directory stream
+                    DIR* dir = opendir(*outputPth);
 
-                // Open a directory stream
-                DIR* dir = opendir(*outputPth);
+                    // Check if the passed value is a valid directory
+                    if (dir) {
 
-                // Check if the passed value is a valid directory
-                if (dir) {
+                        // This is a valid directory
 
-                    // This is a valid directory
+                        // Close the directory stream
+                        closedir(dir);
 
-                    // Close the directory stream
-                    closedir(dir);
+                        // Get the absolute path of the output directory
+                        globalIO.output.fullPth = absPth(*outputPth);
 
-                    // Get the absolute path of the output directory
-                    globalIO.output.fullPth = absPth(*outputPth);
+                        // Free the memory used by the output path variable
+                        free(*outputPth);
+                        *outputPth = NULL;
 
-                    // Free the memory used by the output path variable
-                    free(*outputPth);
-                    *outputPth = NULL;
+                    } else if (ENOENT == errno) {
 
-                } else if (ENOENT == errno) {
+                        // The passed output directory doesn't exist
+                        consoleError("The passed output path is invalid! (You must pass a valid directory path)");
 
-                    // The passed output directory doesn't exist
-                    consoleError("The passed output path is invalid! (You must pass a valid directory path)");
+                    } else {
 
-                } else {
+                        // The `opendir` function failed for some other reason.
+                        consoleError("Couldn't check the output directory!");
 
-                    // The `opendir` function failed for some other reason.
-                    consoleError("Couldn't check the output directory!");
+                    }
+
+                }else{
+
+                    // Get the output directory from the input path!
+
+                    // Get the last occurence of the "/" character or the "\\" character
+                    char *lastOccr;
+                    #ifdef _WIN32
+
+                        lastOccr = strrchr(globalIO.input.fullPth, '\\');
+
+                    #else
+
+                        lastOccr = strrchr(globalIO.input.fullPth, '/');
+
+                    #endif
+                    int position = lastOccr - globalIO.input.fullPth;
+
+                    // Get the absolute path of the input path
+                    globalIO.output.fullPth = calloc(position + 1, sizeof(char));
+
+                    // Copy the directory of the input file (without the file name)
+                    for(int i = 0; i < position; i++){
+                 
+                        globalIO.output.fullPth[i] = globalIO.input.fullPth[i];
+
+                    }
+
+                    // Add the string end character
+                    globalIO.output.fullPth[position] = '\0';
 
                 }
 
             }else{
 
-                // Get the output directory from the input path!
-
-                // Get the last occurence of the "/" character or the "\\" character
-                char *lastOccr;
-                #ifdef _WIN32
-
-                    lastOccr = strrchr(globalIO.input.fullPth, '\\');
-
-                #else
-
-                    lastOccr = strrchr(globalIO.input.fullPth, '/');
-
-                #endif
-                int position = lastOccr - globalIO.input.fullPth;
-
-                // Get the absolute path of the input path
-                globalIO.output.fullPth = calloc(position + 1, sizeof(char));
-
-                // Copy the directory of the input file (without the file name)
-                for(int i = 0; i < position; i++){
-                 
-                    globalIO.output.fullPth[i] = globalIO.input.fullPth[i];
-
-                }
-
-                // Add the string end character
-                globalIO.output.fullPth[position] = '\0';
+                // This is not a valid path
+                consoleError("You can't pass a directory path as an input file path! (You must pass a valid file path)");
 
             }
 

@@ -10,6 +10,11 @@
 // This flag could be set to 0 (off) or 1 (on)
 #define FLAG_CONSOLE_DEBUG_MESSAGES 1
 
+// Define a flag that controls informative console messages
+// This flag will allow informative compiler messages to be outputed into the console
+// This flag could be set to 0 (off) or 1 (on)
+#define FLAG_CONSOLE_INFO_MESSAGES 1
+
 // Define a flag that controls warning console messages
 // This flag will allow warning compiler messages to be outputed into the console
 // This flag could be set to 0 (off) or 1 (on)

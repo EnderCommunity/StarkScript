@@ -18,13 +18,16 @@
 #define CONSOLE_COLOR_GRAY "\e[1;90m"
 
 // Define the prefix of debug console messages
-#define STRING_CONSOLE_DEBUG_MESSAGE "[\033[0;36m*\033[0m][\033[0;36mDebug\033[0m]: "
+#define STRING_CONSOLE_DEBUG_MESSAGE "[\033[0;36m*\033[0m][\033[0;36mDebug\033[0m] -> "
+
+// Define the prefix of informative console messages
+#define STRING_CONSOLE_INFO_MESSAGE "[\033[0;32m?\033[0m][\033[0;32mInfo\033[0m] -> "
 
 // Define the prefix of warning console messages
-#define STRING_CONSOLE_WARNING_MESSAGE "[\033[0;33m!\033[0m][\033[0;33mWarn\033[0m]: "
+#define STRING_CONSOLE_WARNING_MESSAGE "[\033[0;33m!\033[0m][\033[0;33mWarn\033[0m] -> "
 
 // Define the prefix of error console messages
-#define STRING_CONSOLE_ERROR_MESSAGE "[\033[0;31mx\033[0m][\033[0;31mError\033[0m]: "
+#define STRING_CONSOLE_ERROR_MESSAGE "[\033[0;31mx\033[0m][\033[0;31mError\033[0m] -> "
 
 // Define the GitHub issue suggestion string
 #define STRING_CONSOLE_GITHUB_REPORT "\033[0m\n\n            * Please, open an issue on our GitHub repository about this error! (visit https://github.com/EnderCommunity/StarkScript/issues/)\n"

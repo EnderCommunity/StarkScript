@@ -21,9 +21,24 @@
 // Get the console's strings
 #include "./strings/console.h"
 
+// Keep track of the number of logs, warnings, and errors!
+int logCount = 0,
+    warnCount = 0,
+    errorCount = 0,
+    debugCount = 0;
+
+// Define a variable to control the colour gray
+int consoleNoGray = 0;
+
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...
-int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix, const int grayTxt){
+int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix, int grayTxt){
+
+    if(consoleNoGray){
+
+        grayTxt = 0;
+
+    }
 
     // Create a new format string with the prefix included in it
     char *prefixedFormat = calloc(strlen(__format) + strlen(prefix) +
@@ -56,7 +71,7 @@ int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, cons
 }
 
 // Define a function that will print info into the console (basicly the `printf` function)
-int consoleInfo(const char *format, ...){
+int consoleLog(const char *format, ...){
 
     // Create a `__builtin_va_list` from the ellipsis arguments
     __builtin_va_list __local_argv;
@@ -71,6 +86,37 @@ int consoleInfo(const char *format, ...){
 
     // Return the int value that the `printf` function would've returned
     return result;
+
+}
+
+// Define a function that will print informative messages into the console
+int consoleInfo(const char *format, ...){
+
+    // Check if informative messages are enabled
+    if(FLAG_CONSOLE_INFO_MESSAGES){
+
+        // Create a `__builtin_va_list` list
+        __builtin_va_list __local_argv;
+        __builtin_va_start(__local_argv, format);
+
+        // Print a prefixed console message
+        int result = ____printf_prefix(format, __local_argv, STRING_CONSOLE_INFO_MESSAGE, 0);
+
+        // Close the opened `__builtin_va_list` list
+        __builtin_va_end(__local_argv);
+
+        // Record this log
+        logCount++;
+
+        // Return the int value that the `printf` function would've returned
+        return result;
+
+    }else{
+
+        // Don't show the informative message
+        return 0;
+
+    }
 
 }
 
@@ -90,6 +136,9 @@ int consoleDebug(const char *format, ...){
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
 
+        // Record this debug log
+        debugCount++;
+
         // Return the int value that the `printf` function would've returned
         return result;
 
@@ -105,7 +154,7 @@ int consoleDebug(const char *format, ...){
 // Define a function that will print warnings into the console
 int consoleWarn(const char *format, ...){
 
-    // Check if debug mode is enabled
+    // Check if warning messages are enabled
     if(FLAG_CONSOLE_WARNING_MESSAGES){
 
         // Create a `__builtin_va_list` list
@@ -117,6 +166,9 @@ int consoleWarn(const char *format, ...){
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
+
+        // Record this warning
+        warnCount++;
 
         // Return the int value that the `printf` function would've returned
         return result;
@@ -133,7 +185,7 @@ int consoleWarn(const char *format, ...){
 // Define a function that will print warnings into the console
 int consoleError(const char *format, ...){
 
-    // Check if debug mode is enabled
+    // Check if error messages are enabled
     if(FLAG_CONSOLE_ERROR_MESSAGES){
 
         // Create a `__builtin_va_list` list
@@ -145,6 +197,9 @@ int consoleError(const char *format, ...){
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
+
+        // Record this error
+        errorCount++;
 
         // Check if the error message is allowed to terminate this process
         if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT) {

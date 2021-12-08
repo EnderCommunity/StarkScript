@@ -73,9 +73,11 @@ function somethingElse(){
 
 ### Using the `consoleError`, `consoleDebug`, `consoleWarn`, and `consoleInfo` functions
 
-You may never start a console message with a new line character, or any whitespace. (You may break this rule when using the `consoleInfo` function)
+You may never start a console message with a new line character, or any whitespace.
 
 And, when you use the `consoleError` function, make sure to account for any memory leaks that may occur on sudden termination! You may modify the `stopProcess` function to free up global variables.
+
+> You may break all these rules when using the `consoleLog` function. But, you must not use the `consoleLog` function for anything other than displaying results.
 
 If you wish to collect more data about an error path, you may attach the constant string `STRING_CONSOLE_GITHUB_REPORT` to the end of your console error message to inform the user about this. (There is no need to modify your original console message to fit this message, just add `%s` to the end of your format string and add the message constant to the rest of the console function arguments)
 
