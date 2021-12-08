@@ -3,6 +3,8 @@
         "type_traits": "c",
         "*.c": "c",
         "*.h": "c",
-        "*.stark": "cpp"
+        "*.stark": "cpp",
+        "cstdlib": "c",
+        "typeinfo": "c"
     }
 }
