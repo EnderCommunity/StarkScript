@@ -10,6 +10,6 @@
 // Define a function that triggers the lexer
 void lexer(){
 
-    //
+    // ...
 
 }

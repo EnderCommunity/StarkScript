@@ -52,8 +52,10 @@
 #include "./files.c"
 
 // Define a function that triggers the preprocessor
-void preproc(FILE *inputFile){
+void preproc(FILE *inputFile, char *inputDir){
 
-    //
+    // You are not allowed to modify the inputDir variable.
+
+    // ...
 
 }

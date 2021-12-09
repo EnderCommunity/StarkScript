@@ -31,7 +31,7 @@ void initialComp(struct GlobalIO globalIO){
     }
 
     // Trigger the preprocessor
-    preproc(inputFile);
+    preproc(inputFile, globalIO.input.dirPth);
     
     // Trigger the lexer
     lexer();
