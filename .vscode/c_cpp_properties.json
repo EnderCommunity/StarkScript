@@ -6,9 +6,9 @@
         ],
         "browse": {
             "path": [
-                "${workspaceFolder}"
+                "${workspaceFolder}/compiler"
             ],
-            "limitSymbolsToIncludedHeaders": false,
+            "limitSymbolsToIncludedHeaders": true,
             "databaseFilename": ""
         },
         "defines": [
