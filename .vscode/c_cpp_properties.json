@@ -6,7 +6,7 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/compiler/**"
             ],
             "browse": {
                 "path": [
