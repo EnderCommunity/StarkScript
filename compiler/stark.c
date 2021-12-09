@@ -6,7 +6,7 @@
 
 
 //
-// Even though it could prove unnecessary, here's the entire map of the compiler directory:
+// Even though it may prove unnecessary, here's the entire map of the compiler directory:
 //  _______________________________________________________________________________________________
 // |                                                                                               |
 // | [folder] Compiler                                                                             |
@@ -36,7 +36,7 @@
 // | --> [folder] initial                                                                          |
 // |                                                                                               |
 // |     (?) This folder includes all the files that manage the initial compiling process. You may |
-// |         the "initial.c" file within this folder for more info about this.                     |
+// |         read the "initial.c" file within this folder for more info about this.                |
 // |_______________________________________________________________________________________________|
 // |----|                                                                                          |
 // |----| --> [folder] lexer                                                                       |
@@ -111,23 +111,41 @@ int main(int argc, char *argv[]){
         // This is the content of the `globalIO` object:
         // (struct GlobalIO) {
         //     input: {
-        //         fullPth: <absolute input file path>
+        //         fullPth: <absolute input file path>,
+        //         dirPth: <absolute input file (folder) directory path>
         //     },
         //     output: {
         //         fullPth: <absolute output directory path>,
         //         fileName: <output file name>
         //     },
-        //     wrkDir: <working directory path>
+        //     wrkDir: <working directory path>,
+        //     tempDir: <system's temporary directory>
         // }
+
+        // Note that you are not allowed to change any of the `globalIO` object's values until the
+        // end of the compiling process.
+
+        // Now that we have all the information we need about the input and output paths, we need to
+        // start the initial part of the compiling process
+        initialComp(globalIO);
 
         // Print a warning about the state of the compiler
         consoleInfo("End of execution...");
 
+        // Now that we're done with the compiling process, we don't need any of the remaining input
+        // and output data!
+
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);
 
+        // Free up the used memory by the temporary directory variable
+        free(globalIO.tempDir);
+
         // Free up the used memory by the input path variable
         free(globalIO.input.fullPth);
+
+        // Free up the used memory by the input directory path variable
+        free(globalIO.input.dirPth);
 
         // Free up the used memory by the output path variable
         free(globalIO.output.fullPth);

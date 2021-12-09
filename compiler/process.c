@@ -34,9 +34,19 @@ void stopProcess(int exitCode){
         free(globalIO.wrkDir);
 
     }
+    if(globalIO.tempDir != NULL){
+
+        free(globalIO.tempDir);
+
+    }
     if(globalIO.input.fullPth != NULL){
 
         free(globalIO.input.fullPth);
+
+    }
+    if(globalIO.input.dirPth != NULL){
+
+        free(globalIO.input.dirPth);
 
     }
     if(globalIO.output.fullPth != NULL){

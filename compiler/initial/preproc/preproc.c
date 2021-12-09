@@ -42,5 +42,20 @@
 // And the closing guiding line follows this format:
 // "#endfile"
 //
-// Note that Import narratives can be nested. Also, only one import narrative is allowed per line,
-// and no code is allowed to be placed in the same line with an import narrative.
+// Only one import narrative is allowed per line, and no code is allowed to be placed in the same
+// line with an import narrative.
+//
+// Note that Import narratives should be nest-able. (An import narrative is allowed to include
+// other import narratives inside of it)
+
+// Import the `opnImportFile` function and its related functions
+#include "./files.c"
+
+// Define a function that triggers the preprocessor
+void preproc(FILE *inputFile, char *inputDir){
+
+    // You are not allowed to modify the inputDir variable.
+
+    // ...
+
+}
