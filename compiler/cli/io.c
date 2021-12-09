@@ -28,6 +28,9 @@
 // Get the input and output strings
 #include "./../strings/io.h"
 
+// Get the `getTempDir` function
+#include "./temp.c"
+
 // Define an interface that includes all the needed input info
 struct GlobalInput {
 
@@ -55,6 +58,9 @@ struct GlobalIO {
 
     // The current working directory
     char *wrkDir;
+
+    // The system's temporary directory
+    char *tempDir;
 
     // The input and output interface
     struct GlobalOutput output;
@@ -113,6 +119,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
     // Update the `globalIO` object
     globalIO.wrkDir = NULL;
+    globalIO.tempDir = NULL;
     globalIO.input.fullPth = NULL;
     globalIO.input.dirPth = NULL;
     globalIO.output.fullPth = NULL;
@@ -139,7 +146,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
                     // Create a temporary buffer to receive the current working directory
                     // Not using a char array buffer could result in the `getcwd` not working properly
-                    char buffer[PATH_MAX];
+                    char buffer[PATH_MAX + 1];
 
                     // Get the current working directory
                     getcwd(buffer, sizeof(buffer));
@@ -314,5 +321,11 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
         consoleError("No input file path was passed!");
 
     }
+
+    // Get the system's temporary directory
+    globalIO.tempDir = getTempDir();
+
+    // Print the temporary directory path (Debug)
+    consoleDebug("Temporary directory: %s", globalIO.tempDir);
 
 }

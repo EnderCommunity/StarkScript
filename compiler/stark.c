@@ -118,7 +118,8 @@ int main(int argc, char *argv[]){
         //         fullPth: <absolute output directory path>,
         //         fileName: <output file name>
         //     },
-        //     wrkDir: <working directory path>
+        //     wrkDir: <working directory path>,
+        //     tempDir: <system's temporary directory>
         // }
 
         // Note that you are not allowed to change any of the `globalIO` object's values until the
@@ -136,6 +137,9 @@ int main(int argc, char *argv[]){
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);
+
+        // Free up the used memory by the temporary directory variable
+        free(globalIO.tempDir);
 
         // Free up the used memory by the input path variable
         free(globalIO.input.fullPth);
