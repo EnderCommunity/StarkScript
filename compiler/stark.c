@@ -112,7 +112,7 @@ int main(int argc, char *argv[]){
         // (struct GlobalIO) {
         //     input: {
         //         fullPth: <absolute input file path>,
-        //         dirPth: <absolute input file folder directory path>
+        //         dirPth: <absolute input file (folder) directory path>
         //     },
         //     output: {
         //         fullPth: <absolute output directory path>,
