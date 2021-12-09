@@ -34,6 +34,9 @@ struct GlobalInput {
     // The full path
     char *fullPth;
 
+    // The file directory
+    char *dirPth;
+
 };
 
 // Define an interface that includes all the needed output info
@@ -111,7 +114,9 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
     // Update the `globalIO` object
     globalIO.wrkDir = NULL;
     globalIO.input.fullPth = NULL;
+    globalIO.input.dirPth = NULL;
     globalIO.output.fullPth = NULL;
+    globalIO.output.fileName = NULL;
 
     // Check if the user did pass an input path
     if(*inputPth != NULL){
@@ -162,6 +167,40 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
                 // Print the full input path (Debug)
                 consoleDebug("Input path: %s", globalIO.input.fullPth);
+
+                // Get the absolute path of the input file's directory
+                {
+
+                    // Get the last occurence of the "/" character or the "\\" character
+                    char *lastOccr;
+                    #ifdef _WIN32
+
+                        lastOccr = strrchr(globalIO.input.fullPth, '\\');
+
+                    #else
+
+                        lastOccr = strrchr(globalIO.input.fullPth, '/');
+
+                    #endif
+                    int position = lastOccr - globalIO.input.fullPth;
+
+                    // Get the absolute path of the input file directory
+                    globalIO.input.dirPth = calloc(position + 1, sizeof(char));
+
+                    // Copy the directory of the input file (without the file name)
+                    for(int i = 0; i < position; i++){
+                 
+                        globalIO.input.dirPth[i] = globalIO.input.fullPth[i];
+
+                    }
+
+                    // Add the string end character
+                    globalIO.input.dirPth[position] = '\0';
+
+                }
+
+                // Print the full input directory (Debug)
+                consoleDebug("Input directory: %s", globalIO.input.dirPth);
 
                 // Check the file extension
                 // The file extension doesn't really affect the compiler, it's just better to always
@@ -220,33 +259,11 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
                 }else{
 
-                    // Get the output directory from the input path!
+                    // Set the output directory to be the same as the input file's directory
 
-                    // Get the last occurence of the "/" character or the "\\" character
-                    char *lastOccr;
-                    #ifdef _WIN32
-
-                        lastOccr = strrchr(globalIO.input.fullPth, '\\');
-
-                    #else
-
-                        lastOccr = strrchr(globalIO.input.fullPth, '/');
-
-                    #endif
-                    int position = lastOccr - globalIO.input.fullPth;
-
-                    // Get the absolute path of the input path
-                    globalIO.output.fullPth = calloc(position + 1, sizeof(char));
-
-                    // Copy the directory of the input file (without the file name)
-                    for(int i = 0; i < position; i++){
-                 
-                        globalIO.output.fullPth[i] = globalIO.input.fullPth[i];
-
-                    }
-
-                    // Add the string end character
-                    globalIO.output.fullPth[position] = '\0';
+                    // Copy the input `dirPth` variable
+                    globalIO.output.fullPth = calloc(strlen(globalIO.input.dirPth) + 1, sizeof(char));
+                    strcpy(globalIO.output.fullPth, globalIO.input.dirPth);
 
                 }
 
