@@ -1,0 +1,15 @@
+"/*"
+
+    This is a test file!
+    The goal of this file is */ 0 /*to check if the comments filtering is working correctly
+
+*/
+
+int a = 0; // This is a linear comment
+
+"//" This is another linear comment
+
+/* Yay */ // Hello!
+a;/* Yay */a; a;// Hello!
+
+/* comment */int /* comment */ b /* comment */ = /* comment */ a; /* comment */
