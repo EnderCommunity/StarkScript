@@ -20,7 +20,7 @@
 void initialComp(struct GlobalIO globalIO){
 
     // Trigger the preprocessor
-    preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth);
+    preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth, globalIO.output.fileName);
     
     // Trigger the lexer
     lexer();
