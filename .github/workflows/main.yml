@@ -1,0 +1,101 @@
+name: Builds (Windows, Linux, and macOS)
+on: [push, pull_request]
+jobs:
+  build-on-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      # [START] Set up the environment for Linux
+      - name: Updating the packages list
+        run: sudo apt update
+      - name: Installing the build-essential package
+        run: sudo apt install build-essential
+      - name: Install the manpages-dev package
+        run: sudo apt-get install manpages-dev
+      - name: Validating the GCC compiler
+        run: gcc --version
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: cpp
+      # [END] Set up the environment for Linux
+
+
+      # [START] Deleting the executables
+      - name: Clear the binaries
+        run: make clean
+      # [END] Deleting the executables
+
+      - name: List the project files
+        run: ls ${{ github.workspace }}/
+      - name: Build the compiler
+        run: make run-all
+      - name: List the project files
+        run: ls ${{ github.workspace }}/
+
+      # [START] Scan code
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+      # [END] Scan code
+
+      - run: echo "This job's status is ${{ job.status }}."
+  build-on-macos:
+    runs-on: macos-latest
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+
+      # [START] Set up the environment for macOS
+      - run: export HOMEBREW_NO_ANALYTICS=1
+      - name: Updating the packages list
+        run: brew update
+      - name: Upgrading the packages
+        run: brew upgrade
+      - name: Installing GCC
+        run: brew install gcc
+      - name: Validating the GCC compiler
+        run: gcc --version
+      - name: Cleaning up
+        run: brew cleanup
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: cpp
+      # [END] Set up the environment for macOS
+
+      # [START] Deleting the executables
+      - name: Clear the binaries
+        run: make clean
+      # [END] Deleting the executables
+
+      - name: List the project files
+        run: ls ${{ github.workspace }}/
+      - name: Build the compiler
+        run: make run-all
+      - name: List the project files
+        run: ls ${{ github.workspace }}/
+
+      # [START] Scan code
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
+      # [END] Scan code
+
+      - run: echo "This job's status is ${{ job.status }}."
