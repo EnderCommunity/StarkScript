@@ -60,12 +60,12 @@ int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, cons
         CONSOLE_COLOR_RESET);
 
     // Print the console message
-    int result = __builtin_vfprintf(stdout, prefixedFormat, __local_argv);
+    int result = vfprintf(stdout, prefixedFormat, __local_argv);
 
     // Free the allocated memory for the `prefixedFormat` variable
     free(prefixedFormat);
 
-    // Return the return value of the `__builtin_vfprintf` function
+    // Return the return value of the `vfprintf` function
     return result;
 
 }
@@ -77,9 +77,9 @@ int consoleLog(const char *format, ...){
     __builtin_va_list __local_argv;
     __builtin_va_start(__local_argv, format);
 
-    // Print all the message using the `__builtin_vfprintf` function
+    // Print all the message using the `vfprintf` function
     // It receives the ellipsis arguments as a `__builtin_va_list` list
-    int result = __builtin_vfprintf(stdout, format, __local_argv);
+    int result = vfprintf(stdout, format, __local_argv);
 
     // Close the opened `__builtin_va_list` list
     __builtin_va_end(__local_argv);
