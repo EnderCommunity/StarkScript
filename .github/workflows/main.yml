@@ -22,8 +22,14 @@ jobs:
         run: sudo apt install build-essential
       - name: Install the manpages-dev package
         run: sudo apt-get install manpages-dev
-      - name: Validating the GCC compiler
+      - name: Install the mingw-w64 package
+        run: sudo apt-get install mingw-w64
+      - name: Test the GCC command
         run: gcc --version
+      - name: Test the i686-w64-mingw32-gcc command
+        run: i686-w64-mingw32-gcc --version
+      - name: Test the x86_64-w64-mingw32-gcc command
+        run: x86_64-w64-mingw32-gcc --version
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
         with:
@@ -69,10 +75,16 @@ jobs:
         run: brew update
       - name: Upgrading the packages
         run: brew upgrade
-      - name: Installing GCC
+      - name: Install the GCC package
         run: brew install gcc
-      - name: Validating the GCC compiler
+      - name: Install the mingw-w64 package
+        run: brew install mingw-w64
+      - name: Test the GCC command
         run: gcc --version
+      - name: Test the i686-w64-mingw32-gcc command
+        run: i686-w64-mingw32-gcc --version
+      - name: Test the x86_64-w64-mingw32-gcc command
+        run: x86_64-w64-mingw32-gcc --version
       - name: Cleaning up
         run: brew cleanup
       - name: Initialize CodeQL
