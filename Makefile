@@ -9,6 +9,7 @@
 # make win64       Build the compiler for Windows 64-bit
 #                  This command uses the "mingw-w64" compiler
 # make run-all     Build the compiler for Linux and windows (32-bit and 64-bit)
+# make clean       Delete all the compiler binaries
 #
 # If you wish to use any Windows-related commands, you must install "mingw-w64":
 #  _______________________________________________________________________________________________
@@ -47,6 +48,11 @@ win32:
 # Define the behaviour of the "make win64" command
 win64:
 	$(W64CC) $(INPUT) $(OUTPUT)-64bit.exe
+
+clean:
+	rm ./$(NAME).out
+	rm ./$(NAME)-32bit.exe
+	rm ./$(NAME)-64bit.exe
 
 # Define the behaviour of the "make run-all" command
 run-all:

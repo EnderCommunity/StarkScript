@@ -11,6 +11,9 @@ import "file.stark";
 import "file.stark" with prefix Duplicate1; // (You will have to do "Duplicate1->" to access
                                             // variables and functions from this file)
 
+// Pass the name of the function that the compiler should run at runtime!
+start Main;
+
 fileVariable; // from the first import
 Duplicate1->fileVariable; // from the second import
 
