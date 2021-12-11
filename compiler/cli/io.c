@@ -322,8 +322,65 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
     }
 
-    // Get the system's temporary directory
-    globalIO.tempDir = getTempDir();
+    // Create a temporary directory for the compiler to work in (%{Temp}/StarkScript-XXXXXXXXXXXX/)
+    {
+
+        // Generate a 12 characters long random string
+        char randStr[13];
+        randNumStr(randStr, 12);
+
+        // Get the system's temporary directory
+        char *sysTempDir = getTempDir();
+
+        // Get the final temporary directory
+        char *tempDir = calloc(strlen(sysTempDir) + 1 + strlen(__STARK_NAME__) + 1 + 12 + 1, sizeof(char));
+        sprintf(tempDir, "%s%c%s-%s", sysTempDir,
+        #ifdef _WIN32
+            '\\'
+        #else
+            '/'
+        #endif
+        , __STARK_NAME__, randStr);
+
+        // Copy the temporary directory to the `globalIO` object/interface
+        globalIO.tempDir = calloc(strlen(tempDir) + 1, sizeof(char));
+        strcpy(globalIO.tempDir, tempDir);
+
+        // Free up the memory used by the "sysTempDir" variable and the "tempDir" variable
+        free(tempDir);
+        free(sysTempDir);
+
+        // Check if such a directory exists
+        // (The chance of such a directory being in there is not really that high, but it's better
+        // to be safe that sorry)
+        if(access(globalIO.tempDir, F_OK) == 0){
+
+            // You need to stop this process!
+            // This is an already-existing directory!
+            consoleError("It seems like the randomly generated temporary directory is already in use! (This is a rare thing to happen, try to re-run the compiler)");
+
+        }
+
+        // Create the temporary folder
+        #ifdef _WIN32
+
+            mkdir(globalIO.tempDir);
+
+        #else
+
+            mkdir(globalIO.tempDir, 0700);
+
+        #endif
+
+        // Check if the directory was created successfully
+        if(access(globalIO.tempDir, F_OK) != 0){
+
+            // Failed to create a temporary directory!
+            consoleError("Couldn't create a temporary directory!%s", STRING_CONSOLE_GITHUB_REPORT);
+
+        }
+
+    }
 
     // Print the temporary directory path (Debug)
     consoleDebug("Temporary directory: %s", globalIO.tempDir);
