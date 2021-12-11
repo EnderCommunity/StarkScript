@@ -151,7 +151,7 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                 if(multilinearCommEnd){
 
                     // Print two whitespaces
-                    consoleLog("  ");
+                    fprintf(outputFile, "  ");
 
                     // Update the status of the multi-linear comment context
                     inMultilinearComm = 0;
@@ -161,7 +161,7 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                                                 // comment
 
                     // Print two whitespaces
-                    consoleLog("  ");
+                    fprintf(outputFile, "  ");
 
                     // Update the multi-linear comment start variable
                     multilinearCommStart = 0;
@@ -171,7 +171,7 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                     // Print whitespace so you won't lose track of the column number
                     // And allow line line characters to be printed normally so you won't lose track of
                     // line numbers
-                    consoleLog("%c", (currChar == '\n') ? '\n' : ' ');
+                    fprintf(outputFile, "%c", (currChar == '\n') ? '\n' : ' ');
 
                 }
 
@@ -180,7 +180,7 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                 // Print the output (temp)
                 // Replace this with a function that will write the output content into the output file
                 // pointer
-                consoleLog("%c", currChar);
+                fprintf(outputFile, "%c", currChar);
 
             }
 
@@ -197,7 +197,7 @@ void preprocR(FILE *inputFile, FILE *outputFile){
 }
 
 // Define a function that triggers the preprocessor
-void preproc(char *inputPth, char *tempDir, char *inputDir){
+void preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName){
 
     // You are not allowed to modify any of this function's arguments
 
@@ -212,8 +212,20 @@ void preproc(char *inputPth, char *tempDir, char *inputDir){
 
     }
 
+    // Get the path of the temporary "mega file"
+    char *outputFileDir = calloc(strlen(tempDir) + 1 + strlen(outputFileName) + 1 + strlen(STRIING_IO_PREPROCESSOR_OUTPUT_EXT) + 1, sizeof(char));
+    sprintf(outputFileDir, "%s/%s.%s", tempDir, outputFileName, STRIING_IO_PREPROCESSOR_OUTPUT_EXT);
+
+    // Create the temporary "mega file"
+    FILE* outputFile = fopen(outputFileDir, "w");
+
+    // Free the memory used by the "outputFileDir" variable
+    free(outputFileDir);
+
     // Call the recursive function
-    // Change the second input variable (temp)
-    preprocR(inputFile, inputFile);
+    preprocR(inputFile, outputFile);
+
+    // Close the output file stream
+    fclose(outputFile);
 
 }
