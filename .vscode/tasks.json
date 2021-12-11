@@ -9,7 +9,7 @@
 				"-g",
 				"${workspaceFolder}/compiler/stark.c",
 				"-o",
-				"${workspaceFolder}/Stark.exe",
+				"${workspaceFolder}/bin/Stark.exe",
 				"-lregex"
 			],
 			"options": {
@@ -29,10 +29,10 @@
 			"label": "StarkScript: build compiler",
 			"command": "${workspaceFolder}/compiler/Stark",
 			"windows": {
-				"command": "${workspaceFolder}\\compiler\\Stark.exe"
+				"command": "${workspaceFolder}\\bin\\Stark.exe"
 			},
 			"linux": {
-				"command": "${workspaceFolder}/compiler/Stark.out"
+				"command": "${workspaceFolder}/bin/Stark.out"
 			},
 			"args": [
 				"${workspaceFolder}\\pitch.stark"
