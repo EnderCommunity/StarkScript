@@ -68,6 +68,9 @@ clock_t startTime;
 // Include the compiler flags
 #include "./flags.h"
 
+// Get the system-related strings (like console commands)
+#include "./strings/system.h"
+
 // Pre-define the `stopProcess` function so all the included files can use it
 void stopProcess(int exitCode);
 
@@ -144,13 +147,23 @@ int main(int argc, char *argv[]){
         // Now that we're done with the compiling process, we don't need any of the remaining input
         // and output data!
 
-        // Delete the temporary folder
-        rmdir(globalIO.tempDir);
+        // Create a command to delete the temporary folder
+        char *command = calloc(strlen(SYSTEM_COMMAND_REMOVE_FULL_DIR) + strlen(globalIO.tempDir) + 1, sizeof(char));
+        sprintf(command, "%s%s", SYSTEM_COMMAND_REMOVE_FULL_DIR, globalIO.tempDir);
+
+        // Execute the delete command
+        system(command);
+
+        // Check if the temporary folder is still accessible
         if(access(globalIO.tempDir, F_OK) == 0){
 
+            // Warn the use about the temporary folder not being deleted
             consoleWarn("Couldn't delete the temporary directory!");
 
         }
+
+        // Free up the used memory by the "command" variable
+        free(command);
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);
