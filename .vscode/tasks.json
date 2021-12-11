@@ -9,7 +9,7 @@
 				"-g",
 				"${workspaceFolder}/compiler/stark.c",
 				"-o",
-				"${workspaceFolder}/compiler/Stark.exe",
+				"${workspaceFolder}/Stark.exe",
 				"-lregex"
 			],
 			"options": {

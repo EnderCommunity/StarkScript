@@ -2,6 +2,9 @@
 # *.exe
 # *.out
 
+# Ignore the "Stark.exe" executable
+Stark.exe
+
 # Ignore temporary c files
 *.i
 *.o
