@@ -1,4 +1,4 @@
-name: Builds (Windows, Linux, and macOS)
+name: Build the compiler (for Windows, Linux, and macOS)
 on: [push, pull_request]
 jobs:
   build-on-linux:
@@ -16,9 +16,9 @@ jobs:
           ls ${{ github.workspace }}
 
       # [START] Set up the environment for Linux
-      - name: Updating the packages list
+      - name: Update the packages list
         run: sudo apt update
-      - name: Installing the build-essential package
+      - name: Install the build-essential package
         run: sudo apt install build-essential
       - name: Install the manpages-dev package
         run: sudo apt-get install manpages-dev
@@ -37,10 +37,10 @@ jobs:
       # [END] Set up the environment for Linux
 
 
-      # [START] Deleting the executables
+      # [START] Delete the executables
       - name: Clear the binaries
         run: make clean
-      # [END] Deleting the executables
+      # [END] Delete the executables
 
       - name: List the project files
         run: ls ${{ github.workspace }}/
@@ -71,9 +71,9 @@ jobs:
 
       # [START] Set up the environment for macOS
       - run: export HOMEBREW_NO_ANALYTICS=1
-      - name: Updating the packages list
+      - name: Update the packages list
         run: brew update
-      - name: Upgrading the packages
+      - name: Upgrade the packages
         run: brew upgrade
       - name: Install the GCC package
         run: brew install gcc
@@ -85,7 +85,7 @@ jobs:
         run: i686-w64-mingw32-gcc --version
       - name: Test the x86_64-w64-mingw32-gcc command
         run: x86_64-w64-mingw32-gcc --version
-      - name: Cleaning up
+      - name: Clean up
         run: brew cleanup
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v1
@@ -93,10 +93,10 @@ jobs:
           languages: cpp
       # [END] Set up the environment for macOS
 
-      # [START] Deleting the executables
+      # [START] Delete the executables
       - name: Clear the binaries
         run: make clean
-      # [END] Deleting the executables
+      # [END] Delete the executables
 
       - name: List the project files
         run: ls ${{ github.workspace }}/
