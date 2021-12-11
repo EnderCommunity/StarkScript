@@ -68,6 +68,9 @@ clock_t startTime;
 // Include the compiler flags
 #include "./flags.h"
 
+// Get the system-related strings (like console commands)
+#include "./strings/system.h"
+
 // Pre-define the `stopProcess` function so all the included files can use it
 void stopProcess(int exitCode);
 
@@ -80,17 +83,26 @@ void stopProcess(int exitCode);
 // Include the command line arguments processing function
 #include "./cli/args.c"
 
+// Pre-define the `randNumStr` function so code inside the io.c file can access it
+void randNumStr(char *dest, size_t length);
+
 // Include the input and output paths processing function
 #include "./cli/io.c"
 
 // Include the initial compiling components
 #include "./initial/initial.c"
 
+// Include all the randomness-related functions
+#include "./random.c"
+
 // Define the main function
 int main(int argc, char *argv[]){
 
     // Keep track of the start time
     startTime = clock();
+
+    // Prepare the random number generator
+    randInit();
 
     // Print the compiler start message
     printCmplrMsg();
@@ -134,6 +146,24 @@ int main(int argc, char *argv[]){
 
         // Now that we're done with the compiling process, we don't need any of the remaining input
         // and output data!
+
+        // Create a command to delete the temporary folder
+        char *command = calloc(strlen(SYSTEM_COMMAND_REMOVE_FULL_DIR) + strlen(globalIO.tempDir) + 1, sizeof(char));
+        sprintf(command, "%s%s", SYSTEM_COMMAND_REMOVE_FULL_DIR, globalIO.tempDir);
+
+        // Execute the delete command
+        system(command);
+
+        // Check if the temporary folder is still accessible
+        if(access(globalIO.tempDir, F_OK) == 0){
+
+            // Warn the use about the temporary folder not being deleted
+            consoleWarn("Couldn't delete the temporary directory!");
+
+        }
+
+        // Free up the used memory by the "command" variable
+        free(command);
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);

@@ -35,7 +35,7 @@ INPUT = -g ./compiler/stark.c
 
 # The OUTPUT variable is used to store the needed arguments to tell the compiler where we want to
 # stored the output executable
-OUTPUT = -o ./$(NAME)
+OUTPUT = -o ./bin/$(NAME)
 
 # Define the behaviour of the "make" command
 all:
@@ -50,9 +50,7 @@ win64:
 	$(W64CC) $(INPUT) $(OUTPUT)-64bit.exe
 
 clean:
-	rm ./$(NAME).out
-	rm ./$(NAME)-32bit.exe
-	rm ./$(NAME)-64bit.exe
+	rm ./bin/*
 
 # Define the behaviour of the "make run-all" command
 run-all:

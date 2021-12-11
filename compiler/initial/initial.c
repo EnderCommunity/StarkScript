@@ -19,24 +19,10 @@
 // Define a function that triggers the initial part of compiling
 void initialComp(struct GlobalIO globalIO){
 
-    // Open a file stream in read-only mode to read the content of the input file
-    FILE *inputFile = fopen(globalIO.input.fullPth, "r");
-
-    // Check if the file stream wasn't opened successfully
-    if(inputFile == NULL){
-
-        // Tell the user that the input file is inaccessible
-        consoleError("Couldn't access the input file!");
-
-    }
-
     // Trigger the preprocessor
-    preproc(inputFile, globalIO.input.dirPth);
+    preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth, globalIO.output.fileName);
     
     // Trigger the lexer
     lexer();
-
-    // Close the file stream
-    fclose(inputFile);
 
 }

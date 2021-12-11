@@ -11,6 +11,11 @@
 // better to watch out for these memory leaks for a better debugging experience.
 void stopProcess(int exitCode){
 
+    // Note that you shouldn't delete the temporary folder when you reach this function!
+    // The error that triggered this function could've happened before the check of the status of
+    // the temporary directory, so you might be deleting a folder that's being used by another
+    // process!
+
     // Free up any globally allocated variables
     // Note that there is no need to change the value of any of these variables to NUll (as we only
     // need to do that if we want to keep track of the allocation state of these variables)
