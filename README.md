@@ -15,6 +15,8 @@ The StarkScript compiler is written in C, and the whole language is compiled dow
 
 If you face trouble when installing the GCC compiler on your operating system, you could try googling "*How to install GNU GCC compiler on -Your Linux Distro-*". Here's an article that covers [setting up the GCC compiler on Ubuntu](https://linuxize.com/post/how-to-install-gcc-compiler-on-ubuntu-18-04/).
 
+> If you wish to build the compiler for Windows on Linux, you must install `mingw-w64`! You can read more about this in the [Makefile](./Makefile)....
+
 ### Windows
 
 If you wish to use Windows, you need to download [*MSYS2*](https://www.msys2.org/). (Make sure to update your PATH variable after the installing *MSYS2*)
@@ -51,6 +53,14 @@ For starters, to compile a `example.stark` file, you can use this command:
 ```sh
 ./Stark --input /path/to/example.stark
 ```
+
+If you're a Linux user, you can use the `make` command to make things easier. You can run this command to simply compile the compiler for Linux:
+
+```sh
+make
+```
+
+> More `make` commands are avaliable, you can read the [Makefile](./Makefile) for more info!
 
 ### Detecting memory leaks
 
