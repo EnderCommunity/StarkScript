@@ -44,7 +44,7 @@ cd compiler/
 gcc -g stark.c -o Stark.{ext}
 ```
 
-> If you do not wish to compile the compiler, you can use the provided binaries within the compiler folder!
+> If you do not wish to compile the compiler, you can use the provided binaries within the root directory of this project!
 
 You can use the `--help` flag to get help with the general use of all the things you can do with the compiler.
 
