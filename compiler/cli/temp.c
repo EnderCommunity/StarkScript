@@ -1,6 +1,6 @@
 /**
  *
- *  Manage input and output paths
+ *  Manage the temporary directory
  *
 **/
 
