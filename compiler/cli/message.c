@@ -71,7 +71,7 @@ void printExtMsg(int didFail){
     consoleLog("\n%s%s%s in %.4fs\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n",
 
     // Colour the status word with its appropriate colour
-    (didFail) ? CONSOLE_COLOR_RED : CONSOLE_COLOR_GREEN,
+    (didFail) ? CONSOLE_COLOR_RED : ((warnCount == 0) ? CONSOLE_COLOR_GREEN : CONSOLE_COLOR_YELLOW),
 
     // Pass the status of the compiler to the print function
     (didFail) ? "FAILED" : "FINISHED",
