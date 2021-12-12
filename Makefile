@@ -61,27 +61,30 @@ W64CC = x86_64-w64-mingw32-gcc
 OPTIMIZE = -O3
 
 # The NAME variable is used to store the name of the output executable
-NAME=Stark
-
-# The INPUT variable is used to store the needed arguments to tell the compiler where the input
-# file is
-INPUT = -g ./compiler/stark.c
+NAME =Stark
 
 # The OUTPUT variable is used to store the needed arguments to tell the compiler where we want to
 # stored the output executable
 OUTPUT = -o ./bin/$(NAME)
 
+# The DEBUG variable is used to store the debug level flag
+DEBUG = -g3
+
+# The INPUT variable is used to store the needed arguments to tell the compiler where the input
+# file is
+INPUT = ./compiler/stark.c
+
 # Define the behaviour of the "make" command
 all:
-	$(CC) $(OPTIMIZE) $(INPUT) $(OUTPUT).out
+	$(CC) $(OPTIMIZE) $(OUTPUT).out $(DEBUG) $(INPUT)
 
 # Define the behaviour of the "make win32" command
 win32:
-	$(W32CC) $(OPTIMIZE) $(INPUT) $(OUTPUT)-32bit.exe
+	$(W32CC) $(OPTIMIZE) $(OUTPUT)-32bit.exe $(DEBUG) $(INPUT)
 
 # Define the behaviour of the "make win64" command
 win64:
-	$(W64CC) $(OPTIMIZE) $(INPUT) $(OUTPUT)-64bit.exe
+	$(W64CC) $(OPTIMIZE) $(OUTPUT)-64bit.exe $(DEBUG) $(INPUT)
 
 clean:
 	rm ./bin/*
