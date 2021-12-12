@@ -1,0 +1,91 @@
+
+
+
+
+
+use system.io;
+use system.info;
+
+
+import "file.stark";
+import "file.stark" with prefix Duplicate1; 
+                                            
+
+
+start Main;
+
+fileVariable; 
+Duplicate1->fileVariable; 
+
+
+define ZERO 0; 
+
+
+
+%BINARY_HASH%; 
+               
+
+function<int> Main(myVariable:int, myVariable2:bool){
+
+    
+    variable<int> a = 0, b = 1;
+
+    
+    constant<int> c = 0;
+
+    array<int> d = new int(10, 10);
+    d[0, 0] = 1;
+
+    
+    delete a, b, d;
+
+}
+
+
+
+
+class MyCustomObject {
+
+    
+    
+    
+
+    variable<int> a;
+    variable<string> b;
+
+    append function<void> myFunction(){
+
+        
+
+    }
+
+    function<void> myFunction2(){
+
+        
+
+    }
+
+    
+    constructor(a:int, b:string) {
+
+        
+        this.a = a;
+        this.b = b;
+
+    }
+
+}
+
+object<MyCustomObject> name = new MyCustomObject(0, "");
+
+class MyClass {
+
+    append function<void> myFunction(){
+
+        
+
+    }
+
+}
+
+MyClass.myFunction();
