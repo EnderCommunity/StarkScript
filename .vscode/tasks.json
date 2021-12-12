@@ -7,11 +7,10 @@
 			"command": "gcc",
 			"args": [
 				"-O3",
-				"-g",
-				"${workspaceFolder}/compiler/stark.c",
 				"-o",
 				"${workspaceFolder}/bin/Stark.exe",
-				"-lregex"
+				"-g3",
+				"${workspaceFolder}/compiler/stark.c"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"
