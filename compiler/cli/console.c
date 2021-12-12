@@ -23,7 +23,8 @@ int consoleNoGray = 0;
 
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...
-int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix, int grayTxt){
+int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix,
+                        int grayTxt){
 
     if(consoleNoGray){
 

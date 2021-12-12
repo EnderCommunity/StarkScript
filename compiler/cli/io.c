@@ -137,15 +137,13 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
             if(S_ISREG(path_stat.st_mode)) {
 
-                //
-                //
-                //
-                // Contain this block of code so the `buffer` variable would get deleted after getting
-                // copied to the global working directory variable (globalIO.wrkDir)
+                // Contain this block of code so the `buffer` variable would get deleted after
+                // getting copied to the global working directory variable (globalIO.wrkDir)
                 {
 
                     // Create a temporary buffer to receive the current working directory
-                    // Not using a char array buffer could result in the `getcwd` not working properly
+                    // Not using a char array buffer could result in the `getcwd` function not
+                    // working properly
                     char buffer[PATH_MAX + 1];
 
                     // Get the current working directory
@@ -269,7 +267,8 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                     // Set the output directory to be the same as the input file's directory
 
                     // Copy the input `dirPth` variable
-                    globalIO.output.fullPth = calloc(strlen(globalIO.input.dirPth) + 1, sizeof(char));
+                    globalIO.output.fullPth = calloc(strlen(globalIO.input.dirPth)
+                                                        + 1, sizeof(char));
                     strcpy(globalIO.output.fullPth, globalIO.input.dirPth);
 
                 }
@@ -304,7 +303,8 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
         }else{
 
             // Set the output file name to the default one
-            globalIO.output.fileName = calloc(strlen(STRING_IO_OUTPUT_NAME_DEFAULT) + 1, sizeof(char));
+            globalIO.output.fileName = calloc(strlen(STRING_IO_OUTPUT_NAME_DEFAULT)
+                                                + 1, sizeof(char));
             strcpy(globalIO.output.fileName, STRING_IO_OUTPUT_NAME_DEFAULT);
 
         }
@@ -333,7 +333,8 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
         char *sysTempDir = getTempDir();
 
         // Get the final temporary directory
-        char *tempDir = calloc(strlen(sysTempDir) + 1 + strlen(__STARK_NAME__) + 1 + 12 + 1, sizeof(char));
+        char *tempDir = calloc(strlen(sysTempDir) + 1 + strlen(__STARK_NAME__) + 1 + 12
+                                    + 1, sizeof(char));
         sprintf(tempDir, "%s%c%s-%s", sysTempDir,
         #ifdef _WIN32
             '\\'

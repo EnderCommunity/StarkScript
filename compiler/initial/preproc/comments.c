@@ -6,7 +6,9 @@
 
 
 // Define the preprocessor comments end and start detector
-void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *inMultilinearComm, int *multilinearCommStart, int *multilinearCommEnd, int inQuote, int inDoubleQuote){
+void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *inMultilinearComm,
+                        int *multilinearCommStart, int *multilinearCommEnd, int inQuote,
+                        int inDoubleQuote){
 
     // Check if the text is currently free of any quoting or commenting contexts
     if(!*inLinearComm && !*inMultilinearComm && !inQuote && !inDoubleQuote){
