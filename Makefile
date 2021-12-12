@@ -26,6 +26,40 @@ W32CC = i686-w64-mingw32-gcc
 # The CC variable is used to store the Windows 64-bit compile command
 W64CC = x86_64-w64-mingw32-gcc
 
+# The OPTIMIZE variable is used to store the flag that indicates the optimisation level
+# Here are the available optimisation levels:
+#  _______________________________________________________________________________________
+# |          |                              |             |        |          |           |
+# |  option  |         optimisation         |  execution  |  code  |  memory  |  compile  |
+# |          |            level             |    time     |  size  |  usage   |   time    |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |   -O0    |       optimization for       |      +      |   +    |    -     |     -     |
+# |          |       compilation time       |             |        |          |           |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |  -O1 or  |     optimization for code    |      -      |   -    |    +     |     +     |
+# |    -O    |    size and execution time   |             |        |          |           |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |   -O2    |  optimization more for code  |     --      |        |    +     |    ++     |
+# |          |   size and execution time    |             |        |          |           |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |   -O3    |  optimization more for code  |     ---     |        |    +     |    +++    |
+# |          |   size and execution time    |             |        |          |           |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |   -Os    |  optimization for code size  |             |   --   |          |    ++     |
+# |__________|______________________________|_____________|________|__________|___________|
+# |          |                              |             |        |          |           |
+# |  -Ofast  |  O3 with fast none accurate  |     ---     |        |    +     |    +++    |
+# |          |      math calculations       |             |        |          |           |
+# |__________|______________________________|_____________|________|__________|___________|
+# More info about this flag is available here:
+# https://www.rapidtables.com/code/linux/gcc/gcc-o.html#optimization
+OPTIMIZE = -O3
+
 # The NAME variable is used to store the name of the output executable
 NAME=Stark
 
@@ -39,15 +73,15 @@ OUTPUT = -o ./bin/$(NAME)
 
 # Define the behaviour of the "make" command
 all:
-	$(CC) $(INPUT) $(OUTPUT).out
+	$(CC) $(OPTIMIZE) $(INPUT) $(OUTPUT).out
 
 # Define the behaviour of the "make win32" command
 win32:
-	$(W32CC) $(INPUT) $(OUTPUT)-32bit.exe
+	$(W32CC) $(OPTIMIZE) $(INPUT) $(OUTPUT)-32bit.exe
 
 # Define the behaviour of the "make win64" command
 win64:
-	$(W64CC) $(INPUT) $(OUTPUT)-64bit.exe
+	$(W64CC) $(OPTIMIZE) $(INPUT) $(OUTPUT)-64bit.exe
 
 clean:
 	rm ./bin/*
