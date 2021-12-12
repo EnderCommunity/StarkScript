@@ -80,6 +80,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         // --no-gray        Indicates that the user does not wish to see any gray text in the console
         //                  (Note that this flag will take effect only after it's detection, so you may see
         //                  some gray text!)
+        // --save-temps     Indicates that the user wishes to keep the generated temporary files
         // --gcc (p)        Runs the "gcc -v" command
         // -i (r)           Same as --input
         // -o (r)           Same as --output
@@ -188,6 +189,17 @@ void processArgs(int argc, char *argv[], int *allowCompile){
             system("gcc -v");
             consoleLog("%s", CONSOLE_COLOR_RESET);
 
+        }else if(strcmp(argv[i], "--no-gray") == 0){
+
+            // Change the behaviour of the console functions to not allow any >>default<< gray text
+            consoleNoGray = 1;
+
+        }else if(strcmp(argv[i], "--save-temps") == 0){ // Check if the user wishes to get the
+                                                    // files generated in the temporary directory
+
+            // Change the behaviour of the console functions to not allow any >>default<< gray text
+            outputSaveTemps = 1;
+
         }else if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){ // Check if the
                                                             // user is requesting the help catalog
 
@@ -196,11 +208,6 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
             // Call the help catalog function
             helpCatalog();
-
-        }else if(strcmp(argv[i], "--no-gray") == 0){
-
-            // Change the behaviour of the console functions to not allow any >>default<< gray text
-            consoleNoGray = 1;
 
         }else{
 
