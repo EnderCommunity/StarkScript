@@ -139,9 +139,6 @@ void preprocR(FILE *inputFile, FILE *outputFile){
 
         }
 
-        // Store the current character in the "prvsChar" variable
-        prvsChar = currChar;
-
         // Check if you're not in a linear comment context
         if(!inLinearComm){
 
@@ -172,7 +169,12 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                     // Print whitespace so you won't lose track of the column number
                     // And allow line line characters to be printed normally so you won't lose track
                     // of line numbers
-                    fprintf(outputFile, "%c", (currChar == '\n') ? '\n' : ' ');
+                    // You need to watch for the "\r" special character when processing CRLF files!
+                    // Also, this compiler will ignore the "\036" and "\025" special characters and
+                    // treat them as whitespace...
+                    // (For more about new lines: https://en.wikipedia.org/wiki/Newline)
+                    fprintf(outputFile, "%c", ((currChar == '\n' || currChar == '\r') ?
+                            currChar : ' '));
 
                 }
 
@@ -186,6 +188,9 @@ void preprocR(FILE *inputFile, FILE *outputFile){
             }
 
         }
+
+        // Store the current character in the "prvsChar" variable
+        prvsChar = currChar;
 
         // Get the next character
         currChar = fgetc(inputFile);
