@@ -62,32 +62,44 @@
 // In this project, it's used to keep track of how long the compiler takes to run
 #include <time.h>
 
+// Include the standard input and output library
+#include <stdio.h>
+
+// Include the standard library
+#include <stdlib.h>
+
+// Include the strings library (which included functions that are useful when dealing with strings)
+#include <string.h>
+
 // Define the start time variable
 clock_t startTime;
 
 // Include the compiler flags
 #include "./flags.h"
 
-// Get the system-related strings (like console commands)
-#include "./strings/system.h"
-
 // Pre-define the `stopProcess` function so all the included files can use it
 void stopProcess(int exitCode);
+
+// Include all the paths-related functions
+#include "./paths.c"
 
 // Include all the console-related functions
 #include "./cli/console.c"
 
+// Include all the system-related functions
+#include "./system.c"
+
 // Include the start message function
 #include "./cli/message.c"
-
-// Include the command line arguments processing function
-#include "./cli/args.c"
 
 // Pre-define the `randNumStr` function so code inside the io.c file can access it
 void randNumStr(char *dest, size_t length);
 
 // Include the input and output paths processing function
 #include "./cli/io.c"
+
+// Include the command line arguments processing function
+#include "./cli/args.c"
 
 // Include the initial compiling components
 #include "./initial/initial.c"
@@ -147,12 +159,35 @@ int main(int argc, char *argv[]){
         // Now that we're done with the compiling process, we don't need any of the remaining input
         // and output data!
 
-        // Create a command to delete the temporary folder
-        char *command = calloc(strlen(SYSTEM_COMMAND_REMOVE_FULL_DIR) + strlen(globalIO.tempDir) + 1, sizeof(char));
-        sprintf(command, "%s%s", SYSTEM_COMMAND_REMOVE_FULL_DIR, globalIO.tempDir);
+        // Check if the user wishes to get a copy of the temporary files
+        if(outputSaveTemps){
+
+            // Get the directory of the ".input" file
+            char *inputTempDir = joinDirFileExt(globalIO.tempDir, globalIO.output.fileName,
+                                                    STRING_IO_PREPROCESSOR_OUTPUT_EXT);
+
+            // Get the output path
+            char *inputOutputDir = joinDirFileExt(globalIO.output.fullPth, globalIO.output.fileName,
+                                                    STRING_IO_PREPROCESSOR_OUTPUT_EXT);
+
+            // Move the ".input" file to the output directory
+            systemf("%s%s %s", strlen(SYSTEM_COMMAND_MOVE_FILE) + strlen(inputTempDir) + 1
+                                + strlen(inputOutputDir) + 1,
+                    SYSTEM_COMMAND_MOVE_FILE, inputTempDir, inputOutputDir);
+            //rename(inputTempDir, inputOutputDir);
+
+            // Free up the memory used by the "inputTempDir" and "inputOutputDir" variables
+            free(inputTempDir);
+            free(inputOutputDir);
+
+        }
+
+        // Now that you have no other use for the temporary files within the temporary folder, you
+        // can delete the whole directory!
 
         // Execute the delete command
-        system(command);
+        systemf("%s%s", strlen(SYSTEM_COMMAND_REMOVE_FULL_DIR) + strlen(globalIO.tempDir) + 1,
+                    SYSTEM_COMMAND_REMOVE_FULL_DIR, globalIO.tempDir);
 
         // Check if the temporary folder is still accessible
         if(access(globalIO.tempDir, F_OK) == 0){
@@ -162,8 +197,7 @@ int main(int argc, char *argv[]){
 
         }
 
-        // Free up the used memory by the "command" variable
-        free(command);
+        // Now, start freeing up all the globally-defined variables!
 
         // Free up the used memory by the working directory variable
         free(globalIO.wrkDir);

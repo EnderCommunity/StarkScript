@@ -5,15 +5,6 @@
 **/
 
 
-// Include the standard input and output library
-#include <stdio.h>
-
-// Include the standard library
-#include <stdlib.h>
-
-// Include the strings library (which included functions that are useful when dealing with strings)
-#include <string.h>
-
 // Include the `stdarg` library (which is used to allow functions to receive an indefinite number
 // of arguments)
 #include <stdarg.h>

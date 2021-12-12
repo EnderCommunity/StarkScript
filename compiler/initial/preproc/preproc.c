@@ -213,8 +213,8 @@ void preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName
     }
 
     // Get the path of the temporary "mega file"
-    char *outputFileDir = calloc(strlen(tempDir) + 1 + strlen(outputFileName) + 1 + strlen(STRIING_IO_PREPROCESSOR_OUTPUT_EXT) + 1, sizeof(char));
-    sprintf(outputFileDir, "%s/%s.%s", tempDir, outputFileName, STRIING_IO_PREPROCESSOR_OUTPUT_EXT);
+    char *outputFileDir = joinDirFileExt(tempDir, outputFileName,
+                                            STRING_IO_PREPROCESSOR_OUTPUT_EXT);
 
     // Create the temporary "mega file"
     FILE* outputFile = fopen(outputFileDir, "w");

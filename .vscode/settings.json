@@ -1,10 +1,13 @@
 {
     "files.associations": {
+        "*html": "html",
+        "*.html": "html",
         "type_traits": "c",
         "*.c": "c",
         "*.h": "c",
         "*.stark": "cpp",
         "cstdlib": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "cstdio": "c"
     }
 }
