@@ -73,6 +73,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         //                   input value, not as a flag.
 
         // The valid command line flags are:
+        // --help (p)       Indicates that the user wishes to see the help catalog
         // --input (r)      Indicates that the next argument is going to be the path of the input
         //                  file
         // --output (r)     Indicates that the next argument is going to be the path of the output
@@ -86,6 +87,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         // --save-temps     Indicates that the user wishes to keep the generated temporary files
         // --save-temps-c   Indicates that the user wishes to keep the intermediate c files
         // --gcc (p)        Runs the "gcc -v" command
+        // -h (p)           Same as --help
         // -i (r)           Same as --input
         // -o (r)           Same as --output
         // -n (r)           Same as --name
