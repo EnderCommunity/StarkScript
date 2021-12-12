@@ -5,6 +5,9 @@
 **/
 
 
+// Define a variable that can be used to tell the compiler to keep the temporary files
+int outputSaveTemps = 0;
+
 // Define a function that returns the system's temporary directory
 char* getTempDir(){
 
