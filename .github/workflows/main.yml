@@ -1,4 +1,4 @@
-name: Build the compiler (for Windows, Linux, and macOS)
+name: Build the compiler
 on: [push, pull_request]
 jobs:
   build-on-linux:
