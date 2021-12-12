@@ -6,6 +6,7 @@
 			"label": "C/C++: gcc.exe build the stark.c file",
 			"command": "gcc",
 			"args": [
+				"-O3",
 				"-g",
 				"${workspaceFolder}/compiler/stark.c",
 				"-o",
