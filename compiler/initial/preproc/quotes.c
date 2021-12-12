@@ -6,7 +6,8 @@
 
 
 //
-void checkForQuotes(int *inQuote, int *inDoubleQuote, char currChar, char prvsChar, int inLinearComm, int inMultilinearComm){
+void checkForQuotes(int *inQuote, int *inDoubleQuote, char currChar, char prvsChar,
+                    int inLinearComm, int inMultilinearComm){
 
     // Check if you're not in a comment context
     if(!inLinearComm && !inMultilinearComm){

@@ -83,16 +83,17 @@ void preprocR(FILE *inputFile, FILE *outputFile){
 
     // Start a loop to look through all the characters within the input file
     // Only stop the loop when you reach the "end of file" character (EOF)
-    //
     while (currChar != EOF){
 
         // Keep track of the text quoting status and the commenting status!
 
         // Check for quoting contexts
-        checkForQuotes(&inQuote, &inDoubleQuote, currChar, prvsChar, inLinearComm, inMultilinearComm);
+        checkForQuotes(&inQuote, &inDoubleQuote, currChar, prvsChar, inLinearComm,
+                        inMultilinearComm);
 
         // Check for and keep track of comment context
-        checkForComments(&inputFile, &currChar, &inLinearComm, &inMultilinearComm, &multilinearCommStart, &multilinearCommEnd, inQuote, inDoubleQuote);
+        checkForComments(&inputFile, &currChar, &inLinearComm, &inMultilinearComm,
+                            &multilinearCommStart, &multilinearCommEnd, inQuote, inDoubleQuote);
 
         // If you reach a new line character, make sure to reset the text quoting status
         // Even though this might be wrong syntax, you should
@@ -138,9 +139,6 @@ void preprocR(FILE *inputFile, FILE *outputFile){
 
         }
 
-        // Store the current character in the "prvsChar" variable
-        prvsChar = currChar;
-
         // Check if you're not in a linear comment context
         if(!inLinearComm){
 
@@ -169,22 +167,30 @@ void preprocR(FILE *inputFile, FILE *outputFile){
                 }else{
 
                     // Print whitespace so you won't lose track of the column number
-                    // And allow line line characters to be printed normally so you won't lose track of
-                    // line numbers
-                    fprintf(outputFile, "%c", (currChar == '\n') ? '\n' : ' ');
+                    // And allow line line characters to be printed normally so you won't lose track
+                    // of line numbers
+                    // You need to watch for the "\r" special character when processing CRLF files!
+                    // Also, this compiler will ignore the "\036" and "\025" special characters and
+                    // treat them as whitespace...
+                    // (For more about new lines: https://en.wikipedia.org/wiki/Newline)
+                    fprintf(outputFile, "%c", ((currChar == '\n' || currChar == '\r') ?
+                            currChar : ' '));
 
                 }
 
             }else{
 
                 // Print the output (temp)
-                // Replace this with a function that will write the output content into the output file
-                // pointer
+                // Replace this with a function that will write the output content into the output
+                // file pointer
                 fprintf(outputFile, "%c", currChar);
 
             }
 
         }
+
+        // Store the current character in the "prvsChar" variable
+        prvsChar = currChar;
 
         // Get the next character
         currChar = fgetc(inputFile);

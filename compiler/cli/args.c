@@ -73,16 +73,21 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         //                   input value, not as a flag.
 
         // The valid command line flags are:
-        // --input (r)      Indicates that the next argument is going to be the path of the input file
+        // --help (p)       Indicates that the user wishes to see the help catalog
+        // --input (r)      Indicates that the next argument is going to be the path of the input
+        //                  file
         // --output (r)     Indicates that the next argument is going to be the path of the output
         //                  directory
-        // --name (r)       Indicates that the next argument is going to be the name of the output file
-        // --no-gray        Indicates that the user does not wish to see any gray text in the console
-        //                  (Note that this flag will take effect only after it's detection, so you may see
-        //                  some gray text!)
+        // --name (r)       Indicates that the next argument is going to be the name of the output
+        //                  file
+        // --no-gray        Indicates that the user does not wish to see any gray text in the
+        //                  console
+        //                  (Note that this flag will take effect only after it's detection, so you
+        //                  may see some gray text!)
         // --save-temps     Indicates that the user wishes to keep the generated temporary files
         // --save-temps-c   Indicates that the user wishes to keep the intermediate c files
         // --gcc (p)        Runs the "gcc -v" command
+        // -h (p)           Same as --help
         // -i (r)           Same as --input
         // -o (r)           Same as --output
         // -n (r)           Same as --name

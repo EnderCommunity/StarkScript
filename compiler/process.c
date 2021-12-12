@@ -6,9 +6,9 @@
 
 
 // Define a function that stops the process without causing any memory leaks
-// Note that watching out for any memory leaks on sudden termination is not really nesessary, as all operating
-// systems nowadays take care of cleaning up after any program after its termination. However, it's
-// better to watch out for these memory leaks for a better debugging experience.
+// Note that watching out for any memory leaks on sudden termination is not really nesessary, as
+// all operating systems nowadays take care of cleaning up after any program after its termination.
+// However, it's better to watch out for these memory leaks for a better debugging experience.
 void stopProcess(int exitCode){
 
     // Note that you shouldn't delete the temporary folder when you reach this function!
