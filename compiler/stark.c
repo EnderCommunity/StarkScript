@@ -153,8 +153,10 @@ int main(int argc, char *argv[]){
         // start the initial part of the compiling process
         initialComp(globalIO);
 
-        // Print a warning about the state of the compiler
-        consoleInfo("End of execution...");
+        // Now, you should have two files in the temporary directory!
+        // A ".input" file, and a "."
+
+        // ...
 
         // Now that we're done with the compiling process, we don't need any of the remaining input
         // and output data!
@@ -162,23 +164,16 @@ int main(int argc, char *argv[]){
         // Check if the user wishes to get a copy of the temporary files
         if(outputSaveTemps){
 
-            // Get the directory of the ".input" file
-            char *inputTempDir = joinDirFileExt(globalIO.tempDir, globalIO.output.fileName,
-                                                    STRING_IO_PREPROCESSOR_OUTPUT_EXT);
-
-            // Get the output path
-            char *inputOutputDir = joinDirFileExt(globalIO.output.fullPth, globalIO.output.fileName,
-                                                    STRING_IO_PREPROCESSOR_OUTPUT_EXT);
+            // Get the path expression of all the files in the temporary directory
+            char *tempDirFiles = joinDirFile(globalIO.tempDir, "*");
 
             // Move the ".input" file to the output directory
-            systemf("%s%s %s", strlen(SYSTEM_COMMAND_MOVE_FILE) + strlen(inputTempDir) + 1
-                                + strlen(inputOutputDir) + 1,
-                    SYSTEM_COMMAND_MOVE_FILE, inputTempDir, inputOutputDir);
-            //rename(inputTempDir, inputOutputDir);
+            systemf("%s%s %s", strlen(SYSTEM_COMMAND_MOVE_FILE) + strlen(tempDirFiles) + 1
+                                + strlen(globalIO.output.fullPth) + 1,
+                    SYSTEM_COMMAND_MOVE_FILE, tempDirFiles, globalIO.output.fullPth);
 
-            // Free up the memory used by the "inputTempDir" and "inputOutputDir" variables
-            free(inputTempDir);
-            free(inputOutputDir);
+            // Free up the memory used by the "tempDirFiles" variable
+            free(tempDirFiles);
 
         }
 
