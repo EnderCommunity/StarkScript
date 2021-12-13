@@ -1,3 +1,7 @@
+# Ignore the .git directory
+/.git/**
+/.git
+
 # Ignore executables
 # *.exe
 # *.out
