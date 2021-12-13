@@ -154,7 +154,9 @@ int main(int argc, char *argv[]){
         initialComp(globalIO);
 
         // Now, you should have two files in the temporary directory!
-        // A ".input" file, and a "."
+        // A ".input" file, and a ".lex" file!
+        // You should only care about the ".lex" file. It contains an organised list of all the
+        // content of the ".input" file!
 
         // ...
 
