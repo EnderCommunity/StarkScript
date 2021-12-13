@@ -27,7 +27,7 @@ int systemf(const char *format, int length, ...){
     // Gray-out the command output text on Windows
     if(!consoleNoGray){
 
-        consoleLog("%s", CONSOLE_COLOR_GRAY);
+        consoleLog("%s", CONSOLE_COLOR_DARK_GRAY);
 
     }
 
@@ -36,6 +36,8 @@ int systemf(const char *format, int length, ...){
 
     // Reset the console text colour
     consoleLog("%s", CONSOLE_COLOR_RESET);
+
+    printf("\33[2K\r\33[2K\r\33[2K\r");
 
     // Free the memory used by the "str" variable
     free(command);
