@@ -8,6 +8,8 @@ StarkScript - or the *Stark programming language* - is a compiled C-based progra
 
 So far, the compiler has a functional *CLI*, and the compiler can filter out comments from input files.
 
+*A roadmap will be added soon...*
+
 ## The development environment
 
 The StarkScript compiler is written in C, and the whole language is compiled down to C code. So, naturally, you must have a C compiler. We recommend the [GNU compiler](https://gcc.gnu.org/).
