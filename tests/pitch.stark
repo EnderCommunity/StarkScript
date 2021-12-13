@@ -28,15 +28,16 @@ define ZERO 0; // You can use the `define` function to define a constant
 function<int> Main(myVariable:int, myVariable2:bool){
 
     // Define some variables of the type "int"
-    variable<int> a = 0, b = 1;
+    variable:int a = 0, b = 1;
 
     // Define a constant
-    constant<int> c = 0;
+    constant:int c = 0;
 
-    array<int> d = new int(10, 10);
+    // Define an array
+    variable:int[,] d = new int(10, 10);
     d[0, 0] = 1;
 
-    // You can only delete variables and arrays
+    // You can only delete variables
     delete a, b, d;
 
 }
@@ -50,8 +51,8 @@ class MyCustomObject {
     // "private" mode by default. If you want a variable or a function to be
     // accessible outside the class, you need to use the "append" keyword!
 
-    variable<int> a;
-    variable<string> b;
+    variable:int a;
+    variable:string b;
 
     append function<void> myFunction(){
 
@@ -76,7 +77,7 @@ class MyCustomObject {
 
 }
 
-object<MyCustomObject> name = new MyCustomObject(0, "");
+variable:MyCustomObject name = new MyCustomObject(0, "");
 
 class MyClass {
 
