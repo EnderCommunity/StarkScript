@@ -22,7 +22,9 @@ void printCmplrMsg(){
 %s    This is an incomplete experimental project. Development\
 \n    on this project is still in its very early stages and\
 \n    it could stop at any given time and for no valid reason.\n\
-\n    Please, consider helping us! %s<3%s\n\n\
+\n    For help, re-run this command with the flag \"--help\" or\
+\n    the flag \"-h\"... \n\
+\n    Please, consider helping us with this project! %s<3%s\n\n\
 \n        * For more information, visit: %s%s\n\n\n",
 
     // Make the language name blue
@@ -71,27 +73,38 @@ void printExtMsg(int didFail){
     consoleLog("\n%s%s%s in %.4fs\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n",
 
     // Colour the status word with its appropriate colour
-    (didFail) ? CONSOLE_COLOR_RED : ((warnCount == 0) ? CONSOLE_COLOR_GREEN : CONSOLE_COLOR_YELLOW),
+    ((consoleColors) ? 
+        ((didFail) ? CONSOLE_COLOR_RED : 
+            ((warnCount == 0) ? CONSOLE_COLOR_GREEN : CONSOLE_COLOR_YELLOW)
+        ): ""),
 
     // Pass the status of the compiler to the print function
     (didFail) ? "FAILED" : "FINISHED",
 
     // Reset the text colour
-    CONSOLE_COLOR_RESET,
+    ((consoleColors) ? CONSOLE_COLOR_RESET : ""),
 
     // Pass the `timeSpent` variable to the print function
     timeSpent,
 
     // Colour the logs count with green
-    CONSOLE_COLOR_GREEN, logCount, CONSOLE_COLOR_RESET,
+    ((consoleColors) ? CONSOLE_COLOR_GREEN : ""),
+    logCount,
+    ((consoleColors) ? CONSOLE_COLOR_RESET : ""),
 
     // Colour the warnings count with yellow
-    CONSOLE_COLOR_YELLOW, warnCount, CONSOLE_COLOR_RESET,
+    ((consoleColors) ? CONSOLE_COLOR_YELLOW : ""),
+    warnCount,
+    ((consoleColors) ? CONSOLE_COLOR_RESET : ""),
 
     // Colour the errors count with red
-    CONSOLE_COLOR_RED, errorCount, CONSOLE_COLOR_RESET,
+    ((consoleColors) ? CONSOLE_COLOR_RED : ""),
+    errorCount,
+    ((consoleColors) ? CONSOLE_COLOR_RESET : ""),
     
     // Colour the debug count with cyan
-    CONSOLE_COLOR_CYAN, debugCount, CONSOLE_COLOR_RESET);
+    ((consoleColors) ? CONSOLE_COLOR_CYAN : ""),
+    debugCount,
+    ((consoleColors) ? CONSOLE_COLOR_RESET : ""));
 
 }
