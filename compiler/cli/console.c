@@ -101,7 +101,7 @@ int consoleInfo(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? STRING_CONSOLE_CAT_INFO_MESSAGE : STRING_CONSOLE_CAT_INFO_MESSAGE_COLORLESS): ((consoleColors) ? STRING_CONSOLE_INFO_MESSAGE : STRING_CONSOLE_INFO_MESSAGE_COLORLESS)), 0);
+        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_CAT_INFO_MESSAGE_NO_GRAY : STRING_CONSOLE_CAT_INFO_MESSAGE) : STRING_CONSOLE_CAT_INFO_MESSAGE_COLORLESS): ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_INFO_MESSAGE_NO_GRAY : STRING_CONSOLE_INFO_MESSAGE) : STRING_CONSOLE_INFO_MESSAGE_COLORLESS)), 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -132,7 +132,7 @@ int consoleDebug(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? STRING_CONSOLE_CAT_DEBUG_MESSAGE : STRING_CONSOLE_CAT_DEBUG_MESSAGE_COLORLESS) : ((consoleColors) ? STRING_CONSOLE_DEBUG_MESSAGE : STRING_CONSOLE_DEBUG_MESSAGE_COLORLESS)), 1);
+        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_CAT_DEBUG_MESSAGE_NO_GRAY : STRING_CONSOLE_CAT_DEBUG_MESSAGE) : STRING_CONSOLE_CAT_DEBUG_MESSAGE_COLORLESS) : ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_DEBUG_MESSAGE_NO_GRAY : STRING_CONSOLE_DEBUG_MESSAGE) : STRING_CONSOLE_DEBUG_MESSAGE_COLORLESS)), 1);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -163,7 +163,7 @@ int consoleWarn(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? STRING_CONSOLE_CAT_WARNING_MESSAGE : STRING_CONSOLE_CAT_WARNING_MESSAGE_COLORLESS) : ((consoleColors) ? STRING_CONSOLE_WARNING_MESSAGE : STRING_CONSOLE_WARNING_MESSAGE_COLORLESS)), 0);
+        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_CAT_WARNING_MESSAGE_NO_GRAY : STRING_CONSOLE_CAT_WARNING_MESSAGE) : STRING_CONSOLE_CAT_WARNING_MESSAGE_COLORLESS) : ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_WARNING_MESSAGE_NO_GRAY : STRING_CONSOLE_WARNING_MESSAGE) : STRING_CONSOLE_WARNING_MESSAGE_COLORLESS)), 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -194,7 +194,7 @@ int consoleError(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? STRING_CONSOLE_CAT_ERROR_MESSAGE : STRING_CONSOLE_CAT_ERROR_MESSAGE_COLORLESS) : ((consoleColors) ? STRING_CONSOLE_ERROR_MESSAGE : STRING_CONSOLE_ERROR_MESSAGE_COLORLESS)), 0);
+        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ? ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_CAT_ERROR_MESSAGE_NO_GRAY : STRING_CONSOLE_CAT_ERROR_MESSAGE) : STRING_CONSOLE_CAT_ERROR_MESSAGE_COLORLESS) : ((consoleColors) ? ((consoleNoGray) ? STRING_CONSOLE_ERROR_MESSAGE_NO_GRAY : STRING_CONSOLE_ERROR_MESSAGE) : STRING_CONSOLE_ERROR_MESSAGE_COLORLESS)), 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
