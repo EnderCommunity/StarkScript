@@ -22,7 +22,7 @@ void printCmplrMsg(){
 %s    This is an incomplete experimental project. Development\
 \n    on this project is still in its very early stages and\
 \n    it could stop at any given time and for no valid reason.\n\
-\n    For help, re-run this command with the flag \"--help\" or\
+\n    For help, re-run this command with the \"--help\" flag or\
 \n    the flag \"-h\"... \n\
 \n    Please, consider helping us with this project! %s<3%s\n\n\
 \n        * For more information, visit: %s%s\n\n\n",
@@ -63,7 +63,7 @@ void printCmplrMsg(){
 }
 
 // Define a function that prints the exit message
-void printExtMsg(int didFail){
+void printExtMsg(int didFail, int compiledFiles){
 
     // Calculate the time it took the compiler to get to this point
     clock_t endTime = clock();
@@ -71,8 +71,8 @@ void printExtMsg(int didFail){
 
     // Print into the console
     consoleLog(((FLAG_CONSOLE_DEBUG_MESSAGES && consoleAllowDebug) ?
-        "\n%s%s%s in %.4fs\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n" :
-        "\n%s%s%s in %.4fs\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s)\n\n"),
+        "\n%s%s%s in %.4fs %s(%d files compiled)%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n" :
+        "\n%s%s%s in %.4fs %s(%d files compiled)%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s)\n\n"),
 
     // Colour the status word with its appropriate colour
     ((consoleColors) ? 
@@ -88,6 +88,11 @@ void printExtMsg(int didFail){
 
     // Pass the `timeSpent` variable to the print function
     timeSpent,
+
+    // Pass the number of the compiled files
+    (consoleNoGray) ? "" : CONSOLE_COLOR_GRAY,
+    compiledFiles,
+    (consoleNoGray) ? "" : CONSOLE_COLOR_RESET,
 
     // Colour the logs count with green
     ((consoleColors) ? CONSOLE_COLOR_GREEN : ""),
