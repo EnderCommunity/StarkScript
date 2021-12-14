@@ -73,7 +73,7 @@ make
 If you wish to check for any memory leaks, you can use `valgrind` on Linux:
 
 ```sh
-sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./Stark.out
+sudo valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./Stark.out
 ```
 
 ## Contributing

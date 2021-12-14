@@ -116,12 +116,12 @@ int main(int argc, char *argv[]){
     // Prepare the random number generator
     randInit();
 
-    // Print the compiler start message
-    printCmplrMsg();
-
     // Define a variable that can be used to decide if the compiler should attempt to start
     // compiling or not
     int allowCompile = 1;
+
+    // Print the compiler start message
+    printCmplrMsg();
 
     // Process the command line arguments
     processArgs(argc, argv, &allowCompile);

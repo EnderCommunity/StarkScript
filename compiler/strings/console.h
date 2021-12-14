@@ -22,15 +22,28 @@
 
 // Define the prefix of debug console messages
 #define STRING_CONSOLE_DEBUG_MESSAGE "[\033[0;36m*\033[0m][\033[0;36mDebug\033[0m] -> "
+#define STRING_CONSOLE_DEBUG_MESSAGE_COLORLESS "[*][Debug] -> "
+#define STRING_CONSOLE_CAT_DEBUG_MESSAGE "\033[38;5;153m  /ᐠ__ᐟ\\   \n=( \033[0;36mŌ\033[38;5;14m △ \033[0;36mŌ\033[38;5;153m)=\033[38;5;240m ∳ \033[0;36mDebug\033[0m\n             "
+#define STRING_CONSOLE_CAT_DEBUG_MESSAGE_COLORLESS "  /ᐠ__ᐟ\\   \n=( Ō △ Ō)= ∳ Debug\n             "
 
 // Define the prefix of informative console messages
 #define STRING_CONSOLE_INFO_MESSAGE "[\033[0;32m?\033[0m][\033[0;32mInfo\033[0m] -> "
+#define STRING_CONSOLE_INFO_MESSAGE_COLORLESS "[?][Info] -> "
+#define STRING_CONSOLE_CAT_INFO_MESSAGE "\033[38;5;47m  /ᐠ__ᐟ\\   \n=( \033[0;32mÔ\033[38;5;48m △ \033[0;32mÔ\033[38;5;47m)=\033[38;5;240m ∳ \033[0;32mInfo\033[0m\n             "
+#define STRING_CONSOLE_CAT_INFO_MESSAGE_COLORLESS "  /ᐠ__ᐟ\\   \n=( Ô △ Ô)= ∳ Info\n             "
 
 // Define the prefix of warning console messages
 #define STRING_CONSOLE_WARNING_MESSAGE "[\033[0;33m!\033[0m][\033[0;33mWarn\033[0m] -> "
+#define STRING_CONSOLE_WARNING_MESSAGE_COLORLESS "[!][Warn] -> "
+#define STRING_CONSOLE_CAT_WARNING_MESSAGE "\033[38;5;222m  /ᐠ__ᐟ\\   \n=( \033[0;33mǑ\033[38;5;223m △ \033[0;33mǑ\033[38;5;222m)=\033[38;5;240m ∳ \033[0;33mWarn\033[0m\n             "
+#define STRING_CONSOLE_CAT_WARNING_MESSAGE_COLORLESS "  /ᐠ__ᐟ\\   \n=( Ǒ △ Ǒ)= ∳ Warn\n             "
 
 // Define the prefix of error console messages
 #define STRING_CONSOLE_ERROR_MESSAGE "[\033[0;31mx\033[0m][\033[0;31mError\033[0m] -> "
+#define STRING_CONSOLE_ERROR_MESSAGE_COLORLESS "[x][Error] -> "
+#define STRING_CONSOLE_CAT_ERROR_MESSAGE "\033[38;5;210m  /ᐠ__ᐟ\\   \n=( \033[0;31mÒ\033[38;5;218m △ \033[0;31mÓ\033[38;5;210m)=\033[38;5;240m ∳ \033[0;31mError\033[0m\n             "
+#define STRING_CONSOLE_CAT_ERROR_MESSAGE_COLORLESS "  /ᐠ__ᐟ\\   \n=( Ò △ Ó)= ∳ Error\n             "
 
 // Define the GitHub issue suggestion string
 #define STRING_CONSOLE_GITHUB_REPORT "\033[0;36m\n\n            * Please, open an issue on our GitHub repository about this error! (visit https://github.com/EnderCommunity/StarkScript/issues/)\n\033[0m"
+#define STRING_CONSOLE_GITHUB_REPORT_COLORLESS "\n\n            * Please, open an issue on our GitHub repository about this error! (visit https://github.com/EnderCommunity/StarkScript/issues/)\n"
