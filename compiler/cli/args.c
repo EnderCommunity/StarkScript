@@ -87,6 +87,9 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         // --save-temps     Indicates that the user wishes to keep the generated temporary files
         // --save-temps-c   Indicates that the user wishes to keep the intermediate c files
         // --gcc (p)        Runs the "gcc -v" command
+        // --no-colors      Indicates that the user wishes for no coloured text to appear in the
+        //                  console!
+        // --cat            Indicates that the user wishes for a cat to report the console messages!
         // -h (p)           Same as --help
         // -i (r)           Same as --input
         // -o (r)           Same as --output
@@ -212,6 +215,18 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
             // Change the behaviour of the console functions to not allow any >>default<< gray text
             outputSaveTempsC = 1;
+
+        }else if(strcmp(argv[i], "--no-colors") == 0){ // Check if the user does not wishe for any
+                                                    // coloured text to appear in the console
+
+            // Make it so all the formated console messages will have a cat in them!
+            consoleColors = 0;
+
+        }else if(strcmp(argv[i], "--cat") == 0){ // Check if the user wishes for a cat to report all
+                                                 // the console messages!
+
+            // Make it so all the formated console messages will have a cat in them!
+            consoleCat = 1;
 
         }else if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){ // Check if the
                                                             // user is requesting the help catalog

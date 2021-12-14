@@ -26,6 +26,8 @@ void helpCatalog(){
     %s--save-temps%s             Keep intermediate files\n\
     %s--save-temps-c%s           Keep C intermediate files\n\
     %s--gcc%s                    Runs the \"gcc -v\" command\n\
+    %s--no-colors%s              Set all the text in the console to be white!\n\
+    %s--cat%s                    Have a very emotional cat report all the console messages to you!\n\
     %s-h%s <path>                Same as --help\n\
     %s-i%s <path>                Same as --input\n\
     %s-o%s <directory>           Same as --output\n\
@@ -47,6 +49,8 @@ For bug reporting, please visit: %sissues/\n",
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_RED, CONSOLE_COLOR_RESET, // Colour the `--save-temps-c` flag with red to indicate
                                             // that it's an incomplete flag!
+    CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
+    CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
     CONSOLE_COLOR_PURPLE, CONSOLE_COLOR_RESET,
