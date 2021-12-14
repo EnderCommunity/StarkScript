@@ -217,10 +217,15 @@ int main(int argc, char *argv[]){
         // Free up the memory used by the output file name variable
         free(globalIO.output.fileName);
 
-    }
+        // Print a success message
+        printExtMsg(0, -1);
 
-    // Print a success message
-    printExtMsg(0);
+    }else{
+
+        // Print a success message but with a "no compile" status
+        printExtMsg(0, 0);
+
+    }
 
     // Return a SUCCESS exit code
     return EXIT_SUCCESS;

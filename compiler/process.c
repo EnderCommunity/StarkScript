@@ -66,7 +66,7 @@ void stopProcess(int exitCode){
     }
 
     // Print a failure message
-    printExtMsg(1);
+    printExtMsg(1, 0);
 
     // Use the built-in `exit` function to terminate the process
     exit(exitCode);
