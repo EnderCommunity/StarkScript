@@ -126,8 +126,11 @@ int main(int argc, char *argv[]){
     // Process the command line arguments
     processArgs(argc, argv, &allowCompile);
 
-    // Process the input and output paths
-    if(allowCompile && processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName)){
+    /// Check if the compiler is allowed to compile files
+    if(allowCompile){
+
+        // Process the input and output paths
+        processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName);
 
         // Note that all the variables that were passed to the `processIO` function are now cleared,
         // All these variables were used to generate the `globalIO` object!
