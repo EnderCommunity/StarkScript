@@ -27,6 +27,7 @@ void helpCatalog(){
     %s--save-temps-c%s           Keep C intermediate files\n\
     %s--gcc%s                    Runs the \"gcc -v\" command\n\
     %s--no-colors%s              Set all the text in the console to be white\n\
+                                 (Note that this flag won't affect the compiler's start message)\n\
     %s--cat%s                    Have a very emotional cat report all the console messages to you!\n\
     %s--debug%s                  Show debug messages\n\
     %s-h%s <path>                Same as --help\n\
