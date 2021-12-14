@@ -22,7 +22,7 @@ void printCmplrMsg(){
 %s    This is an incomplete experimental project. Development\
 \n    on this project is still in its very early stages and\
 \n    it could stop at any given time and for no valid reason.\n\
-\n    For help, re-run this command with the flag \"--help\" or\
+\n    For help, re-run this command with the \"--help\" flag or\
 \n    the flag \"-h\"... \n\
 \n    Please, consider helping us with this project! %s<3%s\n\n\
 \n        * For more information, visit: %s%s\n\n\n",
