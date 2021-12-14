@@ -27,6 +27,9 @@ int consoleCat = 0;
 // Define a variable to control console text colours
 int consoleColors = 1;
 
+// Define a variable to control console debug messages
+int consoleAllowDebug = 0;
+
 // Define a function similar to the `____printf` function that will add a prefix to the console
 // output...
 int ____printf_prefix(const char *__format, __builtin_va_list __local_argv, const char *prefix,
@@ -122,7 +125,7 @@ int consoleInfo(const char *format, ...){
 int consoleDebug(const char *format, ...){
 
     // Check if debug mode is enabled
-    if(FLAG_CONSOLE_DEBUG_MESSAGES){
+    if(FLAG_CONSOLE_DEBUG_MESSAGES && consoleAllowDebug){
 
         // Create a `__builtin_va_list` list
         __builtin_va_list __local_argv;

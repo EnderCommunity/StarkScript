@@ -90,6 +90,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
         // --no-colors      Indicates that the user wishes for no coloured text to appear in the
         //                  console!
         // --cat            Indicates that the user wishes for a cat to report the console messages!
+        // --debug          Indicates that the user wishes to see all the debug messages!
         // -h (p)           Same as --help
         // -i (r)           Same as --input
         // -o (r)           Same as --output
@@ -227,6 +228,12 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
             // Make it so all the formated console messages will have a cat in them!
             consoleCat = 1;
+
+        }else if(strcmp(argv[i], "--debug") == 0){ // Check if the user wishes to see all the
+                                                // console debug messages
+
+            // Make it so all the formated console messages will have a cat in them!
+            consoleAllowDebug = 1;
 
         }else if(strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0){ // Check if the
                                                             // user is requesting the help catalog
