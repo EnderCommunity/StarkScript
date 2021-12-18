@@ -71,8 +71,8 @@ void printExtMsg(int didFail, int compiledFiles){
 
     // Print into the console
     consoleLog(((FLAG_CONSOLE_DEBUG_MESSAGES && consoleAllowDebug) ?
-        "\n%s%s%s in %.4fs %s(%d files compiled)%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n" :
-        "\n%s%s%s in %.4fs %s(%d files compiled)%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s)\n\n"),
+        "\n%s%s%s in %.4fs %swith %d file(s) processed%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s), %s%d%s debug log(s)\n\n" :
+        "\n%s%s%s in %.4fs %swith %d file(s) processed%s\n%s%d%s log(s), %s%d%s warning(s), %s%d%s error(s)\n\n"),
 
     // Colour the status word with its appropriate colour
     ((consoleColors) ? 

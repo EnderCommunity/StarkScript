@@ -154,7 +154,7 @@ int main(int argc, char *argv[]){
 
         // Now that we have all the information we need about the input and output paths, we need to
         // start the initial part of the compiling process
-        initialComp(globalIO);
+        int filesCount = initialComp(globalIO);
 
         // Now, you should have two files in the temporary directory!
         // A ".input" file, and a ".lex" file!
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]){
         free(globalIO.output.fileName);
 
         // Print a success message
-        printExtMsg(0, -1);
+        printExtMsg(0, filesCount);
 
     }else{
 
