@@ -17,13 +17,16 @@
 #include "./lexer/lexer.c"
 
 // Define a function that triggers the initial part of compiling
-void initialComp(struct GlobalIO globalIO){
+int initialComp(struct GlobalIO globalIO){
 
     // Trigger the preprocessor
-    preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth,
-                globalIO.output.fileName);
-    
+    int filesCount = preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth,
+                                globalIO.output.fileName);
+
     // Trigger the lexer
     lexer();
+
+    // Return the files count
+    return filesCount;
 
 }

@@ -58,7 +58,10 @@
 #include "./quotes.c"
 
 // Define a function that can be used recursively to process the file
-void preprocR(FILE *inputFile, FILE *outputFile){
+void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles){
+
+    // Update the files count
+    (*processedFiles)++;
 
     // Get the first character in the file
     char currChar = fgetc(inputFile);
@@ -203,9 +206,12 @@ void preprocR(FILE *inputFile, FILE *outputFile){
 }
 
 // Define a function that triggers the preprocessor
-void preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName){
+int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName){
 
     // You are not allowed to modify any of this function's arguments
+
+    // Keep track of the number of processed files
+    int processedFiles = 0;
 
     // Open a file stream in read-only mode to read the content of the input file
     FILE *inputFile = fopen(inputPth, "r");
@@ -229,9 +235,12 @@ void preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName
     free(outputFileDir);
 
     // Call the recursive function
-    preprocR(inputFile, outputFile);
+    preprocR(inputFile, outputFile, &processedFiles);
 
     // Close the output file stream
     fclose(outputFile);
+
+    // Return the number of processed files
+    return processedFiles;
 
 }
