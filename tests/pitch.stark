@@ -45,7 +45,7 @@ function<int> Main(myVariable:int, myVariable2:bool){
 
 // StarkScript (1)
 
-// Define a preprocessor condition
+// Define a block-condition
 condition Platform {
 
     win: 1,
@@ -53,7 +53,7 @@ condition Platform {
 
 }
 
-// Preprocessor conditions can be only used on code blocks!
+// Block-conditions can be only used on code blocks!
 // The compiler will assume that all that comes after the condition line is a part of the code
 // block. - Code blocks are chunks of code that are between curly brackets ({}) -
 
