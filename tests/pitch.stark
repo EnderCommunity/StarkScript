@@ -46,8 +46,12 @@ function<int> Main(myVariable:int, myVariable2:bool){
 // StarkScript (1)
 
 // Define a preprocessor condition
-condition Platform ::Win 1,
-                   ::Linux 0;
+condition Platform {
+
+    win: 1,
+    Linux: 1
+
+}
 
 // Preprocessor conditions can be only used on code blocks!
 // The compiler will assume that all that comes after the condition line is a part of the code
