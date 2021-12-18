@@ -45,6 +45,39 @@ function<int> Main(myVariable:int, myVariable2:bool){
 
 // StarkScript (1)
 
+// Define a preprocessor condition
+condition Platform ::Win 1,
+                   ::Linux 0;
+
+// Preprocessor conditions can be only used on code blocks!
+// The compiler will assume that all that comes after the condition line is a part of the code
+// block. - Code blocks are chunks of code that are between curly brackets ({}) -
+
+// Define this version of the function for Windows
+@Platform::Win
+function<void> SystemRelatedFunction(){
+
+    // ...
+
+}
+
+// Define this version of the function for Linux-based systems
+@Platform::Linux
+function<void> SystemRelatedFunction(){
+
+    // ...
+
+}
+
+function<void> MyFunction(...args){
+
+    // ...
+
+}
+
+
+// StarkScript (2)
+
 class MyCustomObject {
 
     // All variables and functions (except for the `constructor`) are set to
@@ -54,13 +87,13 @@ class MyCustomObject {
     variable:int a;
     variable:string b;
 
-    append function<void> myFunction(){
+    append function<void> MyFunction(){
 
         //
 
     }
 
-    function<void> myFunction2(){
+    function<void> MyFunction2(){
 
         //
 
@@ -81,7 +114,7 @@ variable:MyCustomObject name = new MyCustomObject(0, "");
 
 class MyClass {
 
-    append function<void> myFunction(){
+    append function<void> MyFunction(){
 
         //
 
@@ -89,4 +122,4 @@ class MyClass {
 
 }
 
-MyClass.myFunction();
+MyClass.MyFunction();
