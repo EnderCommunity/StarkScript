@@ -48,6 +48,10 @@
 // Note that Import narratives should be nest-able. (An import narrative is allowed to include
 // other import narratives inside of it)
 
+// Import the `ctype.h` library
+// This library is useful for detecting data types! (e.g. detecting the type of a char)
+#include <ctype.h>
+
 // Import the `opnImportFile` function and its related functions
 #include "./files.c"
 
@@ -56,6 +60,24 @@
 
 // Import all the quotes-related functions
 #include "./quotes.c"
+
+// Import all the functions that are related to the "import" keyword
+#include "./import.c"
+
+// Import all the functions that are related to the "use" keyword
+#include "./use.c"
+
+// Define a function to handle preprocessor errors
+void preprocError(FILE *inputFile, FILE *outputFile, const char *msg){
+
+    // Close the opened file streams
+    fclose(inputFile);
+    fclose(outputFile);
+
+    // Temp
+    consoleError(msg);
+
+}
 
 // Define a function that can be used recursively to process the file
 void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles){
@@ -83,6 +105,10 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles){
     // code that may follow the comment)
     int multilinearCommEnd = 0,
         multilinearCommStart = 0;
+
+    // Keep track of importing contexts
+    int importContextStart = 0,
+        useContextStart = 0;
 
     // Start a loop to look through all the characters within the input file
     // Only stop the loop when you reach the "end of file" character (EOF)
@@ -119,26 +145,124 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles){
         // inMultilinearComm                    A multi-linear comment context starts with the first
         //                                      slash and ends with the last slash.
 
+        // Check if you're in a context that does not include any comments...
+        if(!inLinearComm && !inMultilinearComm){
+
+            // Check if the current character is not a whitespace
+            if(currChar != ' ' && currChar != '\t'){
+
+                // Note: move this chunk of code to the "use.c" file when you're done with it!
+                // Warning: this chunk of code is not read yet!
+
+                // Check if you're in a quoting context
+                if(inQuote && inDoubleQuote) {
+
+                    // Check if you're in a "use" context
+                    if(useContextStart){
+
+                        // Temp
+                        preprocError(inputFile, outputFile,
+                                        "A \"use\" context should not include a quoting context!");
+
+                    }
+
+                }
+
+                // Note: move this chunk of code to the "import.c" file when you're done with it!
+                // Warning: this chunk of code is not read yet!
+
+                // Check if you're in an "import" context
+                if(importContextStart){
+
+                    // Check if you're in a new line now
+                    if(currChar == '\n'){
+
+                        // Temp
+                        preprocError(inputFile, outputFile,
+                                    "You cannot move to a new line within an \"import\" context!");
+
+                    }else if(inQuote){ // Check if you're in a quoting context
+
+                        // Temp
+                        preprocError(inputFile, outputFile,
+                                        "You can only use double quotes to point out strings!");
+
+                    }else if(inDoubleQuote){ // Check if you're in a double-quoting context
+
+                        // Temp
+                        consoleInfo("Found a VALID \"import\" context!");
+                        importContextStart = 0;
+
+                    }else{
+
+                        // Temp
+                        preprocError(inputFile, outputFile, "Unexpected \"import\" context!");
+
+                    }
+
+                }
+
+            }
+
+        }
+
         // Check if you're in a context that can only include code that's intended to be ran
         if(!inQuote && !inDoubleQuote && !inLinearComm && !inMultilinearComm) {
 
-            // Debug
-            // consoleLog("%s", CONSOLE_COLOR_PURPLE);
-
             // The preprocessor is only responsible for filtering comments and importing files
-            // The preprocessor is already filtering comments
+            // The preprocessor is already filtering comments, so you need to take of importing
+            // all the files used within the main file!
 
-            // Look for the "import" keyword
-            // if(currChar == 'i'){
+            // Note that you should not process any keyword contexts (like "import" and "use")
+            // outside of this "while" loop. You may branch off to another function when you check
+            // for the keywords themselves or for any expected data that you know is there! (You
+            // should not deal with any whitespace or redundant characters in such contexts)
+            // This is done to make sure that comments (that may be inside a keyword's context) will
+            // not trigger false errors or warnings.
+            // An example of this would be this:
+            //  __________________________________________________________________
+            // |                                                                  |
+            // |  import /* my comment! */ "file.stark";                          |
+            // |__________________________________________________________________|
             //
-            //     // ...
-            //
-            // }
+            // The while loop is written specifically to prevent such contexts from triggering false
+            // errors. So you should always make sure to stay within the while loop when you are not
+            // sure of the nature of the input/"input context" you're dealing with!
 
-        }else {
+            // Note: move the `useContextStart` condition to the "use.c" file when you're done with
+            // it!
+            // Warning: this chunk of code is not read yet!
 
-            // Debug
-            // consoleLog("%s", CONSOLE_COLOR_RESET);
+            // Check if you're in a "use" context
+            if(useContextStart){
+
+                // Temp
+                consoleInfo("Found a \"use\" context!");
+                useContextStart = 0;
+
+                // Check if you're in a new line now
+                if(currChar == '\n'){
+
+                    // Temp
+                    preprocError(inputFile, outputFile,
+                                    "You cannot move to a new line within a \"use\" context!");
+
+                }
+
+            }else if(!importContextStart){
+
+                // Search for an "import" context
+                importContextStart = importContext(&inputFile, &prvsChar, &currChar);
+
+                // Check if you didn't reach an "import" context yet
+                if(!importContextStart){
+
+                    // Search for a "use" context
+                    useContextStart = useContext(&inputFile, &prvsChar, &currChar);
+
+                }
+
+            }
 
         }
 
@@ -235,6 +359,8 @@ int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName)
     free(outputFileDir);
 
     // Call the recursive function
+    // Note that you have to use the `preprocError` function to report errors inside the recursive
+    // function. This is done to prevent memory leaks on sudden termination!
     preprocR(inputFile, outputFile, &processedFiles);
 
     // Close the output file stream
