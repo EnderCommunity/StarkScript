@@ -8,23 +8,27 @@ use system.info;
 
 // Import files
 import "file.stark";
-import "file.stark" with prefix Duplicate1; // (You will have to do "Duplicate1->" to access
-                                            // variables and functions from this file)
+// import "file.stark" prefix Duplicate1; // (You will have to do "Duplicate1->" to access
+//                                             // variables and functions from this file)
+//                                             // Note: this is a bad idea!
 
 // Pass the name of the function that the compiler should run at runtime!
+// By default, the function that the compiler will look for is a function with the name "Main".
+// But, if you wish to use the name of another function, you tell the compiler to run that other
+// function using the "start" keyword!
 start Main;
 
-fileVariable; // from the first import
-Duplicate1->fileVariable; // from the second import
+// fileVariable; // from the first import
+// Duplicate1->fileVariable; // from the second import
 
-// Define constants in the preprocessor
+// Define constants in the preprocessor (c preprocessor constants)
 define ZERO 0; // You can use the `define` function to define a constant
 
-// There will be some compiler constant. All the compiler constants will be accessible like
-// this: %NAME%
-%BINARY_HASH%; // The hash of the final binary file (just an example, not gonna be really
-               // included)
+// There will be some compiler constants. All the compiler constants will be accessible like
+// this: %%NAME%%
+%%SYSTEM%%;
 
+// The start function
 function<int> Main(myVariable:int, myVariable2:bool){
 
     // Define some variables of the type "int"
@@ -48,8 +52,8 @@ function<int> Main(myVariable:int, myVariable2:bool){
 // Define a block-condition
 condition Platform {
 
-    win: 1,
-    Linux: 1
+    win: true,
+    Linux: true
 
 }
 
@@ -57,7 +61,7 @@ condition Platform {
 // The compiler will assume that all that comes after the condition line is a part of the code
 // block. - Code blocks are chunks of code that are between curly brackets ({}) -
 
-// Define this version of the function for Windows
+// Define this version of the `SystemRelatedFunction` function for Windows
 @Platform::Win
 function<void> SystemRelatedFunction(){
 
@@ -65,7 +69,7 @@ function<void> SystemRelatedFunction(){
 
 }
 
-// Define this version of the function for Linux-based systems
+// Define this version of the `SystemRelatedFunction` function for Linux-based systems
 @Platform::Linux
 function<void> SystemRelatedFunction(){
 
