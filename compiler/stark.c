@@ -86,6 +86,9 @@ void stopProcess(int exitCode);
 // Include all the console-related functions
 #include "./cli/console.c"
 
+// Include all the code-related error reporting functions
+#include "./cli/report.c"
+
 // Include all the system-related functions
 #include "./system.c"
 
