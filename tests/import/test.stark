@@ -1,7 +1,8 @@
-
+// Test
 import "myfile.stark";
 // import 'myfile.stark'; // This will trigger an error!
 //import'myfile.stark'; // This will trigger an error!
 import"myfile.stark";
 import /* Hello there! */ "myfile.stark";
 import 0 "myfile.stark"; // This will trigger an error!
+// Test
