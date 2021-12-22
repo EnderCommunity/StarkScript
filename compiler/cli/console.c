@@ -218,15 +218,22 @@ int consoleWarn(const char *format, ...){
 
 }
 
+// Define a function that returns the length of the console error message prefix
+int errorPrefixLength(){
+
+    return (consoleCat) ? STRING_CONSOLE_CAT_ERROR_MESSAGE_LENGTH : STRING_CONSOLE_ERROR_MESSAGE_LENGTH;
+
+}
+
 // Define a function that will print warnings into the console
-int consoleError(const char *format, ...){
+int consoleError(const char *format, int exit, ...){
 
     // Check if error messages are enabled
     if(FLAG_CONSOLE_ERROR_MESSAGES){
 
         // Create a `__builtin_va_list` list
         __builtin_va_list __local_argv;
-        __builtin_va_start(__local_argv, format);
+        __builtin_va_start(__local_argv, exit);
 
         // Print a prefixed console message
         int result = ____printf_prefix(format, __local_argv, ((consoleCat) ?
@@ -248,7 +255,7 @@ int consoleError(const char *format, ...){
         errorCount++;
 
         // Check if the error message is allowed to terminate this process
-        if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT) {
+        if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT && exit) {
 
             // Exit with a FAILURE state
             stopProcess(EXIT_FAILURE);
