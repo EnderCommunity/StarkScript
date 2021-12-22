@@ -75,7 +75,13 @@ void preprocError(FILE *inputFile, FILE *outputFile, const char *msg){
     fclose(outputFile);
 
     // Temp
-    consoleError(msg);
+    // consoleError(msg, 1);
+
+    // Temp
+    consoleInfo("The following error is just a placeholder! (The picked file and position are not related to the actual error)");
+
+    // Report this error to the user
+    report("./../tests/import/test.stark:5;7*<path_2>:0;0*<path_1>:0;0", 20, 1, msg, REPORT_ERROR);
 
 }
 
@@ -344,7 +350,7 @@ int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName)
     if(inputFile == NULL){
 
         // Tell the user that the input file is inaccessible
-        consoleError("Couldn't access the input file!");
+        consoleError("Couldn't access the input file!", 1);
 
     }
 

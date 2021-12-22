@@ -177,6 +177,31 @@ int consoleDebug(const char *format, ...){
 
 }
 
+// Define a function that returns the length of the console warning message prefix
+int warnPrefixLength(){
+
+    return (consoleCat) ? STRING_CONSOLE_CAT_WARN_MESSAGE_LENGTH : STRING_CONSOLE_WARN_MESSAGE_LENGTH;
+
+}
+
+// Define a function that can return the prefix string of warning messages
+const char* consoleWarnPrefix(){
+
+    // Return the prefix string
+    return ((consoleCat) ?
+                ((consoleColors) ?
+                    ((consoleNoGray) ?
+                        STRING_CONSOLE_CAT_WARNING_MESSAGE_NO_GRAY :
+                        STRING_CONSOLE_CAT_WARNING_MESSAGE) :
+                    STRING_CONSOLE_CAT_WARNING_MESSAGE_COLORLESS) :
+                ((consoleColors) ? ((consoleNoGray) ?
+                        STRING_CONSOLE_WARNING_MESSAGE_NO_GRAY :
+                        STRING_CONSOLE_WARNING_MESSAGE) :
+                    STRING_CONSOLE_WARNING_MESSAGE_COLORLESS)
+                );
+
+}
+
 // Define a function that will print warnings into the console
 int consoleWarn(const char *format, ...){
 
@@ -188,17 +213,7 @@ int consoleWarn(const char *format, ...){
         __builtin_va_start(__local_argv, format);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ?
-                                        ((consoleColors) ?
-                                            ((consoleNoGray) ?
-                                                STRING_CONSOLE_CAT_WARNING_MESSAGE_NO_GRAY :
-                                                STRING_CONSOLE_CAT_WARNING_MESSAGE) :
-                                            STRING_CONSOLE_CAT_WARNING_MESSAGE_COLORLESS) :
-                                            ((consoleColors) ? ((consoleNoGray) ?
-                                                STRING_CONSOLE_WARNING_MESSAGE_NO_GRAY :
-                                                STRING_CONSOLE_WARNING_MESSAGE) :
-                                            STRING_CONSOLE_WARNING_MESSAGE_COLORLESS)
-                                        ), 0);
+        int result = ____printf_prefix(format, __local_argv, consoleWarnPrefix(), 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -218,28 +233,43 @@ int consoleWarn(const char *format, ...){
 
 }
 
+// Define a function that returns the length of the console error message prefix
+int errorPrefixLength(){
+
+    return (consoleCat) ? STRING_CONSOLE_CAT_ERROR_MESSAGE_LENGTH : STRING_CONSOLE_ERROR_MESSAGE_LENGTH;
+
+}
+
+// Define a function that can return the prefix string of error messages
+const char* consoleErrorPrefix(){
+
+    // Return the prefix string
+    return ((consoleCat) ?
+                ((consoleColors) ?
+                    ((consoleNoGray) ?
+                        STRING_CONSOLE_CAT_ERROR_MESSAGE_NO_GRAY :
+                        STRING_CONSOLE_CAT_ERROR_MESSAGE) :
+                    STRING_CONSOLE_CAT_ERROR_MESSAGE_COLORLESS) :
+                ((consoleColors) ? ((consoleNoGray) ?
+                        STRING_CONSOLE_ERROR_MESSAGE_NO_GRAY :
+                        STRING_CONSOLE_ERROR_MESSAGE) :
+                    STRING_CONSOLE_ERROR_MESSAGE_COLORLESS)
+                );
+
+}
+
 // Define a function that will print warnings into the console
-int consoleError(const char *format, ...){
+int consoleError(const char *format, int exit, ...){
 
     // Check if error messages are enabled
     if(FLAG_CONSOLE_ERROR_MESSAGES){
 
         // Create a `__builtin_va_list` list
         __builtin_va_list __local_argv;
-        __builtin_va_start(__local_argv, format);
+        __builtin_va_start(__local_argv, exit);
 
         // Print a prefixed console message
-        int result = ____printf_prefix(format, __local_argv, ((consoleCat) ?
-                                        ((consoleColors) ?
-                                            ((consoleNoGray) ?
-                                                STRING_CONSOLE_CAT_ERROR_MESSAGE_NO_GRAY :
-                                                STRING_CONSOLE_CAT_ERROR_MESSAGE) :
-                                            STRING_CONSOLE_CAT_ERROR_MESSAGE_COLORLESS) :
-                                            ((consoleColors) ? ((consoleNoGray) ?
-                                                STRING_CONSOLE_ERROR_MESSAGE_NO_GRAY :
-                                                STRING_CONSOLE_ERROR_MESSAGE) :
-                                            STRING_CONSOLE_ERROR_MESSAGE_COLORLESS)
-                                        ), 0);
+        int result = ____printf_prefix(format, __local_argv, consoleErrorPrefix(), 0);
 
         // Close the opened `__builtin_va_list` list
         __builtin_va_end(__local_argv);
@@ -248,7 +278,7 @@ int consoleError(const char *format, ...){
         errorCount++;
 
         // Check if the error message is allowed to terminate this process
-        if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT) {
+        if(FLAG_CONSOLE_ERROR_MESSAGES_EXIT && exit) {
 
             // Exit with a FAILURE state
             stopProcess(EXIT_FAILURE);

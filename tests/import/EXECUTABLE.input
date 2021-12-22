@@ -4,4 +4,4 @@ t "myfile.stark";
 
 t"myfile.stark";
 t                    "myfile.stark";
-t "myfile.stark" 0; 
+t 

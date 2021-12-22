@@ -113,7 +113,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                     // Show an error in the console tellling the user that only one input path can
                     // be passed at a time
-                    consoleError("Only one input path can passed at a time!");
+                    consoleError("Only one input path can passed at a time!", 1);
 
                 }
 
@@ -121,7 +121,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                 // Show an error in the console telling the user that the compiler expected another
                 // argument after this one
-                consoleError("Expected another argument after the \"%s\" argument!", argv[--i]);
+                consoleError("Expected another argument after the \"%s\" argument!", 1, argv[--i]);
 
             }
 
@@ -143,7 +143,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                     // Show an error in the console tellling the user that only one output path can
                     // be passed at a time
-                    consoleError("Only one output path can passed at a time!");
+                    consoleError("Only one output path can passed at a time!", 1);
 
                 }
 
@@ -151,7 +151,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                 // Show an error in the console telling the user that the compiler expected another
                 // argument after this one
-                consoleError("Expected another argument after the \"%s\" argument!", argv[--i]);
+                consoleError("Expected another argument after the \"%s\" argument!", 1, argv[--i]);
 
             }
 
@@ -173,7 +173,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                     // Show an error in the console tellling the user that only one output path can
                     // be passed at a time
-                    consoleError("Only one output name can passed at a time!");
+                    consoleError("Only one output name can passed at a time!", 1);
 
                 }
 
@@ -181,7 +181,7 @@ void processArgs(int argc, char *argv[], int *allowCompile){
 
                 // Show an error in the console telling the user that the compiler expected another
                 // argument after this one
-                consoleError("Expected another argument after the \"%s\" argument!", argv[--i]);
+                consoleError("Expected another argument after the \"%s\" argument!", 1, argv[--i]);
 
             }
 

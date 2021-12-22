@@ -90,9 +90,9 @@ void printExtMsg(int didFail, int compiledFiles){
     timeSpent,
 
     // Pass the number of the compiled files
-    (consoleNoGray) ? "" : CONSOLE_COLOR_GRAY,
+    (consoleNoGray || !consoleColors) ? "" : CONSOLE_COLOR_GRAY,
     compiledFiles,
-    (consoleNoGray) ? "" : CONSOLE_COLOR_RESET,
+    (consoleNoGray || !consoleColors) ? "" : CONSOLE_COLOR_RESET,
 
     // Colour the logs count with green
     ((consoleColors) ? CONSOLE_COLOR_GREEN : ""),

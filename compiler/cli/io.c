@@ -100,7 +100,7 @@ char* absPth(char *pth){
 
         // You can't really know the native function for an operating system that you don't
         // know, so return an error to the user to tell them about this.
-        consoleError("Your operating system is not supported by the compiler!%s",
+        consoleError("Your operating system is not supported by the compiler!%s", 1,
                 STRING_CONSOLE_GITHUB_REPORT);
 
     #endif
@@ -152,7 +152,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                     if(strlen(buffer) == 0){
 
                         // Inform the user about this error
-                        consoleError("Couldn't get the current working directory!");
+                        consoleError("Couldn't get the current working directory!", 1);
 
                     }else{
 
@@ -253,12 +253,13 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                     } else if (ENOENT == errno) {
 
                         // The passed output directory doesn't exist
-                        consoleError("The passed output path is invalid! (You must pass a valid directory path)");
+                        consoleError("The passed output path is invalid! (You must pass a valid directory path)"
+                                        , 1);
 
                     } else {
 
                         // The `opendir` function failed for some other reason.
-                        consoleError("Couldn't check the output directory!");
+                        consoleError("Couldn't check the output directory!", 1);
 
                     }
 
@@ -276,14 +277,15 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
             }else{
 
                 // This is not a valid path
-                consoleError("You can't pass a directory path as an input file path! (You must pass a valid file path)");
+                consoleError("You can't pass a directory path as an input file path! (You must pass a valid file path)"
+                                , 1);
 
             }
 
         }else{
 
             // This is not a valid path
-            consoleError("The passed input path is invalid! (You must pass a valid file path)");
+            consoleError("The passed input path is invalid! (You must pass a valid file path)", 1);
 
         }
 
@@ -318,7 +320,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
     }else{
 
-        consoleError("No input file path was passed!");
+        consoleError("No input file path was passed!", 1);
 
     }
 
@@ -358,7 +360,8 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
 
             // You need to stop this process!
             // This is an already-existing directory!
-            consoleError("It seems like the randomly generated temporary directory is already in use! (This is a rare thing to happen, try to re-run the compiler)");
+            consoleError("It seems like the randomly generated temporary directory is already in use! (This is a rare thing to happen, try to re-run the compiler)"
+                            , 1);
 
         }
 
@@ -377,7 +380,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
         if(access(globalIO.tempDir, F_OK) != 0){
 
             // Failed to create a temporary directory!
-            consoleError("Couldn't create a temporary directory!%s", STRING_CONSOLE_GITHUB_REPORT);
+            consoleError("Couldn't create a temporary directory!%s", 1, STRING_CONSOLE_GITHUB_REPORT);
 
         }
 

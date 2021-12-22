@@ -66,7 +66,7 @@ char* getTempDir(){
             }else{
 
                 // Inform the user about this error!
-                consoleError("Couldn't find the system's temporary directory!%s",
+                consoleError("Couldn't find the system's temporary directory!%s", 1,
                             STRING_CONSOLE_GITHUB_REPORT);
 
             }
@@ -78,7 +78,7 @@ char* getTempDir(){
             tempDir = NULL;
 
             // Inform the user about this error!
-            consoleError("Couldn't find the system's temporary directory!%s",
+            consoleError("Couldn't find the system's temporary directory!%s", 1,
                             STRING_CONSOLE_GITHUB_REPORT);
 
         #endif

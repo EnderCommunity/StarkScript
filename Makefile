@@ -74,17 +74,22 @@ DEBUG = -g3
 # file is
 INPUT = ./compiler/stark.c
 
+# The LIBRARIES variable is used to store the needed arguments to tell the compiler what libraries
+# it will need to include
+# -lm                         The <math.h> library
+LIBRARIES = -lm
+
 # Define the behaviour of the "make" command
 all:
-	$(CC) $(OPTIMIZE) $(OUTPUT).out $(DEBUG) $(INPUT)
+	$(CC) $(OPTIMIZE) $(OUTPUT).out $(DEBUG) $(INPUT) $(LIBRARIES)
 
 # Define the behaviour of the "make win32" command
 win32:
-	$(W32CC) $(OPTIMIZE) $(OUTPUT)-32bit.exe $(DEBUG) $(INPUT)
+	$(W32CC) $(OPTIMIZE) $(OUTPUT)-32bit.exe $(DEBUG) $(INPUT) $(LIBRARIES)
 
 # Define the behaviour of the "make win64" command
 win64:
-	$(W64CC) $(OPTIMIZE) $(OUTPUT)-64bit.exe $(DEBUG) $(INPUT)
+	$(W64CC) $(OPTIMIZE) $(OUTPUT)-64bit.exe $(DEBUG) $(INPUT) $(LIBRARIES)
 
 clean:
 	rm ./bin/*
