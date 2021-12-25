@@ -44,6 +44,8 @@ function<int> Main(myVariable:int, myVariable2:bool){
     // You can only delete variables
     delete a, b, d;
 
+    // bool double float int string char short long void
+
 }
 
 
