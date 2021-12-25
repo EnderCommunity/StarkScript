@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="${settings:lang}">
+
+<!--
+   -
+   - This is the file that contains the interface of the main window of the studio.
+   - This window contains the list of the projects, list of add-ons, the settings,
+   - and some links to the website of the Stark programming language.
+   -
+   -->
+
+<!--
+    transparent: false
+    frame: true
+    resize: true
+    max/min: true
+    moving/window-dragging: true
+    width: 700
+    height: 520
+    min-width: ?
+    min-height: ?
+    maxByDefault: false
+-->
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- The page title -->
+    <title>${app:title}</title>
+
+    <!-- The CSS resources -->
+    <link rel="stylesheet" href="./layout/window.css">
+    <link rel="stylesheet" href="./layout/main.css">
+
+</head>
+
+<body>
+
+    <!-- Content -->
+    <div class="app--safearea">
+
+        <!-- The side-bar -->
+        <div class="app--sidebar">
+
+            <!-- ??? -->
+            <div class="sidebar--item item--special"></div>
+
+            <!-- The side-bar items -->
+            <div class="sidebar--item">${string:main.sidebar.projects}</div>
+            <div class="sidebar--item">${string:main.sidebar.addons}</div>
+            <div class="sidebar--item">${string:main.sidebar.learn}</div>
+
+            <!-- The bottom side-bar items -->
+            <div class="sidebar--bottom">
+                <div class="sidebar--item item--icon">${string:main.sidebar.settings}</div>
+                <div class="sidebar--item item--icon">${string:main.sidebar.help}</div>
+            </div>
+
+        </div>
+
+        <!-- The content view box -->
+        <div class="app--view">
+
+            <!-- The projects view -->
+            <div id="projects">
+                <div class="view--top"></div>
+            </div>
+
+            <!-- The Add-Ons view -->
+            <div id="addons"></div>
+
+            <!-- The "learn" view -->
+            <div id="learn"></div>
+
+        </div>
+
+    </div>
+
+    <!-- The JS resources -->
+
+</body>
+
+</html>

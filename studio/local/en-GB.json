@@ -1,0 +1,23 @@
+{
+
+    "splash": {
+
+        "info": ""
+
+    },
+
+    "main": {
+
+        "sidebar": {
+
+            "projects": "Projects",
+            "addons": "Add-Ons",
+            "learn": "Learn",
+            "settings": "Settings",
+            "help": "Help"
+
+        }
+
+    }
+
+}
