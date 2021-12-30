@@ -1,7 +1,10 @@
 {
+
     "files.associations": {
+
         "*html": "html",
         "*.html": "html",
+        "*.view": "html",
         "type_traits": "c",
         "*.c": "c",
         "*.h": "c",
@@ -10,5 +13,7 @@
         "typeinfo": "c",
         "cstdio": "c",
         "new": "c"
+
     }
+
 }
