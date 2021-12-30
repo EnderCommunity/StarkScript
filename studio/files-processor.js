@@ -88,15 +88,7 @@ function processViewContent(content) {
         });
 
         // Prepare the final output
-        return viewFrameContent.replace(/prop::title/g, function() {
-
-            return (windowValues.title != undefined) ? `${windowValues.title} | $\${app:title}` : "$${app:title}";
-
-        }).replace(/prop::titleDisplay/g, function() {
-
-            return (windowValues["show-title"]) ? "block" : "none";
-
-        }).replace(/prop::(.*?):/g, function(match, name) {
+        return viewFrameContent.replace(/prop::(.*?):/g, function(match, name) {
 
             if (name == "title") {
 
