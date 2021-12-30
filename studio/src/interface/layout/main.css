@@ -40,6 +40,9 @@
     display: block;
     line-height: var(--sidebaritems-height);
     padding: 0px 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .sidebar--bottom {

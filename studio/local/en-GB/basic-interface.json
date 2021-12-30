@@ -1,11 +1,15 @@
 {
 
-    "splash": {
+    "about": {
 
-        "info": ""
+        "title": "About"
 
     },
+    "alert": {
 
+        "title": "Alert"
+
+    },
     "main": {
 
         "sidebar": {

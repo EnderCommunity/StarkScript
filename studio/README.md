@@ -1,5 +1,9 @@
 # Stark Studio
 
-`${app:**}` -> `(./app.json)->**`
-`${settings:**}` -> `(./settings.json)->**`
+`${app:**}` -> `(./data/app.json)->**`
+`${settings:**}` -> `(./data/settings.json)->**`
 `${string:**}` -> `(./local/{lang}.json)->**`
+
+Deps:
+electron
+monaco-editor

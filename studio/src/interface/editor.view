@@ -1,0 +1,29 @@
+<!--
+   -
+   - This is the file that contains the interface of the editor itself. No more info
+   - about this interface is available at this time.
+   -
+   -->
+
+<!--
+    transparent: false
+    frame: true
+    resize: true
+    max/min: true
+    moving/window-dragging: true
+    width: 740
+    height: 560
+    min-width: ?
+    min-height: ?
+    maxByDefault: true
+-->
+
+<window show-controls="true" enable-max="true" enable-min="true" enable-close="true" show-title="false" start-max="true">
+
+    <content>
+
+        <!---->
+
+    </content>
+
+</window>

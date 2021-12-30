@@ -39,17 +39,19 @@ body,
     font-weight: bolder;
 }
 
-.splash--version,
-.splash--info {
+.splash--version {
     font-size: 5vw;
     position: absolute;
     bottom: 0px;
-}
-
-.splash--version {
     right: 0px;
 }
 
-.splash--info {
-    left: 0px;
+.app--safearea {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+}
+
+.app--titlebar {
+    display: none;
 }
