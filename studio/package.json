@@ -1,0 +1,34 @@
+{
+    "name": "stark-studio",
+    "version": "0.0.1",
+    "description": "No description!",
+    "scripts": {
+        "start": "electron ./launch.js",
+        "build": "node ./build.js",
+        "rebuild": "npm run build && npm start",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/EnderCommunity/StarkScript.git"
+    },
+    "keywords": [
+        "stark",
+        "starkscript",
+        "studio",
+        "stark-studio",
+        "stark studio"
+    ],
+    "author": "0xENDER",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/EnderCommunity/StarkScript/issues"
+    },
+    "homepage": "https://github.com/EnderCommunity/StarkScript#readme",
+    "devDependencies": {
+        "electron": "^16.0.5"
+    },
+    "dependencies": {
+        "monaco-editor": "^0.31.1"
+    }
+}

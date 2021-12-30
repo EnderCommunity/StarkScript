@@ -1,0 +1,56 @@
+/**
+ *
+ * Basic layout style for the main/start window
+ *
+**/
+
+:root {
+    --sidebar-width: 226px;
+    --sidebaritems-height: 42px;
+    --topsection-height: 74px;
+}
+
+.app--sidebar,
+.app--view {
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    position: relative;
+}
+
+.app--sidebar {
+    width: var(--sidebar-width);
+    background-color: lightblue;
+}
+
+.app--view {
+    flex: 1;
+    background-color: lightpink;
+}
+
+.sidebar--item.item--special {
+    height: var(--topsection-height);
+    background-color: purple;
+}
+
+.sidebar--item {
+    height: var(--sidebaritems-height);
+    font-size: 18px;
+    background-color: red;
+    display: block;
+    line-height: var(--sidebaritems-height);
+    padding: 0px 12px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.sidebar--bottom {
+    margin-top: auto;
+}
+
+.view--top {
+    padding: 0px var(--topsection-height);
+    height: var(--topsection-height);
+    background-color: aquamarine;
+}

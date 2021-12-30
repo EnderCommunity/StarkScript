@@ -1,0 +1,66 @@
+<!--
+   -
+   - This is the file that contains the interface of the main window of the studio.
+   - This window contains the list of the projects, list of add-ons, the settings,
+   - and some links to the website of the Stark programming language.
+   -
+   -->
+
+<!--
+    transparent: false
+    frame: true
+    resize: true
+    max/min: true
+    moving/window-dragging: true
+    width: 700
+    height: 520
+    min-width: ?
+    min-height: ?
+    maxByDefault: false
+-->
+
+<window show-controls="true" show-title="true" enable-max="true" enable-min="true" enable-close="true" start-max="false">
+
+    <stylesheet href="studio://interface/layout/main.css" />
+    <javascript ???/>
+
+    <content>
+
+        <!-- The side-bar -->
+        <div class="app--sidebar">
+
+            <!-- ??? -->
+            <div class="sidebar--item item--special"></div>
+
+            <!-- The side-bar items -->
+            <div class="sidebar--item">$${basic-interface:main.sidebar.projects}</div>
+            <div class="sidebar--item">$${basic-interface:main.sidebar.addons}</div>
+            <div class="sidebar--item">$${basic-interface:main.sidebar.learn}</div>
+
+            <!-- The bottom side-bar items -->
+            <div class="sidebar--bottom">
+                <div class="sidebar--item item--icon">$${basic-interface:main.sidebar.settings}</div>
+                <div class="sidebar--item item--icon">$${basic-interface:main.sidebar.help}</div>
+            </div>
+
+        </div>
+
+        <!-- The content view box -->
+        <div class="app--view">
+
+            <!-- The projects view -->
+            <div id="projects">
+                <div class="view--top"></div>
+            </div>
+
+            <!-- The Add-Ons view -->
+            <div id="addons"></div>
+
+            <!-- The "learn" view -->
+            <div id="learn"></div>
+
+        </div>
+
+    </content>
+
+</window>

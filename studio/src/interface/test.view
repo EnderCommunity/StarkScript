@@ -1,0 +1,7 @@
+<window show-controls="true" show-title="true" title="The Title!">
+
+    <stylesheet ???/>
+    <content>Hi</content>
+    <javascript ???/>
+
+</window>
