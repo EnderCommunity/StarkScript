@@ -18,7 +18,7 @@ function createWindow(properties) {
     // Create the window
     const win = new BrowserWindow({
 
-        frame: true,
+        frame: false,
         alwaysOnTop: false,
         center: true,
         resizable: true,
