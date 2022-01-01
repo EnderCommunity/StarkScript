@@ -9,6 +9,11 @@
     --topbar-height: 30px;
 }
 
+* {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 html,
 body {
     width: 100%;
@@ -76,6 +81,7 @@ body {
 
 .app--titlebar .titlebar--controls .controls--option {
     width: 42px;
+    padding: 9px 0px;
 }
 
 .app--titlebar .titlebar--controls .controls--option svg {

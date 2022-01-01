@@ -30,11 +30,13 @@ function createWindow(properties) {
         skipTaskbar: false,
         hasShadow: true,
         focusable: true,
-        title: "Stark Studio",
+        title: "StarkStudio",
         width: 640,
         height: 420,
+        minWidth: 120,
+        minHeight: 80,
         show: false,
-        paintWhenInitiallyHidden: false,
+        paintWhenInitiallyHidden: true,
         titleBarStyle: 'hidden',
 
         // Temp
@@ -47,7 +49,17 @@ function createWindow(properties) {
 
         webPreferences: {
 
-            preload: `${__dirname}/preload.js`
+            devTools: true, // Change this to "false"
+            preload: `${__dirname}/preload.js`,
+            sandbox: true,
+            webSecurity: true,
+            imageAnimationPolicy: "noAnimation",
+            webgl: false,
+            backgroundThrottling: true,
+            autoplayPolicy: "user-gesture-required",
+            accessibleTitle: "Stark Studio",
+            spellcheck: false,
+            enableWebSQL: false
 
         },
 
@@ -81,6 +93,7 @@ function createWindow(properties) {
 // Define the object that this file will return
 module.exports = {
 
+    lang: null,
     loadWindow: {
 
         Main: function(callback) {
@@ -96,7 +109,7 @@ module.exports = {
             });
 
             // Load the main layout
-            window.loadFile("view://main!1");
+            window.loadFile(`./app/local-view/${module.exports.lang}/main.view.html`);
 
             // Pass the window object to the callback function
             callback(window);
@@ -118,7 +131,7 @@ module.exports = {
             window.shouldMaximize = true;
 
             // Load the main layout
-            window.loadFile("view://editor!1");
+            window.loadFile(`./app/local-view/${module.exports.lang}/editor.view.html`);
 
             // Pass the window object to the callback function
             callback(window);
@@ -142,7 +155,7 @@ module.exports = {
             });
 
             // Load the main layout
-            window.loadFile("view://alert!1");
+            window.loadFile(`./app/local-view/${module.exports.lang}/alert.view.html`);
 
             // Pass the window object to the callback function
             callback(window);
@@ -166,7 +179,7 @@ module.exports = {
             });
 
             // Load the main layout
-            window.loadFile("view://about!1");
+            window.loadFile(`./app/local-view/${module.exports.lang}/about.view.html`);
 
             // Pass the window object to the callback function
             callback(window);

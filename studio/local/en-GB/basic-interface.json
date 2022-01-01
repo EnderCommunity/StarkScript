@@ -2,7 +2,8 @@
 
     "about": {
 
-        "title": "About"
+        "title": "About",
+        "buildInfo": "This program was built on $MONTH $DAY, $YEAR!"
 
     },
     "alert": {

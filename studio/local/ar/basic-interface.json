@@ -2,7 +2,8 @@
 
     "about": {
 
-        "title": "حول"
+        "title": "حول",
+        "buildInfo": "تم بناء هذا البرنامج في $DAY $MONTH, سنة $YEAR!"
 
     },
     "alert": {

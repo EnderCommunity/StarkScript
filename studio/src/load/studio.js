@@ -8,6 +8,10 @@
 // Get the required moduels for the inital start
 const { showWindow, closeWindow } = require("./windows");
 const manager = require("./window-manager");
+const { getSettings } = require("./settings");
+
+// Define the studio settings variable
+var studioSettings;
 
 // Define a variable to store all the windows that this program will use
 var windows = {
@@ -21,7 +25,7 @@ var windows = {
 };
 
 // Define a function that will wait for all the windows to fully load
-var initalWindows = 3,
+var initalWindows = 4,
     loadedInitalWindows = 0;
 
 function checkInitalWindows() {
@@ -33,9 +37,10 @@ function checkInitalWindows() {
 
         // Temp
         showWindow(windows.editors[0], function() {}, false);
+        windows.editors[0].openDevTools();
         setTimeout(function() {
             showWindow(windows.main, function() {}, false);
-            // windows.main.openDevTools();
+            windows.main.openDevTools();
             setTimeout(function() {
                 showWindow(windows.about, function() {}, false);
                 setTimeout(function() {
@@ -59,6 +64,11 @@ module.exports = {
 
         // Store the splash widnow object
         windows.splash = splashWindow;
+
+        // Load the settings
+        studioSettings = getSettings();
+
+        manager.lang = studioSettings.lang;
 
         // Start loading all the windows
         manager.loadWindow.Editor("./", function(window) {
