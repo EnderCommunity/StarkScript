@@ -10,53 +10,75 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
-contextBridge.exposeInMainWorld(
-    "electron", {
+const electronAPI = {
 
-        require: function(module) {
+    require: function(module) {
 
-            var modulesWhitelist = [],
-                isWhitelisted = false;
+        var modulesWhitelist = [],
+            isWhitelisted = false;
 
-            modulesWhitelist.forEach(name => {
+        modulesWhitelist.forEach(name => {
 
-                if (name == module) {
+            if (name == module) {
 
-                    isWhitelisted = true;
-
-                }
-
-            });
-
-            if (isWhitelisted) {
-
-                return require(module);
-
-            } else {
-
-                throw new Error("Unsafe module has been detected!");
+                isWhitelisted = true;
 
             }
 
-        },
-        send: (channel, data) => {
+        });
 
-            ipcRenderer.send(channel, data);
+        if (isWhitelisted) {
 
-        },
-        receive: (channel, callback) => {
+            return require(module);
 
-            ipcRenderer.on(channel, (event, ...args) => callback(...args));
+        } else {
 
-        },
-        tell: (channel, data, callback) => {
+            throw new Error("Unsafe module has been detected!");
 
-            // Send the data
-            electron.send(channel, data);
+        }
 
-            // Wait for the callback
+    },
+    send: (channel, data) => {
+
+        ipcRenderer.send(channel, data);
+
+    },
+    receive: (channel, callback) => {
+
+        ipcRenderer.on(channel, (event, ...args) => callback(...args));
+
+    },
+    tell: (channel, data, callback) => {
+
+        // Send the data
+        ipcRenderer.send(channel, data);
+
+        // Wait for the callback
+        if (typeof callback == "function") {
+
             ipcRenderer.once(channel + "-reply", (event, ...args) => callback(...args));
 
         }
+
+    },
+    alert: (title, type, message, callback = null) => {
+
+        electronAPI.tell("show-alert", {
+
+            title: title,
+            type: type,
+            message: message
+
+        }, callback);
+
+    },
+    alertType: {
+
+        info: 0,
+        warn: 1,
+        error: 2
+
     }
-);
+
+};
+contextBridge.exposeInMainWorld("electron", electronAPI);

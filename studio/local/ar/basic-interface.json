@@ -3,7 +3,9 @@
     "about": {
 
         "title": "حول",
-        "buildInfo": "تم بناء هذا البرنامج في $DAY $MONTH, سنة $YEAR!"
+        "buildInfo": "تم بناء هذا البرنامج في $DAY $MONTH, سنة $YEAR!",
+        "description": "StarkStudio هي أداة تطوير رسمية من Stark والتي من شأنها ان تجعل عملية تطوير برامج ،تطبيقات ومكتبات Stark اسهل.",
+        "openSource": "هذا البرنامج بني باستخدام برمجيات مفتوحة المصدر!"
 
     },
     "alert": {

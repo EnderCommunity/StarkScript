@@ -15,7 +15,7 @@ export var tokenizer = {
     ],
     functionalKeywords: [
 
-        "use", "import", "start", "append", "new", "define", "delete", "constructor"
+        "use", "import", "execute", "append", "new", "define", "delete", "constructor", "if", "else", "return", "exit", "intermediate"
 
     ],
     typeKeywords: [
@@ -25,7 +25,7 @@ export var tokenizer = {
     ],
     predefinedKeywords: [
 
-        "this"
+        "this", "true", "false"
 
     ],
 
@@ -49,18 +49,20 @@ export var tokenizer = {
 
         root: [
 
+            [/%%(.*?)%%/, "compiler-constant"],
+            [/'(.*?)'/, "string"],
+
             // identifiers and keywords
             [
 
-                /[a-z_$][\w$]*/,
-                {
+                /[a-z_$][\w$]*/, {
 
                     cases: {
 
                         "@typeKeywords": "keyword.type",
-                        "@functionalKeywords": "keyword",
-                        "@definingKeywords": "keyword",
-                        "@predefinedKeywords": "keyword",
+                        "@functionalKeywords": "keyword.functional",
+                        "@definingKeywords": "keyword.definition",
+                        "@predefinedKeywords": "keyword.predefined",
                         "@default": "identifier",
 
                     },
@@ -95,8 +97,7 @@ export var tokenizer = {
             ],
             [
 
-                /@symbols/,
-                {
+                /@symbols/, {
 
                     cases: {
 
@@ -112,8 +113,7 @@ export var tokenizer = {
             // @ annotations.
             [
 
-                /@[\w:]*/,
-                {
+                /@[a-zA-Z][a-zA-Z_0-9]*/, {
 
                     token: "annotation",
                     log: "annotation token: $0"
@@ -121,7 +121,6 @@ export var tokenizer = {
                 }
 
             ],
-
             // numbers
             [
 
@@ -154,8 +153,7 @@ export var tokenizer = {
             ], // non-teminated string
             [
 
-                /"/,
-                {
+                /"/, {
 
                     token: "string.quote",
                     bracket: "@open",
@@ -228,8 +226,7 @@ export var tokenizer = {
             ],
             [
 
-                /"/,
-                {
+                /"/, {
 
                     token: "string.quote",
                     bracket: "@close",

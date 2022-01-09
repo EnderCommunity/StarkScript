@@ -17,7 +17,6 @@ var studioSettings;
 var windows = {
 
     splash: null,
-    alert: null,
     about: null,
     main: null,
     editors: []
@@ -25,7 +24,7 @@ var windows = {
 };
 
 // Define a function that will wait for all the windows to fully load
-var initalWindows = 4,
+var initalWindows = 3,
     loadedInitalWindows = 0;
 
 function checkInitalWindows() {
@@ -37,15 +36,12 @@ function checkInitalWindows() {
 
         // Temp
         showWindow(windows.editors[0], function() {}, false);
-        windows.editors[0].openDevTools();
+        // windows.editors[0].openDevTools();
         setTimeout(function() {
             showWindow(windows.main, function() {}, false);
-            windows.main.openDevTools();
+            // windows.main.openDevTools();
             setTimeout(function() {
                 showWindow(windows.about, function() {}, false);
-                setTimeout(function() {
-                    showWindow(windows.alert, function() {}, false);
-                }, 500);
             }, 500);
         }, 500);
 
@@ -71,7 +67,7 @@ module.exports = {
         manager.lang = studioSettings.lang;
 
         // Start loading all the windows
-        manager.loadWindow.Editor("./", function(window) {
+        manager.loadWindow.editor("./", function(window) {
 
             // Save the window object
             windows.editors.push(window);
@@ -84,7 +80,7 @@ module.exports = {
             });
 
         });
-        manager.loadWindow.Main(function(window) {
+        manager.loadWindow.main(function(window) {
 
             // Save the window object
             windows.main = window;
@@ -97,23 +93,10 @@ module.exports = {
             });
 
         });
-        manager.loadWindow.About(windows.main, function(window) {
+        manager.loadWindow.about(windows.main, function(window) {
 
             // Save the window object
             windows.about = window;
-
-            // Wait for the window to finish loading
-            window.webContents.once('did-finish-load', function() {
-
-                //checkInitalWindows();
-
-            });
-
-        });
-        manager.loadWindow.Alert("title", "message", "type", windows.main, function(window) {
-
-            // Save the window object
-            windows.alert = window;
 
             // Wait for the window to finish loading
             window.webContents.once('did-finish-load', function() {

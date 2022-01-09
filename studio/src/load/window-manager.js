@@ -96,7 +96,7 @@ module.exports = {
     lang: null,
     loadWindow: {
 
-        Main: function(callback) {
+        main: function(callback) {
 
             // Create a window
             var window = createWindow({
@@ -115,7 +115,7 @@ module.exports = {
             callback(window);
 
         },
-        Editor: function(folder, callback) {
+        editor: function(folder, callback) {
 
             // Create a window
             var window = createWindow({
@@ -137,7 +137,7 @@ module.exports = {
             callback(window);
 
         },
-        Alert: function(title, message, type, parent, callback) {
+        alert: function(title, message, type, parent, callback) {
 
             // Create a window
             var window = createWindow({
@@ -161,7 +161,7 @@ module.exports = {
             callback(window);
 
         },
-        About: function(parent, callback) {
+        about: function(parent, callback) {
 
             // Create a window
             var window = createWindow({
