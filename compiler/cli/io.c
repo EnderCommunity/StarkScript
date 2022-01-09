@@ -21,10 +21,6 @@
 // You need this library to keep track of any errors made by file streams and directory streams
 #include <errno.h>
 
-// Include the `limits.h` library
-// It's used to access the max length of certain values (files names, paths, etc)
-#include <limits.h>
-
 // Get the input and output strings
 #include "./../strings/io.h"
 
@@ -62,6 +58,12 @@ struct GlobalIO {
     // The system's temporary directory
     char *tempDir;
 
+    // The compiler's main directory
+    char *cmpDir;
+
+    // The root directory of Stark's libraries
+    char *libDir;
+
     // The input and output interface
     struct GlobalOutput output;
     struct GlobalInput input;
@@ -71,59 +73,31 @@ struct GlobalIO {
 // Define a global interface variable
 struct GlobalIO globalIO;
 
-// Define a function that can get the absolute path of any given path
-char* absPth(char *pth){
-
-    char *absolutePth = calloc(PATH_MAX + 1, sizeof(char));
-
-    // To get the full path of the input path, you will need to use the dedicated native function
-    // for that!
-    #ifdef _WIN32
-
-        // To get the full path of a file on Windows, you will need to use the `_fullpath`
-        // function. You can read more about the `_fullpath` function here:
-        // https://docs.microsoft.com/cpp/c-runtime-library/reference/fullpath-wfullpath
-
-        // Store the valid path to the global IO interface
-        _fullpath(absolutePth, pth, PATH_MAX);
-
-    #elif __linux__
-
-        // To get the full path of a file on Linux, you will need to use the `realpath`
-        // function. You can read more about the `realpath` function here:
-        // https://man7.org/linux/man-pages/man3/realpath.3.html
-
-        // Store the valid path to the global IO interface
-        realpath(pth, absolutePth);
-
-    #else
-
-        // You can't really know the native function for an operating system that you don't
-        // know, so return an error to the user to tell them about this.
-        consoleError("Your operating system is not supported by the compiler!%s", 1,
-                STRING_CONSOLE_GITHUB_REPORT);
-
-    #endif
-
-    return absolutePth;
-
-}
-
 // Define the function that will recieve the input and output paths
 // This function receives the variables as references to insure that the final value of the global
 // `cmplrInputFilePth` variable and `cmplrOutputFilePth` variable will change according to the
 // changes applied to the `inputPth` and `outputPth` variables
-int processIO(char **inputPth, char **outputPth, char **outputName){
+int processIO(char **inputPth, char **outputPth, char **outputName, char *pathArg){
 
-    // Note that you need to dereference the `inputPth` variable and the `outputPth` variable
+    // Note that you need to dereference the `inputPth`, `outputName`, and the `outputPth` variables
 
     // Update the `globalIO` object
+    globalIO.cmpDir = NULL;
+    globalIO.libDir = NULL;
     globalIO.wrkDir = NULL;
     globalIO.tempDir = NULL;
     globalIO.input.fullPth = NULL;
     globalIO.input.dirPth = NULL;
     globalIO.output.fullPth = NULL;
     globalIO.output.fileName = NULL;
+
+    // Get the path of the compiler's main directory
+    globalIO.cmpDir = getCompilerDir(pathArg);
+    globalIO.libDir = joinDirFile(globalIO.cmpDir, "libraries");
+
+    // Print all the paths that are related to the compiler (debug)
+    consoleDebug("Main compiler directory: %s", globalIO.cmpDir);
+    consoleDebug("Libraries directory: %s", globalIO.libDir);
 
     // Check if the user did pass an input path
     if(*inputPth != NULL){
@@ -174,35 +148,7 @@ int processIO(char **inputPth, char **outputPth, char **outputName){
                 consoleDebug("Input path: %s", globalIO.input.fullPth);
 
                 // Get the absolute path of the input file's directory
-                {
-
-                    // Get the last occurence of the "/" character or the "\\" character
-                    char *lastOccr;
-                    #ifdef _WIN32
-
-                        lastOccr = strrchr(globalIO.input.fullPth, '\\');
-
-                    #else
-
-                        lastOccr = strrchr(globalIO.input.fullPth, '/');
-
-                    #endif
-                    int position = lastOccr - globalIO.input.fullPth;
-
-                    // Get the absolute path of the input file directory
-                    globalIO.input.dirPth = calloc(position + 1, sizeof(char));
-
-                    // Copy the directory of the input file (without the file name)
-                    for(int i = 0; i < position; i++){
-                 
-                        globalIO.input.dirPth[i] = globalIO.input.fullPth[i];
-
-                    }
-
-                    // Add the string end character
-                    globalIO.input.dirPth[position] = '\0';
-
-                }
+                globalIO.input.dirPth = getFileDir(globalIO.input.fullPth);
 
                 // Print the full input directory (Debug)
                 consoleDebug("Input directory: %s", globalIO.input.dirPth);

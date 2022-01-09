@@ -1,7 +1,6 @@
 {
 
     "files.associations": {
-
         "*html": "html",
         "*.html": "html",
         "*.view": "html",
@@ -13,7 +12,6 @@
         "typeinfo": "c",
         "cstdio": "c",
         "new": "c"
-
     }
 
 }

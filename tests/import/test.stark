@@ -1,6 +1,6 @@
 0x000000;
 // Test1
-   0;import "myfile.stark";0;// This will trigger a warning
+   0;import "myfile.stark";0;// This will trigger...nothing
 // import 'myfile.stark'; // This will trigger an error!
 //import'myfile.stark'; // This will trigger an error!
 import"myfile.stark";0;

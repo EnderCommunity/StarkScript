@@ -9,7 +9,13 @@
 function registerLang(name, tokenizer, theme, CIP) {
 
     // Register a new language
-    monaco.languages.register({ id: name });
+    monaco.languages.register({
+
+        id: name,
+        // extensions: ['.stark'],
+        // aliases: ['Stark', 'stark', 'ss', 'SS', 'starkscript', 'StarkScript']
+
+    });
 
     // Register a tokens provider for the language
     monaco.languages.setMonarchTokensProvider(name, tokenizer);

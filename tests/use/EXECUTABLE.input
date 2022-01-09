@@ -1,0 +1,67 @@
+0x000000;
+
+   0;
+#file Library1 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Library1.stark
+0x000001;
+
+variable:int tn = 1;
+0x000001;
+#endfile
+             0; 
+
+#file Library1 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Library1.stark
+0x000001;
+
+variable:int tn = 1;
+0x000001;
+#endfile
+                       0; 
+
+#file Test.Library2 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/Library2.stark
+0x000002;
+
+variable:int tn = 2;
+0x000002;
+#endfile
+                  0;
+-1;
+#file Test.Library2 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/Library2.stark
+0x000002;
+
+variable:int tn = 2;
+0x000002;
+#endfile
+                                      -1;
+
+1;                  1;
+
+     2;
+#file Test.More.Library3 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/More/Library3.stark
+0x000003;
+
+variable:int tn = 2;
+0x000003;
+#endfile
+                                                          2;
+2.5;
+#file Test.More.Library3 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/More/Library3.stark
+0x000003;
+
+variable:int tn = 2;
+0x000003;
+#endfile
+                                                                    2.5;
+3;
+#file Test.More.Library3 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/More/Library3.stark
+0x000003;
+
+variable:int tn = 2;
+0x000003;
+#endfile
+                                                                            3;
+
+
+
+
+
+0x000000;

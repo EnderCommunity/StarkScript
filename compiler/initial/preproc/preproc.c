@@ -41,7 +41,7 @@
 // more than one import narrative within one file, without losing track of the column value.
 //
 // The opening guiding line follows this format:
-// "#file <!library name>/<relative file path> ? <absolute file path>"
+// "#file <library name/ID>/<relative file path> ? <absolute file path>"
 // And the closing guiding line follows this format:
 // "#endfile"
 //
@@ -71,7 +71,7 @@ char* createCodePath(const char *codePath, const char *path, int line, int colum
     // |___________________________________________________________________|
 
     // Allocate memory for the new code path
-    char *newCodePath = calloc(strlen(codePath) + strlen(path) + 3 + (int)(ceil(log10(line))) + (int)(ceil(log10(column))) + 2, sizeof(char));
+    char *newCodePath = calloc(strlen(codePath) + strlen(path) + 3 + 10 + 10 + 1, sizeof(char));
     sprintf(newCodePath, "%s:%d;%d*%s", path, line, column, codePath);
 
     // Return the new code path
@@ -112,7 +112,7 @@ void preprocWarn(const char *msg, const char *codePath, const char *filePath, in
 
 // Pre-define the `preprocR` function so the injection function could use it!
 void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char *codePath,
-                const char *filePath);
+                const char *filePath, const char *libsDir);
 
 // Import all the functions that are related to the "import" keyword
 #include "./import.c"
@@ -122,7 +122,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
 // Define a function that can be used recursively to process the file
 void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char *codePath,
-                const char *filePath){
+                const char *filePath, const char *libsDir){
 
     // Update the files count
     (*processedFiles)++;
@@ -150,7 +150,12 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
     // Keep track of importing contexts
     int importContextStart = 0,
-        useContextStart = 0;
+        useContextStart = 0,
+        useContextStartColumn = 0;
+
+    // Keep track of the lastest library path
+    int latestLibPathSize = 1;
+    char *latestLibPath = calloc(latestLibPathSize, sizeof(char));
 
     // Keep track of the line and the column numbers so you could inform the user of the exact
     // position of the source of errors/warnings
@@ -204,7 +209,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
         // Check if you're in a context that does not include any comments...
         if(!inLinearComm && !inMultilinearComm){
 
-            // Check if the current character is not a whitespace
+            // Check if the current character is not whitespace
             if(currChar != ' ' && currChar != '\t'){
 
                 // Note: move this chunk of code to the "use.c" file when you're done with it!
@@ -216,9 +221,9 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
                     // Check if you're in a "use" context
                     if(useContextStart){
 
-                        // Temp
+                        // There should be no strings within a "use" context!
                         preprocError(inputFile, outputFile, STR_ERROR_000001, codePath, filePath,
-                                        0, 0, 1, 1);
+                                        line, column, 1, 0);
 
                     }
 
@@ -232,7 +237,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
                     outputImport(&inputFile, &outputFile, &currChar, &injectionWhitespace, line,
                                     &column, codePath, filePath, inQuote, &inDoubleQuote,
-                                    &importContextStart, processedFiles);
+                                    &importContextStart, processedFiles, libsDir);
 
                 }
 
@@ -248,11 +253,11 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             // all the files used within the main file!
 
             // Note that you should not process any keyword contexts (like "import" and "use")
-            // outside of this "while" loop. You may branch off to another function when you check
-            // for the keywords themselves or for any expected data that you know is there! (You
-            // should not deal with any whitespace or redundant characters in such contexts)
+            // outside within a comments context. You may branch off to another function when you
+            // check for the keywords themselves, or for any expected data that you know is there!
+            // (You should not deal with any whitespace or redundant characters in such contexts)
             // This is done to make sure that comments (that may be inside a keyword's context) will
-            // not trigger false errors or warnings.
+            // not trigger false errors or warnings, or cause any unwated special cases.
             // An example of this would be this:
             //  __________________________________________________________________
             // |                                                                  |
@@ -267,42 +272,23 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             // it!
             // Warning: this chunk of code is not read yet!
 
-            // Check if you're in a "use" context
-            if(useContextStart){
+            // Check if the current character is not whitespace
+            if(currChar != ' ' && currChar != '\t'){
 
-                // Temp
-                consoleInfo("Found a \"use\" context!");
-                
-                // Wait for the useContext end (tmp!)
-                if(currChar == ';'){
+                // Check if you're in a "use" context
+                if(useContextStart){
 
-                    useContextStart = 0;
-
-                }
-
-                // Check if you're in a new line now
-                if(currChar == '\n' || currChar == '\r'){
-
-                    // Temp
-                    preprocError(inputFile, outputFile, STR_ERROR_000005, codePath, filePath, line,
-                                    column, 1, 1);
-
-                }else if(currChar != ' '){
-
-                    if(!isalpha(currChar) && currChar != '_'){
-
-                        preprocError(inputFile, outputFile, STR_ERROR_000006, codePath, filePath,
-                                        line, column, 1, 0);
-
-                    }else{
-
-                        // ...
-
-                    }
+                    outputUse(&inputFile, &outputFile, &currChar, prvsChar, &injectionWhitespace,
+                                line, &column, codePath, filePath, processedFiles, libsDir,
+                                &latestLibPath, &latestLibPathSize, &useContextStartColumn,
+                                &useContextStart);
 
                 }
 
-            }else if(!importContextStart){
+            }
+
+            // Check if you're in not in a "use" or "import" context
+            if(!useContextStart && !importContextStart){
 
                 // Search for an "import" context
                 importContextStart = importContext(&inputFile, &prvsChar, &currChar, &column);
@@ -313,10 +299,16 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
                     // Search for a "use" context
                     useContextStart = useContext(&inputFile, &prvsChar, &currChar, &column);
 
+                    if(useContextStart){
+
+                        useContextStartColumn = column;
+
+                    }
+
                 }
 
                 // Check if a file will be added now
-                if(importContextStart){ // add "|| useContextStart"
+                if(importContextStart || useContextStart){
 
                     fprintf(outputFile, CHAR_SPECIAL_FILE_SEPARATOR);
 
@@ -332,15 +324,17 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             // Check if you're in a multi-linear comment context
             if(inMultilinearComm){
 
-                // Check if this is not an import or use context
-                if(!importContextStart && !useContextStart){
+                // Check if this is not an import context
+                if(!importContextStart){
 
                     // Check if this is the end/start of a mutli-linear comment!
                     if(multilinearCommEnd || multilinearCommStart){
 
                         // Add two whitespace characters to the injection whitespace suffix
                         // variable
-                        injectionWhitespace += 2;
+                        injectionWhitespace += 2; // Smthing is going on here...
+                                                  // This does not make any sense, why is
+                                                  // this working?
 
                     }
 
@@ -399,7 +393,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
                 // file pointer
                 fprintf(outputFile, "%c", currChar);
 
-                if(currChar == '\e'){
+                if(currChar == CHAR_SPECIAL_ESCAPE[0]){
 
                     // Check if there was any ignored characters in a use/import context
                     if(injectionWhitespace != 0){
@@ -438,10 +432,13 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
     }
 
+    // Free up the memory used by the `latestLibPath` variable
+    free(latestLibPath);
+
 }
 
 // Define a function that triggers the preprocessor
-int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName){
+int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName, char *libsDir){
 
     // You are not allowed to modify any of this function's arguments
 
@@ -472,7 +469,7 @@ int preproc(char *inputPth, char *tempDir, char *inputDir, char *outputFileName)
     // Call the recursive function
     // Note that you have to use the `preprocError` function to report errors inside the recursive
     // function. This is done to prevent memory leaks on sudden termination!
-    preprocR(inputFile, outputFile, &processedFiles, "<root>:0;0", inputPth);
+    preprocR(inputFile, outputFile, &processedFiles, "<root>:0;0", inputPth, libsDir);
 
     // Close the output file stream
     fclose(outputFile);

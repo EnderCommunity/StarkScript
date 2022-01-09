@@ -25,5 +25,8 @@
 // This URL is currently the same as the GitHub repository
 #define __STARK_WEBSITE_URL__ "https://github.com/EnderCommunity/StarkScript/"
 
+// Define the URL of StarkScript's bugs reporting page
+#define __STARK_BUGS_URL__ "https://github.com/EnderCommunity/StarkScript/issues/"
+
 // Define the URL of StarkScript's GitHub repository
 #define __STARK_GITHUB_URL__ "https://github.com/EnderCommunity/StarkScript/"

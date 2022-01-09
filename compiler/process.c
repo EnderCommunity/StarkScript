@@ -34,6 +34,16 @@ void stopProcess(int exitCode){
         free(cmplrOutputFileName);
 
     }
+    if(globalIO.cmpDir != NULL){
+
+        free(globalIO.cmpDir);
+
+    }
+    if(globalIO.libDir != NULL){
+
+        free(globalIO.libDir);
+
+    }
     if(globalIO.wrkDir != NULL){
 
         free(globalIO.wrkDir);
