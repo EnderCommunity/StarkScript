@@ -25,7 +25,8 @@ void printCmplrMsg(){
 \n    For help, re-run this command with the \"--help\" flag or\
 \n    the flag \"-h\"... \n\
 \n    Please, consider helping us with this project! %s<3%s\n\n\
-\n        * For more information, visit: %s%s\n\n\n",
+\n        * For more information, visit: %s\n\
+\n        * For bug reports, visit: %s%s\n\n\n",
 
     // Make the language name blue
     CONSOLE_COLOR_BLUE,
@@ -56,6 +57,9 @@ void printCmplrMsg(){
 
     // Get the website URL so the user can look for additional info
     __STARK_WEBSITE_URL__,
+
+    // Get the website URL so the user can look for additional info
+    __STARK_BUGS_URL__,
 
     // Reset the text colour
     CONSOLE_COLOR_RESET);
