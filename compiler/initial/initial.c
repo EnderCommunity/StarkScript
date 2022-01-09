@@ -21,7 +21,7 @@ int initialComp(struct GlobalIO globalIO){
 
     // Trigger the preprocessor
     int filesCount = preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth,
-                                globalIO.output.fileName);
+                                globalIO.output.fileName, globalIO.libDir);
 
     // Trigger the lexer
     lexer();
