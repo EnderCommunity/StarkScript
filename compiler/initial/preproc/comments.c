@@ -8,7 +8,7 @@
 // Define the preprocessor comments end and start detector
 void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *inMultilinearComm,
                         int *multilinearCommStart, int *multilinearCommEnd, int inQuote,
-                        int inDoubleQuote){
+                        int inDoubleQuote, int *column){
 
     // Check if the text is currently free of any quoting or commenting contexts
     if(!*inLinearComm && !*inMultilinearComm && !inQuote && !inDoubleQuote){
@@ -20,6 +20,7 @@ void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *
 
             // Get the next character
             *currChar = fgetc(*inputFile);
+            (*column)++;
 
             // Check if this is a linear comment
             if(*currChar == '/'){
@@ -47,6 +48,8 @@ void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *
                     // Move the inputFile pointer one character backwards
                     fseek(*inputFile, -1L, SEEK_CUR);
 
+                    (*column)--;
+
                 }
 
                 // Reset the value of the "currChar" variable
@@ -63,6 +66,7 @@ void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *
 
             // Get the next character
             *currChar = fgetc(*inputFile);
+            (*column)++;
 
             // Check if this is really the end of a multi-linear comment
             if(*currChar == '/'){
@@ -74,6 +78,7 @@ void checkForComments(FILE **inputFile, char *currChar, int *inLinearComm, int *
 
                 // Move the inputFile pointer one character backwards
                 fseek(*inputFile, -1L, SEEK_CUR);
+                (*column)--;
 
                 // Reset the value of the "currChar" variable
                 *currChar = '*';

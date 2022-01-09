@@ -437,7 +437,7 @@ char* reportCodeBlock(char *filePth, int line, int column, int height, int endCo
     }else{
 
         // Check if this is a line that triggered this report
-        int isSpecial = (currLine + 1 >= line) && (currLine + 1 <= line + height);
+        int isSpecial = (currLine >= line) && (currLine + 1 <= line + height);
 
         // Add the new line prefix
         codeBlockPrefix(&size, &codeBlock, &l, 1, (isSpecial) ?

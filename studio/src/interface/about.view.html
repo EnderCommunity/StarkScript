@@ -1,0 +1,41 @@
+<!--
+   -
+   - This is the file that contains the interface of the about window. No more info
+   - about this interface is available at this time.
+   -
+   -->
+
+<!--
+    transparent: false
+    frame: true
+    resize: false
+    max/min: false
+    moving/window-dragging: true
+    width: ?
+    height: ?
+    min-width: ?
+    min-height: ?
+    maxByDefault: false
+-->
+
+<window show-controls="true" show-title="true" title="$${basic-interface:about.title}" enable-max="false" enable-min="false" enable-close="true">
+
+    <stylesheet href="studio://interface/layout/about.css" />
+
+    <content>
+
+        <div class="about--top">
+            <text class="about--title">$${app:title}</text>
+        </div>
+        <div class="about--middle">
+            <text class="about--description">$${basic-interface:about.description}</text>
+            <text class="about--opensource">$${basic-interface:about.openSource}</text>
+        </div>
+        <div class="about--bottom">
+            <text class="about--version">$${app:version}</text>
+            <text class="about--build">$${basic-interface:about.buildInfo}</text>
+        </div>
+
+    </content>
+
+</window>

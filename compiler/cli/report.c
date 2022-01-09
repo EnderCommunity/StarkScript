@@ -261,7 +261,7 @@ int reportConsole(const char *format, int type, ...){
 }
 
 // Define a function that will receive report info
-void report(const char *eventPth, int caseEndColumn, int caseHeight, const char *reportMsg, int type){
+void report(char *eventPth, int caseEndColumn, int caseHeight, const char *reportMsg, int type){
 
     // eventPth                             The path to the event/code that triggered this report!
     //                                      Event path format:
@@ -342,6 +342,11 @@ void report(const char *eventPth, int caseEndColumn, int caseHeight, const char 
 
     // Check if you're allowed to terminate this process!
     if(type == REPORT_ERROR && FLAG_CONSOLE_ERROR_MESSAGES_EXIT) {
+
+        // Free up the memory used by the `eventPth` variable
+        free(eventPth);
+
+        // Of course, a memory is stil sure to occur.
 
         // Exit with a FAILURE state
         stopProcess(EXIT_FAILURE);

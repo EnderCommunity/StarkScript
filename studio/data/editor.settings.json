@@ -1,0 +1,18 @@
+{
+
+    "lineNumbers": "on",
+    "roundedSelection": true,
+    "scrollBeyondLastLine": true,
+    "readOnly": false,
+    "minimap": {
+
+        "enabled": false
+
+    },
+    "tabSize": 4,
+    "autoClosingBrackets": "always",
+    "autoClosingQuotes": "always",
+    "quickSuggestions": "any",
+    "bracketPairColorization.enabled": true
+
+}

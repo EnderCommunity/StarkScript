@@ -1,0 +1,49 @@
+/**
+ *
+ * Basic layout style for the about window
+ *
+**/
+
+:root {}
+
+.app--safearea {
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.about--top {
+    height: 80px;
+}
+
+.about--middle {
+    height: auto;
+    flex-grow: 1;
+}
+
+.about--bottom {
+    height: fit-content;
+}
+
+.about--top .about--title {
+    font-size: 48px;
+    width: 100%;
+}
+
+.about--middle .about--description,
+.about--middle .about--opensource {
+    font-size: 16px;
+    display: block;
+}
+
+.about--middle .about--opensource {
+    margin-top: 16px;
+}
+
+.about--bottom .about--version,
+.about--bottom .about--build {
+    font-size: 14px;
+    width: 100%;
+    display: block;
+}

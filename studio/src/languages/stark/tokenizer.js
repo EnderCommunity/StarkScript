@@ -3,7 +3,7 @@
 // Create your own language definition here
 // You can safely look at other samples without losing modifications.
 // Modifications are not saved on browser refresh/close though -- copy often!
-return {
+export var tokenizer = {
 
     // Set defaultToken to invalid to see what you do not tokenize yet
     // defaultToken: 'invalid',
@@ -15,7 +15,7 @@ return {
     ],
     functionalKeywords: [
 
-        "use", "import", "start", "append", "new", "define", "delete", "constructor"
+        "use", "import", "execute", "append", "new", "define", "delete", "constructor", "if", "else", "return", "exit", "intermediate"
 
     ],
     typeKeywords: [
@@ -25,7 +25,7 @@ return {
     ],
     predefinedKeywords: [
 
-        "this"
+        "this", "true", "false"
 
     ],
 
@@ -49,18 +49,20 @@ return {
 
         root: [
 
+            [/%%(.*?)%%/, "compiler-constant"],
+            [/'(.*?)'/, "string"],
+
             // identifiers and keywords
             [
 
-                /[a-z_$][\w$]*/,
-                {
+                /[a-z_$][\w$]*/, {
 
                     cases: {
 
                         "@typeKeywords": "keyword.type",
-                        "@functionalKeywords": "keyword",
-                        "@definingKeywords": "keyword",
-                        "@predefinedKeywords": "keyword",
+                        "@functionalKeywords": "keyword.functional",
+                        "@definingKeywords": "keyword.definition",
+                        "@predefinedKeywords": "keyword.predefined",
                         "@default": "identifier",
 
                     },
@@ -95,8 +97,7 @@ return {
             ],
             [
 
-                /@symbols/,
-                {
+                /@symbols/, {
 
                     cases: {
 
@@ -112,8 +113,7 @@ return {
             // @ annotations.
             [
 
-                /@[\w:]*/,
-                {
+                /@[a-zA-Z][a-zA-Z_0-9]*/, {
 
                     token: "annotation",
                     log: "annotation token: $0"
@@ -121,7 +121,6 @@ return {
                 }
 
             ],
-
             // numbers
             [
 
@@ -154,8 +153,7 @@ return {
             ], // non-teminated string
             [
 
-                /"/,
-                {
+                /"/, {
 
                     token: "string.quote",
                     bracket: "@open",
@@ -228,8 +226,7 @@ return {
             ],
             [
 
-                /"/,
-                {
+                /"/, {
 
                     token: "string.quote",
                     bracket: "@close",

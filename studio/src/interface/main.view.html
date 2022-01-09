@@ -22,9 +22,17 @@
 <window show-controls="true" show-title="true" enable-max="true" enable-min="true" enable-close="true" start-max="false">
 
     <stylesheet href="studio://interface/layout/main.css" />
-    <javascript ???/>
 
     <content>
+
+        <!-- test/tmp -->
+        <script>
+            electron.alert("Test", electron.alertType.info, "This is a test", function() {
+
+                console.log(1);
+
+            });
+        </script>
 
         <!-- The side-bar -->
         <div class="app--sidebar">

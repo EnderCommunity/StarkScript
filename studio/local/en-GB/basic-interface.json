@@ -2,7 +2,10 @@
 
     "about": {
 
-        "title": "About"
+        "title": "About",
+        "buildInfo": "This program was built on $MONTH $DAY, $YEAR!",
+        "description": "StarkStudio is an official Stark development tool that makes the development process of Stark programs, apps, and libraries much more pleasant.",
+        "openSource": "Built and powered by open-source software!"
 
     },
     "alert": {

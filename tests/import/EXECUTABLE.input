@@ -1,7 +1,54 @@
+0x000000;
 
-t "myfile.stark";
+   0;
+#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
+0x000001;
 
 
-t"myfile.stark";
-t                    "myfile.stark";
-t 
+variable:int a = 0;
+
+function<void> myFunc(){
+
+    a++;
+
+}
+0x000001;
+#endfile
+                      0;
+
+
+
+#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
+0x000001;
+
+
+variable:int a = 0;
+
+function<void> myFunc(){
+
+    a++;
+
+}
+0x000001;
+#endfile
+                     0;
+
+1;                  1;
+     2;
+#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
+0x000001;
+
+
+variable:int a = 0;
+
+function<void> myFunc(){
+
+    a++;
+
+}
+0x000001;
+#endfile
+                                                     2;
+
+
+0x000000;

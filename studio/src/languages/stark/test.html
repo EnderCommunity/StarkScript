@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        html,
+        body,
+        #container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script src="https://unpkg.com/monaco-editor@latest/min/vs/loader.js"></script>
+    <script>
+        const code = `// StarkScript (0)
+// StarkScript 0 will include the following features:
+//   - [ ] Including files
+//   - [ ] Including libraries
+//   - [ ] Defining functions
+//   - [ ] Defining variables
+//         - [ ] int
+//         - [ ] double
+//         - [ ] float
+//         - [ ] bool
+//         - [ ] char
+//         - [ ] string
+//   - [ ] The \`delete\` keyword
+//         - [ ] for ints
+//         - [ ] for doubles
+//         - [ ] for floats
+//         - [ ] for booleans
+//         - [ ] for chars
+//         - [ ] for strings
+//   - [ ] Defining constants
+//   - [ ] Injecting C code within your Stark files
+//   - [ ] The \`exit\` keyword
+//   - [ ] The \`execute\` keyword
+//   - [ ] The \`define\` keyword
+//   - [ ] Compiler variables (%%VAR%%)
+//   - [ ] Conditions
+
+
+// Import libraries (no real libraries are going to be included in the first version of
+// StarkScript)
+// use system.io;
+// use system.info;
+
+// Import files
+import "./file.stark";
+// import "file.stark" prefix Duplicate1; // (You will have to do "Duplicate1->" to access
+//                                             // variables and functions from this file)
+//                                             // Note: this is a bad idea!
+
+// You can terminate the program using the "exit" keyword
+exit 0;
+
+// You can use the "intermediate" keyword to tell the compiler that the code-block that follows it
+// will be written in the intermediate programming language that the compiler uses to compile Stark.
+// (The compiler uses C as an intermediate programming language, so you need to include pure C
+// code inside this code-block)
+// Note that this is a temporary feature in Stark. It will be removed when the language is near
+// completion!
+// Also, the Stark compiler will not check if the C code is valid! You need to make sure that
+// it is valid by yourself!
+// You could try to give the compiler a hint about the existence of a function or a variable inside
+// this C code-block by doing something like this:
+variable:int a;
+function<void> MyFunction(var1:double, var2:short:int);
+intermediate {
+
+    a = 0;
+
+    void MyFunction(double var1, short int var2){
+
+        // ...
+
+    }
+
+}
+
+// Pass the name of the function that the compiler should run at runtime!
+// By default, the function that the compiler will look for is a function with the name "Main".
+// But, if you wish to use the name of another function, you can tell the compiler to run that
+// other function using the "execute" keyword!
+execute Main;
+
+// fileVariable; // from the first import
+// Duplicate1->fileVariable; // from the second import
+
+// Define constants in the preprocessor (c preprocessor constants)
+define ZERO 0; // You can use the \`define\` function to define a constant
+
+// There will be some compiler constants. All the compiler constants will be accessible like
+// this: %%NAME%%
+%%SYSTEM%%;
+
+// The start function
+function<int> Main(myVariable:int, myVariable2:bool){
+
+    // Define some variables of the type "int"
+    variable:int a = 0, b = 1;
+    // variable a:int = 0, b:int = 1; // You could also do this...
+
+    // Define a constant
+    constant:int c = 0;
+
+    // Define an array
+    variable:int[,] d = new int(10, 10);
+    d[0, 0] = 1;
+
+    // You can only delete variables
+    delete a, b, d;
+
+    // bool double float int string char short long void
+
+    // Conditions
+    if(true){
+
+        return 1;
+
+    }else if(false){
+
+        return 0;
+
+    }else{
+
+        // Ye, IDK, I just need to write some random conditions...
+        // Never do that...
+
+    }
+
+}
+
+
+// StarkScript (1)
+
+// Define a block-condition
+condition Platform {
+
+    Win: true,
+    Linux: true;
+
+}
+
+// Block-conditions can be only used on code blocks!
+// The compiler will assume that all that comes after the condition line is a part of the code
+// block. - Code blocks are chunks of code that are between curly brackets ({}) -
+
+// Define this version of the \`SystemRelatedFunction\` function for Windows
+@Platform::Win
+function<void> SystemRelatedFunction(){
+
+    // ...
+
+}
+
+// Define this version of the \`SystemRelatedFunction\` function for Linux-based systems
+@Platform::Linux
+function<void> SystemRelatedFunction(){
+
+    // ...
+
+}
+
+function<void> MyFunction(...args){
+
+    // ...
+
+}
+
+
+// StarkScript (2)
+
+class MyCustomObject {
+
+    // All variables and functions (except for the \`constructor\`) are set to
+    // "private" mode by default. If you want a variable or a function to be
+    // accessible outside the class, you need to use the "append" keyword!
+
+    variable:int a;
+    variable:string b;
+
+    append function<void> MyFunction(){
+
+        //
+
+    }
+
+    function<void> MyFunction2(){
+
+        //
+
+    }
+
+    // Define a constructor
+    constructor(a:int, b:string) {
+
+        // Do stuff...
+        this.a = a;
+        this.b = b;
+
+    }
+
+}
+
+variable:MyCustomObject name = new MyCustomObject(0, "");
+
+class MyClass {
+
+    append function<void> MyFunction(){
+
+        //
+
+    }
+
+}
+
+MyClass.MyFunction();`;
+        const C = {
+
+                // Set defaultToken to invalid to see what you do not tokenize yet
+                // defaultToken: 'invalid',
+
+                definingKeywords: [
+
+                    "function", "variable", "constant", "condition", "class"
+
+                ],
+                functionalKeywords: [
+
+                    "use", "import", "execute", "append", "new", "define", "delete", "constructor", "if", "else", "return", "exit", "intermediate"
+
+                ],
+                typeKeywords: [
+
+                    "bool", "double", "int", "short", "char", "void", "long", "float", "string"
+
+                ],
+                predefinedKeywords: [
+
+                    "this", "true", "false"
+
+                ],
+
+                // Remember to add all these operators to the language!
+                operators: [
+
+                    "=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!=", "&&", "||", "++", "--", "+", "-",
+                    "*", "/", "&", "|", "^", "%", "<<", ">>", ">>>", "+=", "-=", "*=", "/=", "&=", "|=", "^=",
+                    "%=", "<<=", ">>=", ">>>="
+
+                ],
+
+                // we include these common regular expressions
+                symbols: /[=><!~?:&|+\-*\/\^%]+/,
+
+                // C# style strings
+                escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+
+                // The main tokenizer for our languages
+                tokenizer: {
+
+                    root: [
+
+                        [/%%(.*?)%%/, "compiler-constant"],
+                        [/'(.*?)'/, "string"],
+
+                        // identifiers and keywords
+                        [
+
+                            /[a-z_$][\w$]*/, {
+
+                                cases: {
+
+                                    "@typeKeywords": "keyword.type",
+                                    "@functionalKeywords": "keyword.functional",
+                                    "@definingKeywords": "keyword.definition",
+                                    "@predefinedKeywords": "keyword.predefined",
+                                    "@default": "identifier",
+
+                                },
+
+                            },
+
+                        ],
+
+                        [
+
+                            /[A-Z][\w\$]*/, "type.identifier" // to show class names nicely
+
+                        ],
+
+                        // whitespace
+                        {
+
+                            include: "@whitespace"
+
+                        },
+
+                        // delimiters and operators
+                        [
+
+                            /[{}()\[\]]/, "@brackets"
+
+                        ],
+                        [
+
+                            /[<>](?!@symbols)/, "@brackets"
+
+                        ],
+                        [
+
+                            /@symbols/, {
+
+                                cases: {
+
+                                    "@operators": "operator",
+                                    "@default": "",
+
+                                },
+
+                            },
+
+                        ],
+
+                        // @ annotations.
+                        [
+
+                            /@[a-zA-Z][a-zA-Z_0-9]*/, {
+
+                                token: "annotation",
+                                log: "annotation token: $0"
+
+                            }
+
+                        ],
+                        // numbers
+                        [
+
+                            /\d*\.\d+([eE][\-+]?\d+)?/, "number.hex"
+
+                        ],
+                        [
+
+                            /0[xX][0-9a-fA-F]+/, "number.hex"
+
+                        ],
+                        [
+
+                            /\d+/, "number.hex"
+
+                        ],
+
+                        // delimiter: after number because of .\d floats
+                        [
+
+                            /[;,.]/, "delimiter"
+
+                        ],
+
+                        // strings
+                        [
+
+                            /"([^"\\]|\\.)*$/, "string.invalid"
+
+                        ], // non-teminated string
+                        [
+
+                            /"/, {
+
+                                token: "string.quote",
+                                bracket: "@open",
+                                next: "@string"
+
+                            }
+
+                        ],
+
+                        // characters
+                        [
+
+                            /'[^\\']'/, "string"
+
+                        ],
+                        [
+
+                            /(')(@escapes)(')/, ["string", "string.escape", "string"]
+
+                        ],
+                        [
+
+                            /'/, "string.invalid"
+
+                        ],
+
+                    ],
+
+                    comment: [
+
+                        [
+
+                            /[^\/*]+/, "comment"
+
+                        ],
+                        [
+
+                            /\/\*/, "comment", "@push"
+
+                        ], // nested comment
+                        [
+
+                            "\\*/", "comment", "@pop"
+
+                        ],
+                        [
+
+                            /[\/*]/, "comment"
+
+                        ],
+
+                    ],
+
+                    string: [
+
+                        [
+
+                            /[^\\"]+/, "string"
+
+                        ],
+                        [
+
+                            /@escapes/, "string.escape"
+
+                        ],
+                        [
+
+                            /\\./, "string.escape.invalid"
+
+                        ],
+                        [
+
+                            /"/, {
+
+                                token: "string.quote",
+                                bracket: "@close",
+                                next: "@pop"
+
+                            }
+
+                        ],
+
+                    ],
+
+                    whitespace: [
+
+                        [
+
+                            /[ \t\r\n]+/, "white"
+
+                        ],
+                        [
+
+                            /\/\*/, "comment", "@comment"
+
+                        ],
+                        [
+
+                            /\/\/.*$/, "comment"
+
+                        ],
+
+                    ],
+
+                },
+
+            },
+            T1 = {
+
+                base: 'vs',
+                inherit: false,
+                rules: [
+
+                    {
+                        token: 'string',
+                        foreground: 'A31515'
+                    }, {
+                        token: 'number',
+                        foreground: '09869E'
+                    }, {
+                        token: 'annotation',
+                        foreground: '795E26'
+                    }, {
+                        token: 'comment',
+                        foreground: '008000'
+                    }, {
+                        token: 'type',
+                        foreground: '267F99'
+                    }, {
+                        token: 'identifier',
+                        foreground: '0070CD'
+                    }, {
+                        token: 'keyword.type',
+                        foreground: '0000FF'
+                    }, {
+                        token: 'keyword.predefined',
+                        foreground: '0000FF'
+                    }, {
+                        token: 'compiler-constant',
+                        foreground: '001090'
+                    }, {
+                        token: 'keyword.definition',
+                        foreground: '0000FF'
+                    }, {
+                        token: 'keyword.functional',
+                        foreground: 'AF00DB'
+                    },
+
+                ],
+                colors: {
+
+
+                }
+
+            },
+            T2 = {
+
+                base: 'vs-dark',
+                inherit: false,
+                rules: [
+
+
+                    {
+                        token: 'operator',
+                        foreground: 'D4D4D4'
+                    }, {
+                        token: '',
+                        foreground: 'D4D4D4'
+                    }, {
+                        token: 'string',
+                        foreground: 'CE9178'
+                    }, {
+                        token: 'number',
+                        foreground: 'B5CEA8'
+                    }, {
+                        token: 'annotation',
+                        foreground: 'DCDCAA'
+                    }, {
+                        token: 'comment',
+                        foreground: '6A9955'
+                    }, {
+                        token: 'type',
+                        foreground: '4EC9B0'
+                    }, {
+                        token: 'identifier',
+                        foreground: '9CDCFE'
+                    }, {
+                        token: 'keyword.type',
+                        foreground: '569CD6'
+                    }, {
+                        token: 'keyword.predefined',
+                        foreground: '569CD6'
+                    }, {
+                        token: 'compiler-constant',
+                        foreground: '4FC1FF'
+                    }, {
+                        token: 'keyword.definition',
+                        foreground: '569CD6'
+                    }, {
+                        token: 'keyword.functional',
+                        foreground: 'C586C0'
+                    },
+
+                ],
+                colors: {
+
+
+                }
+
+            };
+
+
+        // Read "https://microsoft.github.io/monaco-editor/playground.html"
+
+        require.config({
+            paths: {
+                'vs': 'https://unpkg.com/monaco-editor@latest/min/vs'
+            }
+        });
+        window.MonacoEnvironment = {
+            getWorkerUrl: () => proxy
+        };
+
+        let proxy = URL.createObjectURL(new Blob([`
+            self.MonacoEnvironment = {
+                baseUrl: 'https://unpkg.com/monaco-editor@latest/min/'
+            };
+            importScripts('https://unpkg.com/monaco-editor@latest/min/vs/base/worker/workerMain.js');
+        `], {
+            type: 'text/javascript'
+        }));
+
+        require(["vs/editor/editor.main"], function() {
+
+            monaco.languages.register({
+                id: "stark-lang"
+            });
+            // Register a tokens provider for the language
+            monaco.languages.setMonarchTokensProvider("stark-lang", C);
+
+            monaco.editor.defineTheme("stark-lang-theme-light", T1);
+
+            monaco.editor.defineTheme("stark-lang-theme-dark", T2);
+
+            let editor = monaco.editor.create(document.getElementById('container'), {
+                value: [
+                    code
+                ].join('\n'),
+                language: 'stark-lang',
+                theme: 'stark-lang-theme-dark', //stark-lang-theme-light
+
+
+
+
+                lineNumbers: 'on',
+                roundedSelection: true,
+                scrollBeyondLastLine: true,
+                readOnly: false,
+                minimap: {
+                    enabled: false
+                },
+                tabSize: 4,
+                // autoClosingBrackets: "always", // Not working!
+                // autoClosingQuotes: "always", // Not working!
+                quickSuggestions: "any",
+                // "bracketPairColorization.enabled": true
+
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

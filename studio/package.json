@@ -4,8 +4,9 @@
     "description": "No description!",
     "scripts": {
         "start": "electron ./launch.js",
-        "build": "node ./build.js",
-        "rebuild": "npm run build && npm start",
+        "build": "node ./builder/build.js",
+        "rebuild": "npm run clean && npm run build && npm start",
+        "clean": "node ./builder/clean.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
