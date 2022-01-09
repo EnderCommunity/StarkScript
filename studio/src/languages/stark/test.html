@@ -29,8 +29,8 @@
     <script>
         const code = `// StarkScript (0)
 // StarkScript 0 will include the following features:
-//   - [ ] Including files
-//   - [ ] Including libraries
+//   - [X] Including files
+//   - [X] Including libraries
 //   - [ ] Defining functions
 //   - [ ] Defining variables
 //         - [ ] int
@@ -57,8 +57,9 @@
 
 // Import libraries (no real libraries are going to be included in the first version of
 // StarkScript)
-// use system.io;
-// use system.info;
+use Library1;
+use Test.Library2;
+use Test.More.Library3;
 
 // Import files
 import "./file.stark";
@@ -230,7 +231,16 @@ class MyClass {
 
 }
 
-MyClass.MyFunction();`;
+MyClass.MyFunction();
+
+
+// StarkScript (3)
+
+// The \`import\` and \`use\` statements will be replaced by the \`get\` statement
+// The user will have more flexibility with the way libraries and files are imported
+get { Console } from System.IO;
+get System.IO;
+`;
         const C = {
 
                 // Set defaultToken to invalid to see what you do not tokenize yet
