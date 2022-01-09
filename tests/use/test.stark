@@ -1,0 +1,18 @@
+0x000000;
+// Test1
+   0;use Library1;0; // This will trigger...nothing
+use       Library1    ;0; // This will trigger...nothing
+use Test.Library2;0;
+-1;use     Test     .       Library2    ;-1;
+// use NoLibrary; // This will trigger an error
+1;/* Hello there! */1;
+// use Test  More.Library3; // This will trigger an error!
+     2;use     /*      Hello there! */    Test.More.Library3;2;
+2.5;use     /*      Hello there! */    Test   .   More   .   Library3  ;2.5;
+3;use  /* 3 */ Test /* 3 */ . /* 3 */ More /* 3 */ . /* 3 */ Library3 /* 3 */;3;
+// use 0 Library1; // This will trigger an error!
+// use "a" Library1; // This will trigger an error!
+// use "a"; // This will trigger an error!
+// use 'a'; // This will trigger an error!
+// Test2
+0x000000;

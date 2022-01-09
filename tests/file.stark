@@ -1,0 +1,4 @@
+0x100000;
+// This is a file!
+variable:bool isFile = true;
+0x100000;
