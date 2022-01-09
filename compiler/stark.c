@@ -80,11 +80,11 @@ clock_t startTime;
 // Pre-define the `stopProcess` function so all the included files can use it
 void stopProcess(int exitCode);
 
-// Include all the paths-related functions
-#include "./paths.c"
-
 // Include all the console-related functions
 #include "./cli/console.c"
+
+// Include all the paths-related functions
+#include "./paths.c"
 
 // Include all the reports-related strings
 #include "./strings/report.h"
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]){
     if(allowCompile){
 
         // Process the input and output paths
-        processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName);
+        processIO(&cmplrInputFilePth, &cmplrOutputFilePth, &cmplrOutputFileName, argv[0]);
 
         // Note that all the variables that were passed to the `processIO` function are now cleared,
         // All these variables were used to generate the `globalIO` object!
@@ -152,7 +152,9 @@ int main(int argc, char *argv[]){
         //         fileName: <output file name>
         //     },
         //     wrkDir: <working directory path>,
-        //     tempDir: <system's temporary directory>
+        //     tempDir: <system's temporary directory>,
+        //     cmpDir: <compiler main directory path>,
+        //     libDir: <Stark libraries directory path>,
         // }
 
         // Note that you are not allowed to change any of the `globalIO` object's values until the
@@ -205,22 +207,14 @@ int main(int argc, char *argv[]){
 
         // Now, start freeing up all the globally-defined variables!
 
-        // Free up the used memory by the working directory variable
+        // Free up the used memory by the globalIO object/interface
+        free(globalIO.cmpDir);
+        free(globalIO.libDir);
         free(globalIO.wrkDir);
-
-        // Free up the used memory by the temporary directory variable
         free(globalIO.tempDir);
-
-        // Free up the used memory by the input path variable
         free(globalIO.input.fullPth);
-
-        // Free up the used memory by the input directory path variable
         free(globalIO.input.dirPth);
-
-        // Free up the used memory by the output path variable
         free(globalIO.output.fullPth);
-
-        // Free up the memory used by the output file name variable
         free(globalIO.output.fileName);
 
         // Print a success message
