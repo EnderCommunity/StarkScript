@@ -18,7 +18,7 @@ module.exports = {
         }
 
     },
-    showWindow: function(window, callback = function() {}, opacity = true) {
+    showWindow: function(window, callback = function() {}, opacity = true, timeout = 400) {
 
         if (opacity) {
 
@@ -35,7 +35,7 @@ module.exports = {
 
                 callback();
 
-            }, 400);
+            }, timeout);
 
         } else {
 
@@ -51,7 +51,7 @@ module.exports = {
 
                 callback();
 
-            }, 400);
+            }, timeout);
 
         }
 
