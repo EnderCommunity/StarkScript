@@ -1,0 +1,11 @@
+0x000001;
+// This is my file!
+
+variable:int a = 0;
+
+function<void> myFunc(){
+
+    a++;
+
+}
+0x000001;

@@ -1,8 +1,12 @@
+0x000000;
 // Test1
-import "myfile.stark";
+   0;import "myfile.stark";0;// This will trigger a warning
 // import 'myfile.stark'; // This will trigger an error!
 //import'myfile.stark'; // This will trigger an error!
-import"myfile.stark";
-import /* Hello there! */ "myfile.stark";
-import 0 "myfile.stark"; // This will trigger an error!
+import"myfile.stark";0;
+
+1;/* Hello there! */1;
+     2;import     /*      Hello there! */    "myfile.stark";2;
+// import 0 "myfile.stark"; // This will trigger an error!
 // Test2
+0x000000;
