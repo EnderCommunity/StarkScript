@@ -2,6 +2,7 @@
 // StarkScript 0 will include the following features:
 //   - [X] Including files
 //   - [X] Including libraries
+//   - [/] Intermediate language injection/the `intermediate` statement
 //   - [ ] Defining functions
 //   - [ ] Defining variables
 //         - [ ] int
@@ -23,7 +24,6 @@
 //   - [ ] The `execute` keyword
 //   - [ ] The `define` keyword
 //   - [ ] Compiler variables (%%VAR%%)
-//   - [ ] Conditions
 
 
 // Import libraries (no real libraries are going to be included in the first version of
