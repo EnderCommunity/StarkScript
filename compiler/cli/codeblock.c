@@ -93,7 +93,9 @@ void codeBlockPrefix(int *size, char **codeBlock, int *l, int line, const char *
 
     // Get the length of the number that's going to be converted
     // Source: https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c
-    int numLength = (int)(ceil(log10(line)));
+    int numLength = (int)(ceil(log10(line))) + (line % 10 == 0);
+                                            //  ^ This seems to solve a bug that occures when a
+                                            //    number ends with a zero... 
 
     // Get the current line in a string form
     char *currLineStr;
