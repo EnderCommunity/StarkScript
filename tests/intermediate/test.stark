@@ -1,0 +1,13 @@
+0x000000;
+variable:int a = 0; // Define a variable in Stark
+intermediate {
+    import "file.stark"
+    0x000001;
+    a = 5; // Modify its value in C
+    0x000001;
+}
+
+intermediate /**/  {}
+// intermediate { // This will trigger an error
+
+0x000000;

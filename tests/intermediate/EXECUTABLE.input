@@ -1,0 +1,13 @@
+0x000000;
+variable:int a = 0; 
+              
+    import "file.stark"
+    0x000001;
+    a = 5; 
+    0x000001;
+ 
+
+                     
+
+
+0x000000;

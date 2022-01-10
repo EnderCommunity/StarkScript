@@ -6,139 +6,9 @@
 
 
 // Define some special characters that are used by import-related functions
-#define CHAR_SPECIAL_FILE_SEPARATOR "\f" // https://unicode-table.com/en/001C/
+// For more info, read: https://en.wikipedia.org/wiki/Escape_sequences_in_C
+#define CHAR_SPECIAL_FILE_SEPARATOR "\f"
 #define CHAR_SPECIAL_ESCAPE "\e"
-
-// Check for any potential importing context
-int importContext(FILE **inputFile, char *prvsChar, char *currChar, int *column){
-
-    // Check if this is the start of a new word
-    if(!isalpha(*prvsChar) && !isdigit(*prvsChar) && *prvsChar != '_'){
-
-        // Look for the "import" keyword
-        if(*currChar == 'i'){
-
-            // Get the next character
-            *currChar = fgetc(*inputFile);
-            (*column)++;
-
-            if(*currChar == 'm'){
-
-                // Get the next character
-                *currChar = fgetc(*inputFile);
-                (*column)++;
-
-                if(*currChar == 'p'){
-
-                    // Get the next character
-                    *currChar = fgetc(*inputFile);
-                    (*column)++;
-
-                    if(*currChar == 'o'){
-
-                        // Get the next character
-                        *currChar = fgetc(*inputFile);
-                        (*column)++;
-
-                        if(*currChar == 'r'){
-
-                            // Get the next character
-                            *currChar = fgetc(*inputFile);
-                            (*column)++;
-
-                            if(*currChar == 't'){
-
-                                // Get the next character
-                                *currChar = fgetc(*inputFile);
-                                (*column)++;
-
-                                // Check if this "import" string is not a part of a variable/function name
-                                if(!isalpha(*currChar) && !isdigit(*currChar) && *currChar != '_'){
-
-                                    // Move the *inputFile pointer one character to the back
-                                    fseek(*inputFile, -1L, SEEK_CUR);
-                                    (*column)--;
-
-                                    // Restore the original value of the "current character" to "t"
-                                    *currChar = 't';
-
-                                    // Found an import context
-                                    return 1;
-
-                                }else{
-
-                                    // Move the *inputFile pointer six characters to the back
-                                    fseek(*inputFile, -6L, SEEK_CUR);
-                                    (*column) -= 6;
-
-                                    // Restore the original value of the "current character"
-                                    *currChar = 'i';
-
-                                }
-
-                            }else{
-
-                                // Move the *inputFile pointer five characters to the back
-                                fseek(*inputFile, -5L, SEEK_CUR);
-                                (*column) -= 5;
-
-                                // Restore the original value of the "current character"
-                                *currChar = 'i';
-
-                            }
-
-                        }else{
-
-                            // Move the *inputFile pointer four characters to the back
-                            fseek(*inputFile, -4L, SEEK_CUR);
-                            (*column) -= 4;
-
-                            // Restore the original value of the "current character"
-                            *currChar = 'i';
-
-                        }
-
-                    }else{
-
-                        // Move the *inputFile pointer three characters to the back
-                        fseek(*inputFile, -3L, SEEK_CUR);
-                        (*column) -= 3;
-
-                        // Restore the original value of the "current character"
-                        *currChar = 'i';
-
-                    }
-
-                }else{
-
-                    // Move the *inputFile pointer two characters to the back
-                    fseek(*inputFile, -2L, SEEK_CUR);
-                    (*column) -= 2;
-
-                    // Restore the original value of the "current character"
-                    *currChar = 'i';
-
-                }
-
-            }else{
-
-                // Move the *inputFile pointer one character backwards
-                fseek(*inputFile, -1L, SEEK_CUR);
-                (*column) -= 1;
-
-                // Restore the original value of the "current character"
-                *currChar = 'i';
-
-            }
-
-        }
-
-    }
-
-    // Didn't find a valid "import" context
-    return 0;
-
-}
 
 // Define a function that can inject a file's content into the "mega" input file
 void injectFile(FILE *inputFile, FILE *outputFile, int *processedFiles, const char *codePath,
@@ -189,7 +59,7 @@ void outputImport(FILE **inputFile, FILE **outputFile, char *currChar, int *inje
 
     // Print a white space character for each character you deal with to keep the column value
     // intact
-    (*injectionWhitespace) += 6;
+    (*injectionWhitespace) += strlen(PREPROC_KEYWORD_INCLUDE_FILE);
 
     // Check if you're in a new line now
     if(*currChar == '\n' || *currChar == '\r'){

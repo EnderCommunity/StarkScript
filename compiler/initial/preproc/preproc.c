@@ -47,10 +47,24 @@
 //
 // Note that Import narratives is nest-able. (An import narrative is allowed to include other
 // import narratives inside of it)
+//
+// Also, the preprocessor will wrap all intermediate code contexts with the '\a' and '\e'
+// escape characters:
+//    ______________________________________________________
+//   |                                                      |
+//   |   <content>                                          |
+//   |   \a <intermediate> \e                               |
+//   |   <content>                                          |
+//   |______________________________________________________|
+//
+
 
 // Import the `ctype.h` library
 // This library is useful for detecting data types! (e.g. detecting the type of a char)
 #include <ctype.h>
+
+// Get the preprocessor strings
+#include "./../../strings/preproc.h"
 
 // Import the `opnImportFile` function and its related functions
 #include "./files.c"
@@ -120,6 +134,76 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 // Import all the functions that are related to the "use" keyword
 #include "./use.c"
 
+// Import all the functions that are related to the "intermediate" keyword
+#include "./intermediate.c"
+
+// Define a function that can look for a keyword within the input file!
+// If a matching keyword is found, the file pointer will point to the end of the keyword...
+int lookUpKeyword(const char *importKeyword, FILE **inputFile, char *prvsChar, char *currChar, int *column){
+
+    // Keep track of the characters shift
+    int shift = 0;
+
+    // Check if this is the start of a new word
+    if(!isalpha(*prvsChar) && !isdigit(*prvsChar) && *prvsChar != '_'){
+
+        int noMatch = 0;
+
+        // Look for the "import" keyword
+        for(int i = 0; i < strlen(importKeyword); i++){
+
+            importKeyword[i];
+    	    if(*currChar == importKeyword[i]){
+
+                // Get the next character
+                *currChar = fgetc(*inputFile);
+
+                // Update its related values
+                (*column)++;
+                shift++;
+
+            }else{
+
+                noMatch = 1;
+                break;
+
+            }
+
+        }
+
+        // Check if this "import" string is not a part of a variable/function name
+        if(!noMatch && !isalpha(*currChar) && !isdigit(*currChar) && *currChar != '_'){
+
+            // You can ignore the `shift` variable now!
+
+            // Move the *inputFile pointer one character to the back
+            fseek(*inputFile, -1L, SEEK_CUR);
+            (*column)--;
+
+            // Restore the original value of the "current character" to "t"
+            *currChar = importKeyword[strlen(importKeyword) - 1];
+
+            // Found an import context
+            return 1;
+
+        }else if(shift != 0){ // Check if you did shift the file's reading position
+
+            // Move the *inputFile pointer back to the character it was pointing to at the start
+            fseek(*inputFile, (long)((-1)*(shift)), SEEK_CUR);
+            (*column) -= shift;
+
+            // Restore the original value of the current character variable
+            *currChar = importKeyword[0];
+
+        }
+
+    }
+
+    // Didn't find a valid "import" context
+    return 0;
+
+}
+
 // Define a function that can be used recursively to process the file
 void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char *codePath,
                 const char *filePath, const char *libsDir){
@@ -147,6 +231,12 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
     // code that may follow the comment)
     int multilinearCommEnd = 0,
         multilinearCommStart = 0;
+
+    // Keep track of intermediate contexts
+    int intrmContextStart = 0,
+        intrmContextStartColumn = 0,
+        intrmContextStartLine = 0,
+        intrmContextBracketsCount = 0;
 
     // Keep track of importing contexts
     int importContextStart = 0,
@@ -272,6 +362,15 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             // it!
             // Warning: this chunk of code is not read yet!
 
+            // Check if you're in an "intermediate" context
+            if(intrmContextStart){
+
+                intermContext(&inputFile, &outputFile, codePath, filePath, &currChar,
+                                &intrmContextBracketsCount, &intrmContextStart,
+                                &intrmContextStartLine, &intrmContextStartColumn, line, column);
+
+            }
+
             // Check if the current character is not whitespace
             if(currChar != ' ' && currChar != '\t'){
 
@@ -288,20 +387,50 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             }
 
             // Check if you're in not in a "use" or "import" context
-            if(!useContextStart && !importContextStart){
+            if(!useContextStart && !importContextStart && !intrmContextStart){
 
                 // Search for an "import" context
-                importContextStart = importContext(&inputFile, &prvsChar, &currChar, &column);
+                importContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_FILE, &inputFile,
+                                                        &prvsChar, &currChar, &column);
 
                 // Check if you didn't reach an "import" context yet
                 if(!importContextStart){
 
                     // Search for a "use" context
-                    useContextStart = useContext(&inputFile, &prvsChar, &currChar, &column);
+                    useContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_LIBRARY, &inputFile,
+                                                        &prvsChar, &currChar, &column);
 
+                    // Check if the "use" context has been detected
                     if(useContextStart){
 
+                        // Save the column value of the start of this context so you may generate
+                        // error/warning messages for this context later!
                         useContextStartColumn = column;
+
+                    }else{
+
+                        // Search for an "intermediate" context
+                        intrmContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_C, &inputFile,
+                                                            &prvsChar, &currChar, &column);
+
+                        // Check if the "intermediate" context has been detected
+                        if(intrmContextStart){
+
+                            // Save the column value of the start of this context so you may
+                            // generate error/warning messages for this context later!
+                            intrmContextStartColumn = column + 1;
+                            intrmContextStartLine = line;
+
+                            // Reset the brackets count
+                            intrmContextBracketsCount = -1;
+
+                            // Inject the lost whitespace
+                            injectionWhitespace += strlen(PREPROC_KEYWORD_INCLUDE_C) - 1;
+
+                            // Update the "current character" to whitespace
+                            currChar = ' ';
+
+                        }
 
                     }
 
@@ -325,7 +454,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
             if(inMultilinearComm){
 
                 // Check if this is not an import context
-                if(!importContextStart){
+                if(importContextStart || useContextStart){
 
                     // Check if this is the end/start of a mutli-linear comment!
                     if(multilinearCommEnd || multilinearCommStart){
@@ -393,22 +522,18 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
                 // file pointer
                 fprintf(outputFile, "%c", currChar);
 
-                if(currChar == CHAR_SPECIAL_ESCAPE[0]){
+                // Check if there was any ignored characters in a use/import context
+                if(injectionWhitespace != 0){
 
-                    // Check if there was any ignored characters in a use/import context
-                    if(injectionWhitespace != 0){
+                    // Print all the whitespace characters
+                    for(int i = 0; i < injectionWhitespace; i++){
 
-                        // Print all the whitespace characters
-                        for(int i = 0; i < injectionWhitespace; i++){
-
-                            fprintf(outputFile, " ");
-
-                        }
-
-                        // Reset the injection whitespace characters count
-                        injectionWhitespace = 0;
+                        fprintf(outputFile, " ");
 
                     }
+
+                    // Reset the injection whitespace characters count
+                    injectionWhitespace = 0;
 
                 }
 
@@ -429,6 +554,15 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
         // Get the next character
         currChar = fgetc(inputFile);
+
+    }
+
+    // Check if an "intermediate" context wasn't close successfully
+    if(intrmContextBracketsCount != 0){
+
+        preprocError(inputFile, outputFile, STR_ERROR_000011, codePath, filePath,
+                        intrmContextStartLine, intrmContextStartColumn, column,
+                        line - intrmContextStartLine);
 
     }
 
