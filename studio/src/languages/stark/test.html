@@ -31,7 +31,7 @@
 // StarkScript 0 will include the following features:
 //   - [X] Including files
 //   - [X] Including libraries
-//   - [ ] Defining functions
+//   - [/] Intermediate language injection/the \`intermediate\` statement
 //   - [ ] Defining variables
 //         - [ ] int
 //         - [ ] double
@@ -47,12 +47,11 @@
 //         - [ ] for chars
 //         - [ ] for strings
 //   - [ ] Defining constants
-//   - [ ] Injecting C code within your Stark files
+//   - [ ] Defining functions
 //   - [ ] The \`exit\` keyword
 //   - [ ] The \`execute\` keyword
 //   - [ ] The \`define\` keyword
 //   - [ ] Compiler variables (%%VAR%%)
-//   - [ ] Conditions
 
 
 // Import libraries (no real libraries are going to be included in the first version of
@@ -178,6 +177,10 @@ function<void> SystemRelatedFunction(){
 
 }
 
+// When defining different versions of a function with block-conditions, it's always good
+// practical to make it so the function will always take in the same input, and return
+// the same output!
+
 function<void> MyFunction(...args){
 
     // ...
@@ -189,9 +192,10 @@ function<void> MyFunction(...args){
 
 class MyCustomObject {
 
-    // All variables and functions (except for the \`constructor\`) are set to
-    // "private" mode by default. If you want a variable or a function to be
-    // accessible outside the class, you need to use the "append" keyword!
+    // All variables and functions (except for the \`constructor\` and
+    // \`destructor\`) are set to "private" mode by default. If you want
+    // a variable or a function to be accessible outside the class, you
+    // need to use the "append" keyword!
 
     variable:int a;
     variable:string b;
@@ -217,12 +221,35 @@ class MyCustomObject {
 
     }
 
+    destructor(){
+
+        // ...
+
+    }
+
+}
+
+class MyCustomObject2 extend MyCustomObject {
+
+    @override
+    append variable:int a;
+
+    @override
+    constructor(a:int, b:string) {
+
+        // Do stuff...
+        this.a = Int(b);
+        this.b = String(a);
+
+    }
+
 }
 
 variable:MyCustomObject name = new MyCustomObject(0, "");
 
 class MyClass {
 
+    @async
     append function<void> MyFunction(){
 
         //
@@ -231,7 +258,7 @@ class MyClass {
 
 }
 
-MyClass.MyFunction();
+await MyClass.MyFunction();
 
 
 // StarkScript (3)
@@ -240,6 +267,8 @@ MyClass.MyFunction();
 // The user will have more flexibility with the way libraries and files are imported
 get { Console } from System.IO;
 get System.IO;
+
+// Add lambda expressions...
 `;
         const C = {
 
@@ -253,7 +282,7 @@ get System.IO;
                 ],
                 functionalKeywords: [
 
-                    "use", "import", "execute", "append", "new", "define", "delete", "constructor", "if", "else", "return", "exit", "intermediate"
+                    "use", "import", "execute", "append", "new", "define", "delete", "if", "else", "return", "exit", "intermediate", "constructor", "destructor", "extend", "await"
 
                 ],
                 typeKeywords: [
