@@ -9,14 +9,15 @@
 // For more info, read: https://en.wikipedia.org/wiki/Escape_sequences_in_C
 #define CHAR_SPECIAL_FILE_SEPARATOR "\f"
 #define CHAR_SPECIAL_ESCAPE "\e"
+#define CHAR_SPECIAL_VERTICAL_TAB "\v"
 
 // Define a function that can inject a file's content into the "mega" input file
 void injectFile(FILE *inputFile, FILE *outputFile, int *processedFiles, const char *codePath,
                         const char *filePath, int line, int column, char *importPath,
                         char *absImportPath, const char *libsDir){
 
-    // Inject the opening guiding line
-    fprintf(outputFile, "\n#file %s ? %s\n", importPath, absImportPath);
+    // Inject the file info
+    fprintf(outputFile, "%s<%s>%s", importPath, absImportPath, CHAR_SPECIAL_VERTICAL_TAB);
 
     // Get the codePath for this file
     char *importCodePath = createCodePath(codePath, filePath, line, column);
@@ -46,9 +47,6 @@ void injectFile(FILE *inputFile, FILE *outputFile, int *processedFiles, const ch
         free(importCodePath);
 
     }
-
-    // Inject the closing guiding line
-    fprintf(outputFile, "\n#endfile\n");
 
 }
 

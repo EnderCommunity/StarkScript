@@ -15,7 +15,7 @@ export var tokenizer = {
     ],
     functionalKeywords: [
 
-        "use", "import", "execute", "append", "new", "define", "delete", "constructor", "if", "else", "return", "exit", "intermediate"
+        "use", "import", "execute", "append", "new", "define", "delete", "if", "else", "return", "exit", "intermediate", "constructor", "destructor", "extend", "await"
 
     ],
     typeKeywords: [

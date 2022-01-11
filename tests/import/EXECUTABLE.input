@@ -1,8 +1,6 @@
 0x000000;
 
-   0;
-#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
-0x000001;
+   0;myfile.stark</mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark>0x000001;
 
 
 variable:int a = 0;
@@ -12,14 +10,10 @@ function<void> myFunc(){
     a++;
 
 }
-0x000001;
-#endfile
-                      0;
+0x000001;                      0;
 
 
-
-#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
-0x000001;
+myfile.stark</mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark>0x000001;
 
 
 variable:int a = 0;
@@ -29,14 +23,10 @@ function<void> myFunc(){
     a++;
 
 }
-0x000001;
-#endfile
-                     0;
+0x000001;                     0;
 
 1;                  1;
-     2;
-#file myfile.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark
-0x000001;
+     2;myfile.stark</mnt/f/files/EnderCommunity/Projects/Stark/tests/import/myfile.stark>0x000001;
 
 
 variable:int a = 0;
@@ -46,9 +36,7 @@ function<void> myFunc(){
     a++;
 
 }
-0x000001;
-#endfile
-                                                     2;
+0x000001;                                                     2;
 
 
 0x000000;

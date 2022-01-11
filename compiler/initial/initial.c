@@ -23,6 +23,23 @@ int initialComp(struct GlobalIO globalIO){
     int filesCount = preproc(globalIO.input.fullPth, globalIO.tempDir, globalIO.input.dirPth,
                                 globalIO.output.fileName, globalIO.libDir);
 
+    // Now, you have a ".input" file that only includes the code used by the user. Basically, the
+    // ".input" file includes all the code from the main input file, built-in libraries, and other
+    // user-imported files)!
+    //
+    // All the file contexts are separated by the "\f" escape character, and the "\e" escape
+    // character. Inside each file context, you have the file's basic info, and the file's content.
+    // The file content is between the "\v" escape character and the "\e" escape character!
+    // (read the comments in the `preproc/preproc.c` file for more info)
+    //
+    // In addition to file contexts, there are "intermediate" contexts! "Intermediate" contexts are
+    // separated from the file that contains them with the "\a" escape character and the "\e" escape
+    // character. They contain a code that's written in the intermediate compiling language that the
+    // compiler uses. (Pure C code)
+
+    // Now, with all this organised data in this one file, you can start analysing the user's code
+    // to create a lexical index!
+
     // Trigger the lexer
     lexer();
 

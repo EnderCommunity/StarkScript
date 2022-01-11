@@ -27,41 +27,24 @@
 
 
 
-
-
-#file Library1 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Library1.stark
-0x000001;
+Library1</mnt/f/files/EnderCommunity/Projects/Stark/libraries/Library1.stark>0x000001;
 
 variable:int tn = 1;
-0x000001;
-#endfile
-             
-
-#file Test.Library2 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/Library2.stark
-0x000002;
+0x000001;             
+Test.Library2</mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/Library2.stark>0x000002;
 
 variable:int tn = 2;
-0x000002;
-#endfile
-                  
-
-#file Test.More.Library3 ? /mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/More/Library3.stark
-0x000003;
+0x000002;                  
+Test.More.Library3</mnt/f/files/EnderCommunity/Projects/Stark/libraries/Test/More/Library3.stark>0x000003;
 
 variable:int tn = 2;
-0x000003;
-#endfile
-                       
+0x000003;                       
 
 
-
-#file ./file.stark ? /mnt/f/files/EnderCommunity/Projects/Stark/tests/file.stark
-0x100000;
+./file.stark</mnt/f/files/EnderCommunity/Projects/Stark/tests/file.stark>0x100000;
 
 variable:bool isFile = true;
-0x100000;
-#endfile
-                      
+0x100000;                      
 
 
 
@@ -177,6 +160,10 @@ function<void> SystemRelatedFunction(){
 
 }
 
+
+
+
+
 function<void> MyFunction(...args){
 
     
@@ -188,6 +175,7 @@ function<void> MyFunction(...args){
 
 class MyCustomObject {
 
+    
     
     
     
@@ -216,12 +204,35 @@ class MyCustomObject {
 
     }
 
+    destructor(){
+
+        
+
+    }
+
+}
+
+class MyCustomObject2 extend MyCustomObject {
+
+    @override
+    append variable:int a;
+
+    @override
+    constructor(a:int, b:string) {
+
+        
+        this.a = Int(b);
+        this.b = String(a);
+
+    }
+
 }
 
 variable:MyCustomObject name = new MyCustomObject(0, "");
 
 class MyClass {
 
+    @async
     append function<void> MyFunction(){
 
         
@@ -230,7 +241,7 @@ class MyClass {
 
 }
 
-MyClass.MyFunction();
+await MyClass.MyFunction();
 
 
 
@@ -239,3 +250,5 @@ MyClass.MyFunction();
 
 get { Console } from System.IO;
 get System.IO;
+
+
