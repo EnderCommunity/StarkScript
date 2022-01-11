@@ -218,10 +218,10 @@ class MyCustomObject {
 
 class MyCustomObject2 extend MyCustomObject {
 
-    @override
+    @overwrite
     append variable:int a;
 
-    @override
+    @overwrite
     constructor(a:int, b:string) {
 
         
