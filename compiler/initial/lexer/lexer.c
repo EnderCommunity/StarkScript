@@ -44,6 +44,8 @@
 // 
 //     RELATIONAL-OPERATOR                An operator that is used to compare two parties
 // 
+//     MATH-OPERATOR                      A maths-related operator
+//
 //     ASSIGNNENT-OPERATOR                An operator that is used to change the value of a variable
 // 
 //     END-OPERATOR                       The ";" operator
