@@ -18,11 +18,11 @@
 //         - [ ] for chars
 //         - [ ] for strings
 //   - [ ] Defining constants
+//   - [ ] Compiler constants
 //   - [ ] Defining functions
 //   - [ ] The `exit` keyword
 //   - [ ] The `execute` keyword
 //   - [ ] The `define` keyword
-//   - [ ] Compiler variables (%%VAR%%)
 
 
 // Import libraries (no real libraries are going to be included in the first version of
@@ -76,9 +76,10 @@ execute Main;
 // Define constants in the preprocessor (c preprocessor constants)
 define ZERO 0; // You can use the `define` function to define a constant
 
-// There will be some compiler constants. All the compiler constants will be accessible like
-// this: %%NAME%%
-%%SYSTEM%%;
+// There will be some pre-defined compiler constants. All the compiler constants will be accessible
+// like any other constant!
+use Defaults;
+LANG_VERSION;
 
 // The start function
 function<int> Main(myVariable:int, myVariable2:bool){
@@ -114,6 +115,9 @@ function<int> Main(myVariable:int, myVariable2:bool){
         // Never do that...
 
     }
+
+    // String-variable flexibility
+    string d = "The variable \"a\" has the value of ${a}";
 
 }
 
@@ -209,8 +213,8 @@ class MyCustomObject2 extend MyCustomObject {
     constructor(a:int, b:string) {
 
         // Do stuff...
-        this.a = Int(b);
-        this.b = String(a);
+        this.a = int(b);
+        this.b = string(a);
 
     }
 
