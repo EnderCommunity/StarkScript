@@ -27,9 +27,10 @@ int initialComp(struct GlobalIO globalIO){
     // ".input" file includes all the code from the main input file, built-in libraries, and other
     // user-imported files)!
     //
-    // All the files contexts are separated by the "\f" escape character, and the "\e" escape
-    // character. Inside each file context, you have two guiding lines. (read the comments in the
-    // `preproc/preproc.c` file for more info)
+    // All the file contexts are separated by the "\f" escape character, and the "\e" escape
+    // character. Inside each file context, you have the file's basic info, and the file's content.
+    // The file content is between the "\v" escape character and the "\e" escape character!
+    // (read the comments in the `preproc/preproc.c` file for more info)
     //
     // In addition to file contexts, there are "intermediate" contexts! "Intermediate" contexts are
     // separated from the file that contains them with the "\a" escape character and the "\e" escape

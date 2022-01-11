@@ -21,31 +21,25 @@
 //   |______________________________________________________|
 //
 // Will be like this when converted to a "mega input file":
-//    ______________________________________________________
-//   |                                                      |
-//   |   <content>                                          |
-//   |   #file ./example1.stark ? /path/to/example1.stark   |
-//   |   <content>                                          |
-//   |   #endfile                                           |
-//   |   #file ./example2.stark ? /path/to/example2.stark   |
-//   |   <content>                                          |
-//   |   #endfile                                           |
-//   |   <content>                                          |
-//   |______________________________________________________|
+//    _______________________________________________________________
+//   |                                                               |
+//   |   <content>                                                   |
+//   |   \f./example1.stark</path/to/example1.stark>\v<content>\e    |
+//   |   \f./example2.stark</path/to/example2.stark>\v<content>\e    |
+//   |   <content>                                                   |
+//   |_______________________________________________________________|
 //
 //
-// In short words, the preprocessor is going to replace each the import narrative with two guiding
-// lines with the content of the imported file placed between those two lines.
-// Note the start and end of the imported file will be also marked with a "form feed new page"
-// character and an "escape" character (\f & \e)! This is done so the user would be able to include
-// more than one import narrative within one file, without losing track of the column value.
+// In short words, the preprocessor is going to replace each the import narrative with a file
+// context. The file context includes the file's path, and the file's content.
+// Note the start and end of the imported file content will be marked with a "vertical tab"
+// character and an "escape" character (\v & \e)! This is done so the user would be able to include
+// more than one import narrative within one line, without losing track of the column value.
 //
-// The opening guiding line follows this format:
-// "#file <library name/ID>/<relative file path> ? <absolute file path>"
-// And the closing guiding line follows this format:
-// "#endfile"
+// File info would be shown like this (with no space between the different components):
+// "\f <library name/ID>/<relative file path> <<absolute file path>>\v"
 //
-// Note that Import narratives is nest-able. (An import narrative is allowed to include other
+// Note that Import narratives are nest-able. (An import narrative is allowed to include other
 // import narratives inside of it)
 //
 // Also, the preprocessor will wrap all intermediate code contexts with the '\a' and '\e'
@@ -53,7 +47,7 @@
 //    ______________________________________________________
 //   |                                                      |
 //   |   <content>                                          |
-//   |   \a <intermediate> \e                               |
+//   |   \a<intermediate>\e                                 |
 //   |   <content>                                          |
 //   |______________________________________________________|
 //
