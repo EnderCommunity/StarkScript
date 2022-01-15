@@ -7,25 +7,59 @@ export var tokenizer = {
 
     // Set defaultToken to invalid to see what you do not tokenize yet
     // defaultToken: 'invalid',
+    keyword: [
 
-    definingKeywords: [
+        "use", "import"
+
+    ],
+    keywordNR: [
+
+        "execute", "append", "obscure", "new", "define", "delete", "if", "else", "return", "exit",
+        "intermediate", "constructor", "destructor", "extend", "await", "get", "from"
+
+    ],
+
+    definitionalKeyword: [
+
+        // ...
+
+    ],
+    definitionalKeywordNR: [
 
         "function", "variable", "constant", "condition", "class"
 
     ],
-    functionalKeywords: [
 
-        "use", "import", "execute", "append", "new", "define", "delete", "if", "else", "return", "exit", "intermediate", "constructor", "destructor", "extend", "await"
+    typeKeyword: [
+
+        // ...
 
     ],
-    typeKeywords: [
+    typeKeywordNR: [
 
         "bool", "double", "int", "short", "char", "void", "long", "float", "string"
 
     ],
-    predefinedKeywords: [
 
-        "this", "true", "false"
+    referenceKeyword: [
+
+        // ...
+
+    ],
+    referenceKeywordNR: [
+
+        "this", "super"
+
+    ],
+
+    boolean: [
+
+        // ...
+
+    ],
+    booleanNR: [
+
+        "true", "false"
 
     ],
 
@@ -59,10 +93,18 @@ export var tokenizer = {
 
                     cases: {
 
-                        "@typeKeywords": "keyword.type",
-                        "@functionalKeywords": "keyword.functional",
-                        "@definingKeywords": "keyword.definition",
-                        "@predefinedKeywords": "keyword.predefined",
+                        "@keyword": "keyword.functional",
+                        "@definitionalKeyword": "keyword.definition",
+                        "@typeKeyword": "keyword.type",
+                        "@referenceKeyword": "keyword.predefined",
+                        "@boolean": "keyword.predefined",
+
+                        "@keywordNR": "invalid",
+                        "@definitionalKeywordNR": "invalid",
+                        "@typeKeywordNR": "invalid",
+                        "@referenceKeywordNR": "invalid",
+                        "@booleanNR": "invalid",
+
                         "@default": "identifier",
 
                     },
@@ -115,8 +157,7 @@ export var tokenizer = {
 
                 /@[a-zA-Z][a-zA-Z_0-9]*/, {
 
-                    token: "annotation",
-                    log: "annotation token: $0"
+                    token: "invalid" // Change to "annotation" when you implement this!
 
                 }
 
@@ -124,17 +165,17 @@ export var tokenizer = {
             // numbers
             [
 
-                /\d*\.\d+([eE][\-+]?\d+)?/, "number.hex"
+                /\d*\.\d+([eE][\-+]?\d+)?/, "invalid" // Change this to "number.hex"
 
             ],
             [
 
-                /0[xX][0-9a-fA-F]+/, "number.hex"
+                /0[xX][0-9a-fA-F]+/, "invalid" // Change this to "number.hex"
 
             ],
             [
 
-                /\d+/, "number.hex"
+                /\d+/, "invalid" // Change this to "number.hex"
 
             ],
 

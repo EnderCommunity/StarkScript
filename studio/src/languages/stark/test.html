@@ -145,8 +145,12 @@ function<int> Main(myVariable:int, myVariable2:bool){
 
     }
 
+    // This is casting in Stark!
+    int(b);
+    string(a);
+
     // String-variable flexibility
-    string d = "The variable \\"a\\" has the value of \${a}";
+    string d = "The variable \\"a\\" has the value of {a}";
 
 }
 
@@ -241,9 +245,19 @@ class MyCustomObject2 extend MyCustomObject {
     @overwrite
     constructor(a:int, b:string) {
 
-        // Do stuff...
-        this.a = int(b);
-        this.b = string(a);
+        // Do the same thing the original constructor does
+        super.constructor(a, b);
+
+        // Do something else...
+        // ...
+
+    }
+
+    // The "obscure" keyword prevents other classes that might extend this class from detecting or
+    // "super"-refrencing the function
+    obscure function<void> MyTopSecretFunction(){
+
+        //
 
     }
 
@@ -278,25 +292,59 @@ get System.IO;
 
                 // Set defaultToken to invalid to see what you do not tokenize yet
                 // defaultToken: 'invalid',
+                keyword: [
 
-                definingKeywords: [
+                    "use", "import"
+
+                ],
+                keywordNR: [
+
+                    "execute", "append", "obscure", "new", "define", "delete", "if", "else", "return", "exit",
+                    "intermediate", "constructor", "destructor", "extend", "await", "get", "from"
+
+                ],
+
+                definitionalKeyword: [
+
+                    // ...
+
+                ],
+                definitionalKeywordNR: [
 
                     "function", "variable", "constant", "condition", "class"
 
                 ],
-                functionalKeywords: [
 
-                    "use", "import", "execute", "append", "new", "define", "delete", "if", "else", "return", "exit", "intermediate", "constructor", "destructor", "extend", "await"
+                typeKeyword: [
+
+                    // ...
 
                 ],
-                typeKeywords: [
+                typeKeywordNR: [
 
                     "bool", "double", "int", "short", "char", "void", "long", "float", "string"
 
                 ],
-                predefinedKeywords: [
 
-                    "this", "true", "false"
+                referenceKeyword: [
+
+                    // ...
+
+                ],
+                referenceKeywordNR: [
+
+                    "this", "super"
+
+                ],
+
+                boolean: [
+
+                    // ...
+
+                ],
+                booleanNR: [
+
+                    "true", "false"
 
                 ],
 
@@ -330,10 +378,18 @@ get System.IO;
 
                                 cases: {
 
-                                    "@typeKeywords": "keyword.type",
-                                    "@functionalKeywords": "keyword.functional",
-                                    "@definingKeywords": "keyword.definition",
-                                    "@predefinedKeywords": "keyword.predefined",
+                                    "@keyword": "keyword.functional",
+                                    "@definitionalKeyword": "keyword.definition",
+                                    "@typeKeyword": "keyword.type",
+                                    "@referenceKeyword": "keyword.predefined",
+                                    "@boolean": "keyword.predefined",
+
+                                    "@keywordNR": "invalid",
+                                    "@definitionalKeywordNR": "invalid",
+                                    "@typeKeywordNR": "invalid",
+                                    "@referenceKeywordNR": "invalid",
+                                    "@booleanNR": "invalid",
+
                                     "@default": "identifier",
 
                                 },
@@ -386,8 +442,7 @@ get System.IO;
 
                             /@[a-zA-Z][a-zA-Z_0-9]*/, {
 
-                                token: "annotation",
-                                log: "annotation token: $0"
+                                token: "invalid"
 
                             }
 
@@ -395,17 +450,17 @@ get System.IO;
                         // numbers
                         [
 
-                            /\d*\.\d+([eE][\-+]?\d+)?/, "number.hex"
+                            /\d*\.\d+([eE][\-+]?\d+)?/, "invalid"
 
                         ],
                         [
 
-                            /0[xX][0-9a-fA-F]+/, "number.hex"
+                            /0[xX][0-9a-fA-F]+/, "invalid"
 
                         ],
                         [
 
-                            /\d+/, "number.hex"
+                            /\d+/, "invalid"
 
                         ],
 
@@ -571,7 +626,10 @@ get System.IO;
                     }, {
                         token: 'keyword.functional',
                         foreground: 'AF00DB'
-                    },
+                    }, {
+                        token: 'invalid',
+                        foreground: 'CD3131'
+                    }
 
                 ],
                 colors: {
@@ -626,7 +684,10 @@ get System.IO;
                     }, {
                         token: 'keyword.functional',
                         foreground: 'C586C0'
-                    },
+                    }, {
+                        token: 'invalid',
+                        foreground: 'F44747'
+                    }
 
                 ],
                 colors: {
