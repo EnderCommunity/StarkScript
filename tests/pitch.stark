@@ -116,8 +116,12 @@ function<int> Main(myVariable:int, myVariable2:bool){
 
     }
 
+    // This is casting in Stark!
+    int(b);
+    string(a);
+
     // String-variable flexibility
-    string d = "The variable \"a\" has the value of ${a}";
+    string d = "The variable \"a\" has the value of {a}";
 
 }
 
@@ -212,9 +216,19 @@ class MyCustomObject2 extend MyCustomObject {
     @overwrite
     constructor(a:int, b:string) {
 
-        // Do stuff...
-        this.a = int(b);
-        this.b = string(a);
+        // Do the same thing the original constructor does
+        super.constructor(a, b);
+
+        // Do something else...
+        // ...
+
+    }
+
+    // The "obscure" keyword prevents other classes that might extend this class from detecting or
+    // "super"-refrencing the function
+    obscure function<void> MyTopSecretFunction(){
+
+        //
 
     }
 
