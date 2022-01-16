@@ -37,7 +37,8 @@ export var tokenizer = {
     ],
     typeKeywordNR: [
 
-        "bool", "double", "int", "short", "char", "void", "long", "float", "string"
+        "bool", "double", "int", "short", "char", "void", "long", "float", "string", "signed",
+        "unsigned"
 
     ],
 
