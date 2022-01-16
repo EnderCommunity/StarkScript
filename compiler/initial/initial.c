@@ -41,7 +41,7 @@ int initialComp(struct GlobalIO globalIO){
     // to create a lexical index!
 
     // Trigger the lexer
-    lexer();
+    lexer(globalIO.tempDir, globalIO.output.fileName);
 
     // Return the files count
     return filesCount;
