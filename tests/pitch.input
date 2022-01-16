@@ -129,7 +129,12 @@ function<int> Main(myVariable:int, myVariable2:bool){
     }
 
     
-    string d = "The variable \"a\" has the value of ${a}";
+    int(b);
+    string(a);
+    int(5.8); 
+
+    
+    string d = "The variable \"a\" has the value of {a}";
 
 }
 
@@ -218,15 +223,25 @@ class MyCustomObject {
 
 class MyCustomObject2 extend MyCustomObject {
 
-    @override
+    @overwrite
     append variable:int a;
 
-    @override
+    @overwrite
     constructor(a:int, b:string) {
 
         
-        this.a = int(b);
-        this.b = string(a);
+        super.constructor(a, b);
+
+        
+        
+
+    }
+
+    
+    
+    obscure function<void> MyTopSecretFunction(){
+
+        
 
     }
 

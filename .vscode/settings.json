@@ -11,7 +11,8 @@
         "cstdlib": "c",
         "typeinfo": "c",
         "cstdio": "c",
-        "new": "c"
+        "new": "c",
+        "functional": "cpp"
     }
 
 }

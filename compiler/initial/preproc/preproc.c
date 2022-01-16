@@ -60,9 +60,6 @@
 // Get the preprocessor strings
 #include "./../../strings/preproc.h"
 
-// Import the `opnImportFile` function and its related functions
-#include "./files.c"
-
 // Import all the comments-related functions
 #include "./comments.c"
 
@@ -88,7 +85,8 @@ char* createCodePath(const char *codePath, const char *path, int line, int colum
 }
 
 // Define a function to handle preprocessor errors
-void preprocError(FILE *inputFile, FILE *outputFile, const char *msg, const char *codePath, const char *filePath, int line, int column, int length, int height){
+void preprocError(FILE *inputFile, FILE *outputFile, const char *msg, const char *codePath,
+                    const char *filePath, int line, int column, int length, int height){
 
     // Get the current code path
     char *currentCodePath = createCodePath(codePath, filePath, line, column);
@@ -104,7 +102,8 @@ void preprocError(FILE *inputFile, FILE *outputFile, const char *msg, const char
 }
 
 // Define a function to handle preprocessor warnings
-void preprocWarn(const char *msg, const char *codePath, const char *filePath, int line, int column, int length, int height){
+void preprocWarn(const char *msg, const char *codePath, const char *filePath, int line, int column,
+                    int length, int height){
 
     // Get the current code path
     char *currentCodePath = createCodePath(codePath, filePath, line, column);
@@ -133,21 +132,21 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
 // Define a function that can look for a keyword within the input file!
 // If a matching keyword is found, the file pointer will point to the end of the keyword...
-int lookUpKeyword(const char *importKeyword, FILE **inputFile, char *prvsChar, char *currChar, int *column){
+int lookUpKeyword(const char *keyword, FILE **inputFile, char prvsChar, char *currChar,
+                    int *column){
 
     // Keep track of the characters shift
     int shift = 0;
 
     // Check if this is the start of a new word
-    if(!isalpha(*prvsChar) && !isdigit(*prvsChar) && *prvsChar != '_'){
+    if(!isalpha(prvsChar) && !isdigit(prvsChar) && prvsChar != '_'){
 
         int noMatch = 0;
 
         // Look for the "import" keyword
-        for(int i = 0; i < strlen(importKeyword); i++){
+        for(int i = 0; i < strlen(keyword); i++){
 
-            importKeyword[i];
-    	    if(*currChar == importKeyword[i]){
+    	    if(*currChar == keyword[i]){
 
                 // Get the next character
                 *currChar = fgetc(*inputFile);
@@ -175,7 +174,7 @@ int lookUpKeyword(const char *importKeyword, FILE **inputFile, char *prvsChar, c
             (*column)--;
 
             // Restore the original value of the "current character" to "t"
-            *currChar = importKeyword[strlen(importKeyword) - 1];
+            *currChar = keyword[strlen(keyword) - 1];
 
             // Found an import context
             return 1;
@@ -187,7 +186,7 @@ int lookUpKeyword(const char *importKeyword, FILE **inputFile, char *prvsChar, c
             (*column) -= shift;
 
             // Restore the original value of the current character variable
-            *currChar = importKeyword[0];
+            *currChar = keyword[0];
 
         }
 
@@ -385,14 +384,14 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
                 // Search for an "import" context
                 importContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_FILE, &inputFile,
-                                                        &prvsChar, &currChar, &column);
+                                                        prvsChar, &currChar, &column);
 
                 // Check if you didn't reach an "import" context yet
                 if(!importContextStart){
 
                     // Search for a "use" context
                     useContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_LIBRARY, &inputFile,
-                                                        &prvsChar, &currChar, &column);
+                                                        prvsChar, &currChar, &column);
 
                     // Check if the "use" context has been detected
                     if(useContextStart){
@@ -405,7 +404,7 @@ void preprocR(FILE *inputFile, FILE *outputFile, int *processedFiles, const char
 
                         // Search for an "intermediate" context
                         intrmContextStart = lookUpKeyword(PREPROC_KEYWORD_INCLUDE_C, &inputFile,
-                                                            &prvsChar, &currChar, &column);
+                                                            prvsChar, &currChar, &column);
 
                         // Check if the "intermediate" context has been detected
                         if(intrmContextStart){

@@ -41,7 +41,10 @@ export var lightTheme = {
         }, {
             token: 'keyword.functional',
             foreground: 'AF00DB'
-        },
+        }, {
+            token: 'invalid',
+            foreground: 'CD3131'
+        }
 
     ],
     colors: {
@@ -97,7 +100,10 @@ export var darkTheme = {
         }, {
             token: 'keyword.functional',
             foreground: 'C586C0'
-        },
+        }, {
+            token: 'invalid',
+            foreground: 'F44747'
+        }
 
     ],
     colors: {
