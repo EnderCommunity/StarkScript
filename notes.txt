@@ -1,2 +1,13 @@
 Make sure to rename functions at compile time (max is 31 characters):
 http://www.crasseux.com/books/ctutorial/Function-names.html
+
+If you wish to learn more about compilers, watch these videos:
+https://www.youtube.com/watch?v=QXjU9qTsYCc
+https://www.youtube.com/watch?v=0A079QpDAzY
+https://www.youtube.com/watch?v=sJKFLcsysVs
+https://www.youtube.com/watch?v=8nBoVjEOCMI
+https://www.youtube.com/watch?v=xtouovp9kvQ
+https://www.youtube.com/watch?v=TikxuBeHgqk
+
+Helpful (for parser):
+https://tree-sitter.github.io/tree-sitter/playground
