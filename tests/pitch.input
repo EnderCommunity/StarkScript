@@ -131,6 +131,7 @@ function<int> Main(myVariable:int, myVariable2:bool){
     
     int(b);
     string(a);
+    int(5.8); 
 
     
     string d = "The variable \"a\" has the value of {a}";

@@ -119,6 +119,7 @@ function<int> Main(myVariable:int, myVariable2:bool){
     // This is casting in Stark!
     int(b);
     string(a);
+    int(5.8); // This will round up the float value
 
     // String-variable flexibility
     string d = "The variable \"a\" has the value of {a}";
