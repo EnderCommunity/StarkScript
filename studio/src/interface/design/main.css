@@ -1,0 +1,61 @@
+/**
+ *
+ * The style of the main window
+ *
+**/
+
+:root {
+    --mainwindowoption-background: #e2e4e6;
+    --scrollbarthumb-background: #d6d6d6;
+}
+
+:root[data-dark-scheme="true"] {
+    --mainwindowoption-background: #3b3b3b;
+    --scrollbarthumb-background: #888888;
+}
+
+.options--item {
+    background-color: var(--mainwindowoption-background);
+    border-radius: 4px;
+}
+
+.user--picture {
+    background-color: var(--text-color);
+}
+
+.projects--search-input {
+    background-color: transparent;
+    color: var(--text-color);
+}
+
+.projects--search-input::placeholder {
+    color: darkgrey;
+}
+
+.projects-results::-webkit-scrollbar {
+    width: 16px;
+}
+
+.projects-results::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.projects-results::-webkit-scrollbar-thumb {
+    background: var(--scrollbarthumb-background);
+    border-radius: 2px;
+}
+
+.projects--item.projects--project .item--extra,
+.user--message {
+    opacity: 0.6;
+}
+
+.projects--search-icon path,
+.options--item-icon path,
+.options--special-icon path {
+    stroke: var(--text-color);
+}
+
+.projects-results[message]:after {
+    opacity: 0.4;
+}

@@ -20,6 +20,9 @@
 
 <window show-controls="true" enable-max="true" enable-min="true" enable-close="true" show-title="false" start-max="true">
 
+    <stylesheet href="studio://interface/layout/editor.css" />
+    <stylesheet href="studio://interface/design/editor.css" />
+
     <javascript src="node_modules://monaco-editor/min/vs/loader.js" />
     <javascript src="studio://languages/register.js" />
     <!-- type="module" -->
@@ -28,7 +31,66 @@
 
     <content>
 
-        <!---->
+        <div class="top-bar">
+            <img class="top-bar-icon top-bar-item">
+            <img class="top-bar-icon top-bar-item">
+            <img class="top-bar-icon top-bar-item">
+            <text class="top-bar-item"> Top bar </text>
+            <img class="top-bar-icon top-bar-item">
+        </div>
+
+        <div class="body">
+
+            <div class="content">
+
+                <!---->
+                <div class="active-files-list">
+
+                    <div class="file-list-item">
+                        <img class="list-item-icon">
+                        <text class="list-item-title">Item 1</text>
+                    </div>
+
+                    <div class="file-list-item">
+                        <img class="list-item-icon">
+                        <text class="list-item-title">Item 2</text>
+                    </div>
+
+                </div>
+
+                <!---->
+                <div class="extra-info">Extra info</div>
+
+                <div class="active-file">
+
+                    <!-- Editor, or whatever else you need to add... -->
+                    The active file's content
+
+                    <div id="editors">
+                        <!-- Monaco editors -->
+                    </div>
+
+                    <div id="images">
+                        <!-- Monaco editors -->
+                    </div>
+
+                    <div id="previews">
+                        <!-- Monaco editors -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="side-bar">
+                Side bar
+            </div>
+
+        </div>
+
+        <div class="bottom-bar">
+            Bottom bar
+        </div>
 
     </content>
 

@@ -12,14 +12,12 @@ body,
     padding: 0px;
     margin: 0px;
     overflow: hidden;
-    background-color: lightgreen;
 }
 
 .splash--background {
     position: fixed;
     top: 0px;
     z-index: -1;
-    background-color: lightpink;
 }
 
 .splash--container {
@@ -31,7 +29,6 @@ body,
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: lightblue;
 }
 
 .splash--title {

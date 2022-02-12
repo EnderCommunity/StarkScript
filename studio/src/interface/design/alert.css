@@ -1,0 +1,9 @@
+/**
+ *
+ * The style of the alert window
+ *
+**/
+
+.icon path {
+    stroke: var(--text-color);
+}

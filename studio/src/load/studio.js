@@ -24,28 +24,28 @@ var windows = {
 };
 
 // Define a function that will wait for all the windows to fully load
-var initalWindows = 3,
+var initalWindows = 2,
     loadedInitalWindows = 0;
 
-function checkInitalWindows() {
+function studioLoaded() {
 
-    if (++loadedInitalWindows == initalWindows) {
+    // Close the splash screen
+    closeWindow(windows.splash);
 
-        // Close the splash screen
-        closeWindow(windows.splash);
+    // Show the main window
+    showWindow(windows.main, function() {}, false);
 
-        // Temp
-        showWindow(windows.editors[0], function() {}, false);
-        // windows.editors[0].openDevTools();
-        setTimeout(function() {
-            showWindow(windows.main, function() {}, false);
-            // windows.main.openDevTools();
-            setTimeout(function() {
-                showWindow(windows.about, function() {}, false);
-            }, 500);
-        }, 500);
+    // Temp
+    // showWindow(windows.editors[0], function() {}, false);
 
-    }
+    // windows.editors[0].openDevTools();
+    // setTimeout(function() {
+    //     showWindow(windows.main, function() {}, false);
+    //     // windows.main.openDevTools();
+    //     setTimeout(function() {
+    //         showWindow(windows.about, function() {}, false);
+    //     }, 500);
+    // }, 500);
 
 }
 
@@ -56,7 +56,11 @@ module.exports = {
     loadStudio: function(splashWindow) {
 
         // Set up the content-related events
-        require(`${__dirname}/events.js`).windowLoaded = checkInitalWindows;
+        require(`${__dirname}/events.js`).studio = {
+
+            mainWindowLoaded: studioLoaded
+
+        };
 
         // Store the splash widnow object
         windows.splash = splashWindow;
@@ -66,8 +70,16 @@ module.exports = {
 
         manager.lang = studioSettings.lang;
 
+        // Load the main window
+        manager.loadWindow.main(function(window) {
+
+            // Save the window object
+            windows.main = window;
+
+        });
+
         // Start loading all the windows
-        manager.loadWindow.editor("./", function(window) {
+        /* manager.loadWindow.editor("./", function(window) {
 
             // Save the window object
             windows.editors.push(window);
@@ -79,21 +91,8 @@ module.exports = {
 
             });
 
-        });
-        manager.loadWindow.main(function(window) {
-
-            // Save the window object
-            windows.main = window;
-
-            // Wait for the window to finish loading
-            window.webContents.once('did-finish-load', function() {
-
-                //checkInitalWindows();
-
-            });
-
-        });
-        manager.loadWindow.about(windows.main, function(window) {
+        }); */
+        /* manager.loadWindow.about(windows.main, function(window) {
 
             // Save the window object
             windows.about = window;
@@ -105,7 +104,7 @@ module.exports = {
 
             });
 
-        });
+        }); */
 
     }
 

@@ -30,6 +30,7 @@
         "electron": "^16.0.5"
     },
     "dependencies": {
+        "chokidar": "^3.5.3",
         "monaco-editor": "^0.31.1"
     }
 }

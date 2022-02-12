@@ -33,6 +33,8 @@ module.exports = {
 
                 }
 
+                window.focus();
+
                 callback();
 
             }, timeout);
@@ -48,6 +50,8 @@ module.exports = {
                     window.maximize();
 
                 }
+
+                window.focus();
 
                 callback();
 

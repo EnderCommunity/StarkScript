@@ -1,0 +1,29 @@
+{
+
+    "name": "Test Project",
+    "description": "This is my test project!!!",
+
+    "content": {
+
+        "source": {
+
+            "path": "./src/",
+            "main": "myFile.stark"
+
+        }
+
+    },
+
+    "versionID": 0,
+    "version": "0.00.0000",
+    "channel": "alpha|beta|pre-release|release",
+
+    "ignore": {
+
+        "folder": ["<regex>"],
+        "file": ["<regex>"],
+        "any": ["<regex>"]
+
+    }
+
+}

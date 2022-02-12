@@ -15,7 +15,7 @@ export var tokenizer = {
     keywordNR: [
 
         "execute", "append", "obscure", "new", "define", "delete", "if", "else", "return", "exit",
-        "intermediate", "constructor", "destructor", "extend", "await", "get", "from"
+        "constructor", "destructor", "extend", "await", "get", "from"
 
     ],
 
@@ -85,12 +85,20 @@ export var tokenizer = {
         root: [
 
             [/%%(.*?)%%/, "compiler-constant"],
+
+            // Manage the "intermediate" codeblock
+            [/intermediate/, {
+                token: 'keyword.functional',
+                next: '@intermediateBlock',
+                nextEmbedded: 'c'
+            }],
+
             [/'(.*?)'/, "string"],
 
             // identifiers and keywords
             [
 
-                /[a-z_$][\w$]*/, {
+                /[a-z_][\w]*/, {
 
                     cases: {
 
@@ -116,7 +124,7 @@ export var tokenizer = {
 
             [
 
-                /[A-Z][\w\$]*/, "type.identifier" // to show class names nicely
+                /[A-Z][\w]*/, "type.identifier" // to show class names nicely
 
             ],
 
@@ -221,6 +229,26 @@ export var tokenizer = {
                 /'/, "string.invalid"
 
             ],
+
+        ],
+
+        intermediateBlock: [
+
+            [/{/, {
+                token: '@rematch',
+                next: '@push',
+                nextEmbedded: 'html'
+            }],
+            [/}/, {
+                token: '@rematch',
+                next: '@pop',
+                nextEmbedded: '@pop'
+            }],
+            [/intermediat0/, {
+                token: '@rematch',
+                next: '@pop',
+                nextEmbedded: '@pop'
+            }],
 
         ],
 

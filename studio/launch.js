@@ -6,7 +6,7 @@
 
 
 // Get the required moduels for the inital start
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, globalShortcut } = require('electron');
 const { hideWindow, showWindow } = require("./app/load/windows");
 const { loadStudio } = require("./app/load/studio");
 
@@ -56,6 +56,13 @@ function createSplash(callback) {
 
 // Wait for Electron to get ready
 app.whenReady().then(() => {
+
+    // Debug
+    globalShortcut.register('CommandOrControl+Shift+I', () => {
+
+        BrowserWindow.getFocusedWindow().webContents.openDevTools();
+
+    });
 
     // Show the splash screen
     const splashWindow = createSplash(function() {

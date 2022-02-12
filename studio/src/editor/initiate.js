@@ -23,7 +23,7 @@ require(['vs/editor/editor.main'], function() {
     console.log(monaco);
 
     // Get the needed settings data
-    electron.tell("get-data", {
+    electron.getData({
 
         editorSettings: true
 

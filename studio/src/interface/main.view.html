@@ -12,8 +12,8 @@
     resize: true
     max/min: true
     moving/window-dragging: true
-    width: 700
-    height: 520
+    width: 900
+    height: 620
     min-width: ?
     min-height: ?
     maxByDefault: false
@@ -22,50 +22,65 @@
 <window show-controls="true" show-title="true" enable-max="true" enable-min="true" enable-close="true" start-max="false">
 
     <stylesheet href="studio://interface/layout/main.css" />
+    <stylesheet href="studio://interface/design/main.css" />
+    <javascript src="studio://main/events.js" />
+    <javascript src="studio://main/load.js" />
 
     <content>
 
-        <!-- test/tmp -->
-        <script>
-            electron.alert("Test", electron.alertType.info, "This is a test", function() {
-
-                console.log(1);
-
-            });
-        </script>
-
         <!-- The side-bar -->
-        <div class="app--sidebar">
+        <div class="app--projects">
 
-            <!-- ??? -->
-            <div class="sidebar--item item--special"></div>
+            <!-- User account info -->
+            <div class="projects--item item--special">
+                <img id="projects--profile" class="user--picture" clickable show-on-signed disabled>
+                <text class="user--message" show-on-signed>$${basic-interface:main.hello}, <text id="user--name">$USER</text>!</text>
+                <text class="user--message" hide-on-signed>$${basic-interface:main.signinmessage}</text>
+            </div>
 
-            <!-- The side-bar items -->
-            <div class="sidebar--item">$${basic-interface:main.sidebar.projects}</div>
-            <div class="sidebar--item">$${basic-interface:main.sidebar.addons}</div>
-            <div class="sidebar--item">$${basic-interface:main.sidebar.learn}</div>
+            <!-- The projects -->
+            <div class="projects--title">$${basic-interface:main.projects.recents}</div>
+            <div id="projects" class="projects-results" message="$${basic-interface:main.projects.loading}" disabled></div>
 
-            <!-- The bottom side-bar items -->
-            <div class="sidebar--bottom">
-                <div class="sidebar--item item--icon">$${basic-interface:main.sidebar.settings}</div>
-                <div class="sidebar--item item--icon">$${basic-interface:main.sidebar.help}</div>
+            <!-- The search bar -->
+            <div class="projects--search" disabled>
+                <svg class="projects--search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 15.5L19 19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 11C5 14.3137 7.68629 17 11 17C12.6597 17 14.1621 16.3261 15.2483 15.237C16.3308 14.1517 17 12.654 17 11C17 7.68629 14.3137 5 11 5C7.68629 5 5 7.68629 5 11Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <input class="projects--search-input" type="search" placeholder="$${basic-interface:main.projects.search}">
             </div>
 
         </div>
 
-        <!-- The content view box -->
-        <div class="app--view">
+        <!-- The start options -->
+        <div class="app--options">
 
-            <!-- The projects view -->
-            <div id="projects">
-                <div class="view--top"></div>
+            <!-- Studio options -->
+            <div class="item--special">
+                <svg id="options--about" class="options--special-icon" clickable width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 9C9 5.49997 14.5 5.5 14.5 9C14.5 11.5 12 10.9999 12 13.9999" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 18.01L12.01 17.9989" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg id="options--settings" class="options--special-icon" clickable disabled width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.6224 10.3954L18.5247 7.7448L20 6L18 4L16.2647 5.48295L13.5578 4.36974L12.9353 2H10.981L10.3491 4.40113L7.70441 5.51596L6 4L4 6L5.45337 7.78885L4.3725 10.4463L2 11V13L4.40111 13.6555L5.51575 16.2997L4 18L6 20L7.79116 18.5403L10.397 19.6123L11 22H13L13.6045 19.6132L16.2551 18.5155C16.6969 18.8313 18 20 18 20L20 18L18.5159 16.2494L19.6139 13.598L21.9999 12.9772L22 11L19.6224 10.3954Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+
+                <text id="options--signout" class="options--special-text" disabled clickable show-on-signed>$${basic-interface:main.options.signout}</text>
+                <text id="options--signin" class="options--special-text" disabled clickable hide-on-signed>$${basic-interface:main.options.signin}</text>
             </div>
 
-            <!-- The Add-Ons view -->
-            <div id="addons"></div>
+            <!-- Starter options -->
+            <div class="options--title">$${basic-interface:main.options.title}</div>
+            <div id="options--cloneproject" class="options--item" clickable disabled>
+                <svg class="options--item-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 18L18 18" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 6V14M12 14L15.5 10.5M12 14L8.5 10.5" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20.4V3.6C3 3.26863 3.26863 3 3.6 3H20.4C20.7314 3 21 3.26863 21 3.6V20.4C21 20.7314 20.7314 21 20.4 21H3.6C3.26863 21 3 20.7314 3 20.4Z" stroke="black" stroke-width="1.5"/></svg>
+                <text class="options--item-title">$${basic-interface:main.options.clone}</text>
+            </div>
+            <div id="options--openproject" class="options--item" clickable disabled>
+                <svg class="options--item-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 18H10.5H14" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 14H7.5H8" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 10H8.5H10" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 2L16.5 2L21 6.5V19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 20.5V6.5C3 5.67157 3.67157 5 4.5 5H14.2515C14.4106 5 14.5632 5.06321 14.6757 5.17574L17.8243 8.32426C17.9368 8.43679 18 8.5894 18 8.74853V20.5C18 21.3284 17.3284 22 16.5 22H4.5C3.67157 22 3 21.3284 3 20.5Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8.4V5.35355C14 5.15829 14.1583 5 14.3536 5C14.4473 5 14.5372 5.03725 14.6036 5.10355L17.8964 8.39645C17.9628 8.46275 18 8.55268 18 8.64645C18 8.84171 17.8417 9 17.6464 9H14.6C14.2686 9 14 8.73137 14 8.4Z" fill="black" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <text class="options--item-title">$${basic-interface:main.options.open}</text>
+            </div>
+            <div id="options--createproject" class="options--item" clickable>
+                <svg class="options--item-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.99219 19H4.99219M7.99219 19H4.99219M4.99219 19V16M4.99219 19V22" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 2L16.5 2L21 6.5V19" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 22H16.5C17.3284 22 18 21.3284 18 20.5V8.74853C18 8.5894 17.9368 8.43679 17.8243 8.32426L14.6757 5.17574C14.5632 5.06321 14.4106 5 14.2515 5H4.5C3.67157 5 3 5.67157 3 6.5V13" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8.4V5.35355C14 5.15829 14.1583 5 14.3536 5C14.4473 5 14.5372 5.03725 14.6036 5.10355L17.8964 8.39645C17.9628 8.46275 18 8.55268 18 8.64645C18 8.84171 17.8417 9 17.6464 9H14.6C14.2686 9 14 8.73137 14 8.4Z" fill="black" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <text class="options--item-title">$${basic-interface:main.options.new}</text>
+            </div>
 
-            <!-- The "learn" view -->
-            <div id="learn"></div>
+            <!-- The extra options -->
+            <div class="options--extra">
+                <text id="options--openempty" clickable>$${basic-interface:main.options.nocode}</text>
+            </div>
 
         </div>
 

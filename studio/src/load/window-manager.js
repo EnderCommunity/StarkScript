@@ -8,6 +8,7 @@
 // Import all the needed modules
 const { BrowserWindow } = require('electron');
 const { hideWindow } = require("./windows");
+const path = require("path");
 
 // Use this:
 // https://www.npmjs.com/package/glasstron
@@ -101,10 +102,10 @@ module.exports = {
             // Create a window
             var window = createWindow({
 
-                width: 700,
-                height: 520,
-                minWidth: 700,
-                minHeight: 520
+                width: 900,
+                height: 690,
+                minWidth: 840,
+                minHeight: 690
 
             });
 
@@ -116,6 +117,9 @@ module.exports = {
 
         },
         editor: function(folder, callback) {
+
+            // folder == null       => empty
+            // folder ~~ <string>   => dir
 
             // Create a window
             var window = createWindow({
@@ -155,7 +159,11 @@ module.exports = {
             });
 
             // Load the main layout
-            window.loadFile(`./app/local-view/${module.exports.lang}/alert.view.html`);
+            var location = path.resolve(`./app/local-view/${module.exports.lang}/alert.view.html`).replace(/\\/gi, "/");
+
+            window.loadURL(`file://${location}?title=${encodeURI(title)}&message=${encodeURI(message)}&type=${encodeURI(type)}`);
+            // window.loadFile(`./app/local-view/${module.exports.lang}/alert.view.html`);
+            //?title=${encodeURI(title)}&message=${encodeURI(message)}&message=${encodeURI(type)}
 
             // Pass the window object to the callback function
             callback(window);
