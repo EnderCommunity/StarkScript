@@ -54,10 +54,6 @@
 // 
 // [ ] TYPE-OPERATOR                      The ":" operator
 // 
-// [ ] OPEN-TYPE-OPERATOR                 The "<" operator
-// 
-// [ ] CLOSE-TYPE-OPERATOR                The ">" operator
-// 
 // [ ] OPEN-BRACKET                       The "(" operator
 // 
 // [ ] CLOSE-BRACKET                      The ")" operator
@@ -155,8 +151,36 @@ void lexerWarn(const char *msg, const char *codePath, const char *filePath, int 
 // Get the lexer strings
 #include "./../../strings/lexer.h"
 
+// Define a function that can be used to inject intermediate code into the lexer's output file
+void intermBlock(FILE **input, FILE **output){
+
+    // Mark this as the start of the intermediate code block
+    fprintf(*output, "$intermediate\n");
+
+    // Keep track of the current character
+    char currChar = fgetc(*input);
+
+    while(currChar != CHAR_SPECIAL_ESCAPE[0]){
+
+        // Print the current character
+        fprintf(*output, "%c", currChar);
+
+        // Get the next character
+        currChar = fgetc(*input);
+
+    }
+
+    // Mark this as the end of the intermediate code block
+    fprintf(*output, "$$\n");
+
+}
+
 // Define a recursive function for the lexer
-void lexerR(FILE **input, FILE **output, char endChar){
+void lexerR(FILE **input, FILE **output, char endChar, const char *relativePath,
+                const char *absolutePath){
+
+    // Mark this as the start of the file
+    fprintf(*output, "!%s\n?%s\n", relativePath, absolutePath);
 
     // Get the current character
     char currChar = fgetc(*input);
@@ -209,6 +233,76 @@ void lexerR(FILE **input, FILE **output, char endChar){
 
         // Remember that you still have access to the `lookUpKeyword` function, you can also use it
         // here!
+
+        // Check if this is the start of a new file
+        if(currChar == CHAR_SPECIAL_FILE_SEPARATOR[0]){
+
+            // Correct the column value
+            column--;
+
+            // Remember that you don't have to keep track of the line and column values within this
+            // file inside the current loop!
+
+            // Prepare the path variables
+            int relSize = 1,
+                absSize = 1; 
+            char *relPath = calloc(relSize, sizeof(char)),
+                *absPath = calloc(absSize, sizeof(char));
+
+            // Get the next character
+            currChar = fgetc(*input);
+
+            // Get the file's path info
+            while(currChar != '<'){
+
+                // Save this character
+                relPath = realloc(relPath, (++relSize)*(sizeof(char)));
+                relPath[relSize - 2] = currChar;
+
+                // Get the next character
+                currChar = fgetc(*input);
+
+            }
+            relPath[relSize - 1] = '\0';
+
+            // Get the next character
+            currChar = fgetc(*input);
+
+            // Get the file's path info
+            while(currChar != '>'){
+
+                // Save this character
+                absPath = realloc(absPath, (++absSize)*(sizeof(char)));
+                absPath[absSize - 2] = currChar;
+
+                // Get the next character
+                currChar = fgetc(*input);
+
+            }
+            absPath[absSize - 1] = '\0';
+
+            // Skip the vertical tab character
+            currChar = fgetc(*input);
+
+            // Start a new loop for this file
+            lexerR(input, output, CHAR_SPECIAL_ESCAPE[0], relPath, absPath);
+
+            // Free up the memory used by the path variables
+            free(relPath);
+            free(absPath);
+
+        }
+
+        // Check if this is the start of an intermediate code block
+        if(currChar == CHAR_SPECIAL_ALERT[0]){
+
+            // Skip the start character
+            currChar = fgetc(*input);
+
+            // Start a new loop for this file
+            intermBlock(input, output);
+
+        }
 
         // Start looking for quotes first so you couldn't confuse any of the quotes' content to
         // other normal code!
@@ -454,6 +548,9 @@ void lexerR(FILE **input, FILE **output, char endChar){
 
     }
 
+    // Mark this as the end of the file
+    fprintf(*output, "!!\n");
+
 }
 
 // Define a function that triggers the lexer
@@ -466,7 +563,7 @@ void lexer(const char *tmpDir, const char *outputFileName){
     FILE *output = createLexerFile(tmpDir, outputFileName);
 
     // Call the recursive function
-    lexerR(&input, &output, EOF);
+    lexerR(&input, &output, EOF, "0", "0");
 
     // ...
 
