@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="$${config:code}" dir="$${config:direction}">
+<html lang="$${config:code}" dir="$${config:direction}" data-dark-scheme="false" data-signed-in="false">
 
 <!--
    -
@@ -18,6 +18,7 @@
 
     <!-- The CSS resources -->
     <link rel="stylesheet" href="studio://interface/layout/window.css">
+    <link rel="stylesheet" href="studio://interface/design/window.css">
     <!-- @insert::CSS -->
 
 </head>
@@ -31,17 +32,17 @@
         <div id="titlebar--controls" class="titlebar--controls">
 
             <div id="windowcontrols--hide" class="controls--option controls--close" style="display: prop::controlsHideDisplay:;" onclick="electron.send('window-min');">
-                <svg width="12px" height="12px" x="0px" y="0px" viewBox="0 0 10.2 1"><rect x="0" y="50%" width="10.2" height="1" /></svg>
+                <svg width="10px" height="10px" x="0px" y="0px" viewBox="0 0 10.2 1"><rect x="0" y="50%" width="10.2" height="1" /></svg>
             </div>
 
             <div onclick="electron.send('window-max');">
 
                 <div id="windowcontrols--max" class="controls--option" style="display: prop::controlsMaxDisplay:;">
-                    <svg width="12px" height="12px" viewBox="0 0 10 10"><path d="M0,0v10h10V0H0z M9,9H1V1h8V9z" /></svg>
+                    <svg width="10px" height="10px" viewBox="0 0 10 10"><path d="M0,0v10h10V0H0z M9,9H1V1h8V9z" /></svg>
                 </div>
 
                 <div id="windowcontrols--unmax" class="controls--option" style="display: prop::controlsUnmaxDisplay:;">
-                    <svg width="12px" height="12px" viewBox="0 0 10.2 10.1"><path d="M2.1,0v2H0v8.1h8.2v-2h2V0H2.1z M7.2,9.2H1.1V3h6.1V9.2z M9.2,7.1h-1V2H3.1V1h6.1V7.1z" /></svg>
+                    <svg width="10px" height="10px" viewBox="0 0 10.2 10.1"><path d="M2.1,0v2H0v8.1h8.2v-2h2V0H2.1z M7.2,9.2H1.1V3h6.1V9.2z M9.2,7.1h-1V2H3.1V1h6.1V7.1z" /></svg>
                 </div>
 
                 <script>
@@ -68,7 +69,7 @@
             </div>
 
             <div id="windowcontrols--close" class="controls--option" style="display: prop::controlsCloseDisplay:;" onclick="electron.send('window-close');">
-                <svg width="12px" height="12px" viewBox="0 0 10 10"><polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1" /></svg>
+                <svg width="10px" height="10px" viewBox="0 0 10 10"><polygon points="10.2,0.7 9.5,0 5.1,4.4 0.7,0 0,0.7 4.4,5.1 0,9.5 0.7,10.2 5.1,5.8 9.5,10.2 10.2,9.5 5.8,5.1" /></svg>
             </div>
 
         </div>
@@ -83,7 +84,33 @@
 
     <!-- The JS resources -->
     <script>
-        electron.send("window-ready");
+        // Get the app's settings
+        electron.getData({
+
+            settings: true
+
+        }, function(data) {
+
+            // Check the colour scheme settings
+            if (data.settings["color-scheme"] == "auto") {
+
+                var mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+                document.documentElement.dataset.darkScheme = mediaQuery.matches;
+
+                mediaQuery.addEventListener("change", function() {
+
+                    document.documentElement.dataset.darkScheme = mediaQuery.matches;
+
+                });
+
+            } else {
+
+                document.documentElement.dataset.darkScheme = data.settings["color-scheme"] == "dark";
+
+            }
+
+        });
     </script>
     <!-- @insert::JAVASCRIPT -->
 

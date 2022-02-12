@@ -1,0 +1,17 @@
+/**
+ *
+ * The general style of the windows
+ *
+**/
+
+:root {
+    --window-background: #f5f5f5;
+    --text-color: #1E1E1E;
+    color-scheme: light;
+}
+
+:root[data-dark-scheme="true"] {
+    --window-background: #1E1E1E;
+    --text-color: #f5f5f5;
+    color-scheme: dark;
+}

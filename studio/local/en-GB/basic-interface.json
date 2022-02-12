@@ -15,13 +15,25 @@
     },
     "main": {
 
-        "sidebar": {
+        "hello": "Hello",
+        "signinmessage": "Hello there! You might want to sign in to your account!",
+        "projects": {
 
-            "projects": "Projects",
-            "addons": "Add-Ons",
-            "learn": "Learn",
-            "settings": "Settings",
-            "help": "Help"
+            "recents": "Recent Projects",
+            "search": "Search recents...",
+            "loading": "Loading your projects...",
+            "empty": "No projects were found!"
+
+        },
+        "options": {
+
+            "title": "Get Started",
+            "signout": "Sign Out",
+            "signin": "Sign In",
+            "clone": "Clone a repository",
+            "open": "Open a project",
+            "new": "Create a new project",
+            "nocode": "Continue without code!"
 
         }
 

@@ -1,0 +1,81 @@
+/**
+ *
+ * Basic layout style for the editor window
+ *
+**/
+
+.app--safearea {
+    flex-flow: column;
+}
+
+.bottom-bar,
+.top-bar {
+    width: 100%;
+}
+
+.top-bar {
+    padding-bottom: var(--window-safearea);
+    align-items: center;
+}
+
+.top-bar .top-bar-item {
+    margin: 0px 4px;
+}
+
+.top-bar .top-bar-icon {
+    width: 26px;
+    height: 26px;
+}
+
+.bottom-bar {
+    padding-top: var(--window-safearea);
+    font-size: 14px;
+}
+
+.body {
+    flex-grow: 1;
+    display: flex;
+}
+
+.body .side-bar {
+    width: 260px;
+}
+
+.body .content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.body .content .active-files-list,
+.body .content .extra-info,
+.body .content .active-file {
+    width: 100%;
+}
+
+.body .content .extra-info {}
+
+.body .content .active-file {
+    flex-grow: 1;
+}
+
+.body .content .active-files-list,
+.top-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+.file-list-item {
+    min-width: 140px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+
+.file-list-item .list-item-icon {
+    width: 20px;
+    height: 20px;
+    padding-right: 4px;
+}
+
+.file-list-item .list-item-title {}

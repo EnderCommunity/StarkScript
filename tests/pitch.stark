@@ -51,7 +51,7 @@ exit 0;
 // You could try to give the compiler a hint about the existence of a function or a variable inside
 // this C code-block by doing something like this:
 variable:int a;
-function<void> MyFunction(var1:double, var2:short:int);
+function:void MyFunction(var1:double, var2:short:int);
 intermediate {
 
     a = 0;
@@ -82,7 +82,7 @@ use Defaults;
 LANG_VERSION;
 
 // The start function
-function<int> Main(myVariable:int, myVariable2:bool){
+function:int Main(myVariable:int, myVariable2:bool){
 
     // Define some variables of the type "int"
     variable:int a = 0, b = 1;
@@ -143,7 +143,7 @@ condition Platform {
 
 // Define this version of the `SystemRelatedFunction` function for Windows
 @Platform::Win
-function<void> SystemRelatedFunction(){
+function:void SystemRelatedFunction(){
 
     // ...
 
@@ -151,7 +151,7 @@ function<void> SystemRelatedFunction(){
 
 // Define this version of the `SystemRelatedFunction` function for Linux-based systems
 @Platform::Linux
-function<void> SystemRelatedFunction(){
+function:void SystemRelatedFunction(){
 
     // ...
 
@@ -161,7 +161,7 @@ function<void> SystemRelatedFunction(){
 // practical to make it so the function will always take in the same input, and return
 // the same output!
 
-function<void> MyFunction(...args){
+function:void MyFunction(...args){
 
     // ...
 
@@ -180,13 +180,13 @@ class MyCustomObject {
     variable:int a;
     variable:string b;
 
-    append function<void> MyFunction(){
+    append function:void MyFunction(){
 
         //
 
     }
 
-    function<void> MyFunction2(){
+    function:void MyFunction2(){
 
         //
 
@@ -227,7 +227,7 @@ class MyCustomObject2 extend MyCustomObject {
 
     // The "obscure" keyword prevents other classes that might extend this class from detecting or
     // "super"-refrencing the function
-    obscure function<void> MyTopSecretFunction(){
+    obscure function:void MyTopSecretFunction(){
 
         //
 
@@ -240,7 +240,7 @@ variable:MyCustomObject name = new MyCustomObject(0, "");
 class MyClass {
 
     @async
-    append function<void> MyFunction(){
+    append function:void MyFunction(){
 
         //
 

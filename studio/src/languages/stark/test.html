@@ -80,7 +80,7 @@ exit 0;
 // You could try to give the compiler a hint about the existence of a function or a variable inside
 // this C code-block by doing something like this:
 variable:int a;
-function<void> MyFunction(var1:double, var2:short:int);
+function:void MyFunction(var1:double, var2:short:int);
 intermediate {
 
     a = 0;
@@ -111,7 +111,7 @@ use Defaults;
 LANG_VERSION;
 
 // The start function
-function<int> Main(myVariable:int, myVariable2:bool){
+function:int Main(myVariable:int, myVariable2:bool){
 
     // Define some variables of the type "int"
     variable:int a = 0, b = 1;
@@ -127,8 +127,7 @@ function<int> Main(myVariable:int, myVariable2:bool){
     // You can only delete variables
     delete a, b, d;
 
-    // bool double float int string char short long void signed unsigned
-
+    // bool double float int string char short long void
 
     // Conditions
     if(true){
@@ -149,6 +148,7 @@ function<int> Main(myVariable:int, myVariable2:bool){
     // This is casting in Stark!
     int(b);
     string(a);
+    int(5.8); // This will round up the float value
 
     // String-variable flexibility
     string d = "The variable \\"a\\" has the value of {a}";
@@ -172,7 +172,7 @@ condition Platform {
 
 // Define this version of the \`SystemRelatedFunction\` function for Windows
 @Platform::Win
-function<void> SystemRelatedFunction(){
+function:void SystemRelatedFunction(){
 
     // ...
 
@@ -180,7 +180,7 @@ function<void> SystemRelatedFunction(){
 
 // Define this version of the \`SystemRelatedFunction\` function for Linux-based systems
 @Platform::Linux
-function<void> SystemRelatedFunction(){
+function:void SystemRelatedFunction(){
 
     // ...
 
@@ -190,7 +190,7 @@ function<void> SystemRelatedFunction(){
 // practical to make it so the function will always take in the same input, and return
 // the same output!
 
-function<void> MyFunction(...args){
+function:void MyFunction(...args){
 
     // ...
 
@@ -209,13 +209,13 @@ class MyCustomObject {
     variable:int a;
     variable:string b;
 
-    append function<void> MyFunction(){
+    append function:void MyFunction(){
 
         //
 
     }
 
-    function<void> MyFunction2(){
+    function:void MyFunction2(){
 
         //
 
@@ -256,7 +256,7 @@ class MyCustomObject2 extend MyCustomObject {
 
     // The "obscure" keyword prevents other classes that might extend this class from detecting or
     // "super"-refrencing the function
-    obscure function<void> MyTopSecretFunction(){
+    obscure function:void MyTopSecretFunction(){
 
         //
 
@@ -269,7 +269,7 @@ variable:MyCustomObject name = new MyCustomObject(0, "");
 class MyClass {
 
     @async
-    append function<void> MyFunction(){
+    append function:void MyFunction(){
 
         //
 
@@ -301,7 +301,7 @@ get System.IO;
                 keywordNR: [
 
                     "execute", "append", "obscure", "new", "define", "delete", "if", "else", "return", "exit",
-                    "intermediate", "constructor", "destructor", "extend", "await", "get", "from"
+                    "constructor", "destructor", "extend", "await", "get", "from"
 
                 ],
 
@@ -371,12 +371,20 @@ get System.IO;
                     root: [
 
                         [/%%(.*?)%%/, "compiler-constant"],
+
+                        // Manage the "intermediate" codeblock
+                        [/intermediate/, {
+                            token: 'keyword.functional',
+                            next: '@intermediateBlock',
+                            nextEmbedded: 'c'
+                        }],
+
                         [/'(.*?)'/, "string"],
 
                         // identifiers and keywords
                         [
 
-                            /[a-z_$][\w$]*/, {
+                            /[a-z_][\w]*/, {
 
                                 cases: {
 
@@ -402,7 +410,7 @@ get System.IO;
 
                         [
 
-                            /[A-Z][\w\$]*/, "type.identifier" // to show class names nicely
+                            /[A-Z][\w]*/, "type.identifier" // to show class names nicely
 
                         ],
 
@@ -444,7 +452,7 @@ get System.IO;
 
                             /@[a-zA-Z][a-zA-Z_0-9]*/, {
 
-                                token: "invalid"
+                                token: "invalid" // Change to "annotation" when you implement this!
 
                             }
 
@@ -452,17 +460,17 @@ get System.IO;
                         // numbers
                         [
 
-                            /\d*\.\d+([eE][\-+]?\d+)?/, "invalid"
+                            /\d*\.\d+([eE][\-+]?\d+)?/, "invalid" // Change this to "number.hex"
 
                         ],
                         [
 
-                            /0[xX][0-9a-fA-F]+/, "invalid"
+                            /0[xX][0-9a-fA-F]+/, "invalid" // Change this to "number.hex"
 
                         ],
                         [
 
-                            /\d+/, "invalid"
+                            /\d+/, "invalid" // Change this to "number.hex"
 
                         ],
 
@@ -507,6 +515,26 @@ get System.IO;
                             /'/, "string.invalid"
 
                         ],
+
+                    ],
+
+                    intermediateBlock: [
+
+                        [/{/, {
+                            token: '@rematch',
+                            next: '@push',
+                            nextEmbedded: 'html'
+                        }],
+                        [/}/, {
+                            token: '@rematch',
+                            next: '@pop',
+                            nextEmbedded: '@pop'
+                        }],
+                        [/intermediat0/, {
+                            token: '@rematch',
+                            next: '@pop',
+                            nextEmbedded: '@pop'
+                        }],
 
                     ],
 

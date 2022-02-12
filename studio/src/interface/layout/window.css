@@ -12,6 +12,8 @@
 * {
     -webkit-user-select: none;
     user-select: none;
+    font-family: Helvetica, Arial, Sans-Serif;
+    color: var(--text-color);
 }
 
 html,
@@ -20,8 +22,8 @@ body {
     height: 100%;
     padding: 0px;
     margin: 0px;
-    background-color: orange;
     overflow: hidden;
+    background-color: var(--window-background);
 }
 
 .app--safearea {
@@ -29,7 +31,6 @@ body {
     height: calc(100% - 2 * var(--window-safearea) - var(--topbar-height));
     margin: var(--window-safearea) auto;
     margin-top: calc(var(--window-safearea) + var(--topbar-height));
-    background-color: lightgreen;
     display: flex;
     position: relative;
 }
@@ -40,7 +41,6 @@ body {
     width: 100%;
     height: var(--topbar-height);
     display: flex;
-    background-color: lightseagreen;
     overflow: hidden;
     -webkit-user-select: none;
     -webkit-app-region: drag;
@@ -52,9 +52,15 @@ body {
 }
 
 .app--titlebar .titlebar--icon {
-    width: var(--topbar-height);
-    height: var(--topbar-height);
-    background-color: blue;
+    width: calc(var(--topbar-height) - 10px);
+    height: calc(var(--topbar-height) - 10px);
+    padding: 5px;
+    padding-right: 0px;
+}
+
+[dir="rtl"] .app--titlebar .titlebar--icon {
+    padding-right: 5px;
+    padding-left: 0px;
 }
 
 .app--titlebar .titlebar--title {
@@ -67,7 +73,6 @@ body {
     height: 100%;
     width: fit-content;
     margin-left: auto;
-    background-color: crimson;
     -webkit-app-region: no-drag;
     display: flex;
     align-items: center;
@@ -87,5 +92,27 @@ body {
 .app--titlebar .titlebar--controls .controls--option svg {
     margin: auto;
     display: block;
-    fill: blue;
+    fill: var(--text-color);
+}
+
+[clickable] {
+    cursor: pointer;
+}
+
+[disabled] {
+    cursor: not-allowed;
+    opacity: 0.4 !important;
+    pointer-events: none;
+}
+
+[data-signed-in="false"] [show-on-signed] {
+    display: none !important;
+}
+
+[data-signed-in="true"] [hide-on-signed] {
+    display: none !important;
+}
+
+input:focus {
+    outline: none;
 }

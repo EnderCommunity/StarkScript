@@ -5,52 +5,213 @@
 **/
 
 :root {
-    --sidebar-width: 226px;
-    --sidebaritems-height: 42px;
-    --topsection-height: 74px;
+    --options-width: 300px;
+    --projectsitems-height: 42px;
+    --topsection-height: 60px;
 }
 
-.app--sidebar,
-.app--view {
+.app--projects,
+.app--options {
     height: 100%;
     display: flex;
     flex-flow: column;
     position: relative;
 }
 
-.app--sidebar {
-    width: var(--sidebar-width);
-    background-color: lightblue;
-}
-
-.app--view {
+.app--projects {
     flex: 1;
-    background-color: lightpink;
+    max-width: calc(100% - var(--options-width));
 }
 
-.sidebar--item.item--special {
-    height: var(--topsection-height);
-    background-color: purple;
+.app--options {
+    width: var(--options-width);
+    max-width: 50%;
 }
 
-.sidebar--item {
-    height: var(--sidebaritems-height);
-    font-size: 18px;
-    background-color: red;
+.item--special,
+.projects--item {
+    height: var(--projectsitems-height);
+    font-size: 16px;
     display: block;
-    line-height: var(--sidebaritems-height);
-    padding: 0px 12px;
+    line-height: var(--projectsitems-height);
+    padding: 0px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
 
-.sidebar--bottom {
-    margin-top: auto;
+.item--special {
+    margin: 26px 0px;
+    height: var(--topsection-height);
+    min-height: var(--topsection-height);
+    display: flex;
+    align-items: center;
 }
 
 .view--top {
     padding: 0px var(--topsection-height);
     height: var(--topsection-height);
-    background-color: aquamarine;
+}
+
+.projects--title,
+.options--title {
+    padding: 20px 0px;
+    font-size: 18px;
+}
+
+.app--safearea {
+    width: calc(100% - 2 * var(--window-safearea) - 120px);
+    height: calc(100% - 2 * var(--window-safearea) - 2 * var(--topbar-height));
+    max-width: 1080px;
+}
+
+.options--item {
+    display: flex;
+    align-items: center;
+    padding: 28px 16px;
+    margin-bottom: 18px;
+}
+
+.options--item-icon {
+    width: 36px;
+    height: 36px;
+}
+
+.options--item-title {
+    margin: 12px;
+}
+
+.user--picture {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    margin-right: 14px;
+}
+
+[dir="rtl"] .user--picture {
+    margin-right: 0px;
+    margin-left: 14px;
+}
+
+.user--message {
+    font-size: 16px;
+}
+
+.projects--search,
+.options--extra {
+    display: flex;
+    align-items: center;
+    padding: 26px 0px;
+}
+
+.options--extra {
+    padding-top: 0px;
+    margin-top: auto;
+    height: 54px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.projects--search-input {
+    padding: 18px 12px;
+    font-size: 16px;
+    border: 0px solid;
+    display: inline-block;
+    flex-grow: 1;
+}
+
+.projects--search-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+.app--projects,
+.app--options {
+    padding: 0px 8px;
+}
+
+.projects--item.projects--project {
+    display: flex;
+    height: fit-content;
+}
+
+.projects--item.projects--project .item--icon {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+    margin-left: 16px;
+    margin-top: 16px;
+}
+
+.projects--item.projects--project .item--info {
+    width: 100%;
+    margin: 12px;
+    height: 54px;
+    position: relative;
+    width: calc(100% - 64px);
+}
+
+.projects--item.projects--project .item--name {
+    display: block;
+    margin: 0px;
+    line-height: 32px;
+    font-size: 16px;
+}
+
+.projects--item.projects--project .item--extra {
+    display: block;
+    font-size: 14px;
+    margin-top: -12px;
+}
+
+.user--message,
+.projects--item.projects--project .item--extra {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.projects-results {
+    flex-grow: 1;
+    overflow: hidden scroll;
+    position: relative;
+    max-width: 100%;
+}
+
+.projects-results[message] * {
+    display: none;
+}
+
+.projects-results[message]:after {
+    content: attr(message);
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app--options .item--special {
+    justify-content: right;
+}
+
+[dir="rtl"] .app--options .item--special {
+    justify-content: left;
+}
+
+.options--special-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 14px;
+}
+
+[dir="rtl"] .options--special-icon {
+    margin-right: 0px;
+    margin-left: 14px;
 }
